@@ -1,0 +1,27 @@
+{% extends 'MovieApp/base.html' %}
+
+{% block content %}
+  <h1>Top Five Most Watched Movies</h1>
+
+  <div class="table-responsive">
+    <table class="table table-dark table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Times Watched</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in most_watched_films %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td> {{ movie.title }}</td>
+            <td>{{ movie.title_count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}

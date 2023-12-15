@@ -1,0 +1,33 @@
+{% extends 'MovieApp/base.html' %}
+{%  block content %}
+<head>
+    <title>
+        Search Movie
+    </title>
+</head>
+{% if searched %}
+    <div class="container text-center">
+        <h1>You Searched For {{searched|title}}</h1>
+        <div class="container">
+            <div class="row">
+                {% for movie in movies %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-success mb-3" style="max-width: 18rem;">
+                            {% if movie.movie_images %}
+                                <img src="{{ movie.movie_images.url }}" class="card-img-top" height="300" width="300">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <a href="{% url 'movie-detail' movie.pk %}">{{ movie.title }}</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <h1>You Didn't Search</h1>
+{% endif %}
+{% endblock %}

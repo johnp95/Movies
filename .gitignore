@@ -1,0 +1,6 @@
+events
+static
+db.sqlite3
+postgres.session.sql
+media
+my_venv

@@ -1,0 +1,44 @@
+{% extends 'MovieApp/base.html' %}
+{% block content %}
+
+<head>
+    <title>Movies Watched</title>
+</head>
+<br>
+
+<div class="container">
+    <div class="row">
+        {% for movie in foreign_movies %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    {% if movie.movie_images %}
+                        <img src="{{ movie.movie_images.url }}" class="card-img-top" height="300" width="300">
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <a href="{% url 'movie-detail' movie.pk %}">{{ movie.title }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center pagination-sm">
+        {% if movies.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{  movies.previous_page_number }}">Previous</a></li>
+        {% endif %}
+
+        <li  id="idk" class="page-item disabled"><a href="#" class="page-link">Page {{ movies.number}} of {{movies.paginator.num_pages}}</a></li>
+
+        {% if movies.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ movies.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ movies.paginator.num_pages }}">Last &raquo</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}

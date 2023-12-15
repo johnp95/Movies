@@ -1,0 +1,29 @@
+{% extends 'MovieApp/base.html' %}
+{% block content %}
+<head>
+    <title>{{year}}s</title>
+</head>
+<br>
+<h2><span class="badge bg-dark">Movies Count: {{decade_films_count}}</span> </h2>
+<br>
+<div class="container">
+    <div class="row">
+        {% for movie in decade_films %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    {% if movie.movie_images %}
+                        <img src="{{ movie.movie_images.url }}" class="card-img-top" height="300" width="300">
+                    {% endif %}
+                    
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <a href="{% url 'movie-detail' movie.pk %}">{{ movie.title }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

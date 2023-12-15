@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          More
+        </a>
+        <ul class="dropdown-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'movie-list'%}">Movies Watched</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add-movie'%}">Add Movie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'oldest-movies'%}">Oldest Seen</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'recent-movies'%}">Recently Watched</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'female-directed'%}">Female Directed</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'most-watched'%}">Most Watched</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Decades
+        </a>
+        <ul class="dropdown-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1930 %}">1930s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1940 %}">1940s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1950 %}">1950s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1960 %}">1960s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1970 %}">1970s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1980 %}">1980s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 1990 %}">1990s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 2000 %}">2000s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 2010 %}">2010s</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'decades' 2020 %}">2020s</a>
+          </li>
+        </ul>
+    </ul>
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Foreign Films
+        </a>
+        <ul class="dropdown-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'languages' 'French' %}">French</a>
+            <a class="nav-link" href="{% url 'languages' 'Korean' %}">Korean</a>
+            <a class="nav-link" href="{% url 'languages' 'Swedish' %}">Swedish</a>
+            <a class="nav-link" href="{% url 'languages' 'Chinese' %}">Chinese</a>
+            <a class="nav-link" href="{% url 'languages' 'Japanese' %}">Japanese</a>
+            <a class="nav-link" href="{% url 'languages' 'German' %}">German</a>
+            <a class="nav-link" href="{% url 'languages' 'Dutch' %}">Dutch</a>
+            <a class="nav-link" href="{% url 'languages' 'Norwegian' %}">Norwegian</a>
+            <a class="nav-link" href="{% url 'languages' 'Finnish' %}">Finnish</a>
+            <a class="nav-link" href="{% url 'languages' 'Italian' %}">Italian</a>
+          </li>
+        </ul>
+        
+        
+    </ul>
+
+    <form class="d-flex mx-auto" role="search" method="POST" action="{% url 'search-movie' %}">
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="Search Movie" aria-label="Search" name="search_data">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
