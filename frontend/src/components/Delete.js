@@ -7,12 +7,11 @@ const Delete = () => {
 
     const MyParam = useParams()
     const MyId = MyParam.id
-
     const [myData,setMyData] = useState()
     const [loading,setLoading] = useState(true)
   
     const GetData = () => {
-        AxiosInstance.get(`add_movie/${MyId}`).then((res) => {
+        AxiosInstance.get(`api/movies/${MyId}`).then((res) => {
             setMyData(res.data)
             console.log(res.data)
             setLoading(false)
@@ -26,7 +25,7 @@ const Delete = () => {
     const navigate = useNavigate()
     const submission = (data) => {
 
-        AxiosInstance.delete(`add_movie/${MyId}/`)
+        AxiosInstance.delete(`api/movies/${MyId}/`)
         .then((res) => {
         navigate(`/`)
         })

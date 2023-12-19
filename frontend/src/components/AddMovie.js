@@ -4,12 +4,13 @@ import MyDatePickerField from './forms/MyDatePickerField';
 import MyTextField from './forms/MyTextField';
 import { useForm } from 'react-hook-form';
 import AxiosInstance from './Axios';
-import DayJs from 'dayjs';
+import Dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 export const AddMovie = () => {
+
   const navigate = useNavigate();
   const defaultValues = {
     title: '',
@@ -33,17 +34,17 @@ export const AddMovie = () => {
   const {handleSubmit,control} = useForm({defaultValues:defaultValues,resolver: yupResolver(schema)})
 
   const submission = (data) => {
-    const date_watched = DayJs(data.date_watched['$d']).format('YYYY-MM-DD');
-    AxiosInstance.post(`add_movie/`, {
-      title: data.title,
-      director: data.director,
-      actor: data.actor,
-      actress: data.actress,
-      date_watched: date_watched,
-      released: data.released,
-    }).then((res) => {
-      navigate(`/`);
-    });
+    const date_watched = Dayjs(data.date_watched['$d']).format('YYYY-MM-DD');
+      AxiosInstance.post(`api/movies/`, {
+        title: data.title,
+        director: data.director,
+        actor: data.actor,
+        actress: data.actress,
+        date_watched: date_watched,
+        released: data.released,
+      }).then((res) => {
+        navigate(`/`);
+      });
   };
 
   return (
@@ -54,7 +55,7 @@ export const AddMovie = () => {
       alignItems: 'center',
       justifyContent: 'flex-start',
       height: '100vh',
-      marginTop: '50px', // Adjust margin-top as needed
+      marginTop: '50px',
     }}
     >
       <form onSubmit={handleSubmit(submission)}>
@@ -62,7 +63,7 @@ export const AddMovie = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '80%', // Adjust the width as needed
+            width: '80%',
             justifyContent: 'center',
             color: 'white',
             padding: 4,

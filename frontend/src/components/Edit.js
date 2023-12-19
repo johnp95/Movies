@@ -4,7 +4,7 @@ import MyDatePickerField from './forms/MyDatePickerField';
 import MyTextField from './forms/MyTextField';
 import {useForm} from 'react-hook-form';
 import AxiosInstance from './Axios';
-import DayJs from 'dayjs'
+import Dayjs from 'dayjs'
 import {useNavigate, useParams} from 'react-router-dom'
 
 const Edit = () => {
@@ -12,13 +12,12 @@ const Edit = () => {
     const MyParam = useParams()
     const MyId = MyParam.id
     const GetData = () => {
-        AxiosInstance.get(`add_movie/${MyId}`).then((res) => {
-        //   console.log(res.data)
+        AxiosInstance.get(`api/movies/${MyId}`).then((res) => {
           setValue('title',res.data.title)
           setValue('director',res.data.director)
           setValue('actor',res.data.actor)
           setValue('actress',res.data.actress)
-          setValue('date_watched',DayJs(res.data.date_watched))
+          setValue('date_watched',Dayjs(res.data.date_watched))
           setValue('released',res.data.released)
         })
       }
@@ -35,9 +34,9 @@ const Edit = () => {
     }
     const {handleSubmit,setValue, control} = useForm({defaultValues:defaultValues})
     const submission = (data) => {
-    const date_watched = DayJs(data.date_watched["$d"]).format('YYYY-MM-DD')
+    const date_watched = Dayjs(data.date_watched["$d"]).format('YYYY-MM-DD')
 
-    AxiosInstance.put(`add_movie/${MyId}/`,{
+    AxiosInstance.put(`api/movies/${MyId}/`,{
         title: data.title,
         director: data.director,
         actor: data.actor,

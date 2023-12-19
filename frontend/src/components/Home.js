@@ -9,9 +9,9 @@ export const Home = () => {
 
   const [myData,setMyData] = useState()
   const [loading,setLoading] = useState(true)
-  
+
   const GetData = () => {
-    AxiosInstance.get(`add_movie/`).then((res) => {
+    AxiosInstance.get(`api/movies/`).then((res) => {
 
       setMyData(res.data)
       console.log(res.data)
