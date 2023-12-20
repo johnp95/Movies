@@ -1,12 +1,10 @@
-# urls.py
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import movie_list, MovieViewSet
-
-router = DefaultRouter()
-router.register(r'movies', MovieViewSet, basename='movie')
+from django.urls import path
+from . import views 
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    path('movies/', movie_list, name='movie-list'),
-    path('', include(router.urls)),
+    path('movies/', views.MovieList.as_view()),
+    path('movies/<int:pk>/', views.MovieDetail.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,5 +1,4 @@
 # python manage.py sqlsequencereset MovieApp | python manage.py dbshell
-
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse
 from .models import Movie
@@ -11,44 +10,6 @@ from rest_framework import viewsets,permissions
 from rest_framework.response import Response
 from .serializers import MovieSerializer
 
-# class MovieViewset(viewsets.ViewSet):
-#     permisson_classes = [permissions.AllowAny]
-#     queryset = Movie.objects.all()
-#     serializer_class = MovieSerializer
-
-#     def list(self, request):
-#         queryset  = Movie.objects.all()
-#         serializer = self.serializer_class(queryset,many=True)
-#         return Response(serializer.data)
-
-#     def create(self, request):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         else:
-#             return Response(serializer.errors,status=400)
-
-
-#     def retrieve(self, request, pk=None):
-#         movie = self.queryset.get(pk=pk)
-#         serializer = self.serializer_class(movie)
-#         return Response(serializer.data)
-
-#     def update(self, request, pk=None):
-#         movie = self.queryset.get(pk=pk)
-#         serializer = self.serializer_class(movie, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         else:
-#             return Response(serializer.errors,status=400)
-
-#     def destroy(self, request, pk=None):
-#         movie = self.queryset.get(pk=pk)
-#         movie.delete()
-#         return Response(status=204)
-    
 def update_movie(request, pk):
     movie = Movie.objects.get(pk=pk)
     form = MovieForm(request.POST or None,request.FILES or None, instance=movie)
