@@ -6,18 +6,27 @@ import { AddMovie } from './components/AddMovie';
 import { Navbar } from './components/Navbar';
 import Edit from './components/Edit';
 import Delete from './components/Delete';
+import {Search} from './components/Search';
+import {useState} from 'react';
+import { MovieList } from './components/MovieList';
+
 function App() {
+
+  const [movieData, setMovieData] = useState([])
+  
   return (
     <div className="App">
       <Navbar />
-      <Routes>
+      <Search setMovieData={setMovieData} />
+      <MovieList movieData={movieData}/>
+      {/* <Routes>
         <Route path="" element={<Home />}/>
         <Route path="/about" element={<About />}/>
         <Route path="/AddMovie" element={<AddMovie />}/>
         <Route path='/edit/:id' element={<Edit />}  />
         <Route path='/delete/:id' element={<Delete />} />
-      </Routes>
-   
+      </Routes> */}
+    
 
     </div>
   );

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from MovieApp.models import Movie
 from .serializers import MovieSerializer
+from rest_framework.views import APIView
 
 @api_view(['GET', 'POST'])
 def movie_list(request):
@@ -19,10 +20,22 @@ def movie_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieList(generics.ListCreateAPIView):
-    queryset = Movie.objects.all().order_by('-date_watched')
+    queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+
+class MovieSearchView(APIView):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('query', '')
+        # Perform your search logic and return the results
+        results = Movie.objects.filter(title__icontains=query) | \
+                  Movie.objects.filter(director__icontains=query) | \
+                  Movie.objects.filter(actor__icontains=query) | \
+                  Movie.objects.filter(actress__icontains=query)
+
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
