@@ -59,6 +59,7 @@ export const Home = () => {
   
   return (
     <div>
+    
         { loading ? <p>Loading data...</p> : 
         <MaterialReactTable 
         columns={columns}
