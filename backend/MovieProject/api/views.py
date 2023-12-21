@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 @api_view(['GET', 'POST'])
 def movie_list(request):
     if request.method == 'GET':
-        queryset = Movie.objects.all()
+        queryset = Movie.objects.all().order_by('id')
         serializer = MovieSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -20,12 +20,12 @@ def movie_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieList(generics.ListCreateAPIView):
-    queryset = Movie.objects.all()
+    queryset = Movie.objects.all().order_by('id')
     serializer_class = MovieSerializer
 
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Movie.objects.all()
+    queryset = Movie.objects.all().order_by('id')
     serializer_class = MovieSerializer
 
 class MovieSearchView(APIView):

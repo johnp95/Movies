@@ -1,0 +1,35 @@
+.movieCard {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgb(0,0,0,0.2);
+    border-radius: 10px;
+    font-family: Polysans,sans-serif;
+    color: #393e46
+
+}
+
+.recipleName{
+    font-size: 24px;
+    margin-bottom: 10px; 
+}
+.movieImage{
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}
+.movieDetails{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.movieData{
+    margin-bottom: 20px;
+
+}
+.movieActors{
+    margin-bottom: 20px;
+}
