@@ -2,7 +2,7 @@ import {React,useState,useEffect} from 'react';
 import styles from './search.module.css'
 const url = 'http://127.0.0.1:8000/api/movies/search'
 
-export const Search = ({setMovieData}) => {
+export const Search = ({ setMovieData, setIsClicked}) => {
     
     const [query,setQuery] = useState('');
     useEffect(() => {
@@ -22,7 +22,11 @@ export const Search = ({setMovieData}) => {
         className={styles.input}
         placeholder='Search'
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        
+        onChange={(e) => {
+            setQuery(e.target.value)
+            setIsClicked(false)
+            }}
         type='text'
         />
         </div>

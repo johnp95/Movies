@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Search setMovieData={setMovieData} />
+      <Search setMovieData={setMovieData} setIsClicked={setIsClicked} />
       <Container>
         <InnerContainer>
           <MovieList setMovieId={setMovieId} movieData={movieData} setIsClicked={setIsClicked}/>
