@@ -1,14 +1,15 @@
 import {React} from 'react'
 import { MovieItem } from './MovieItem'
 
-export const MovieList = ({movieData, setMovieId, setIsClicked}) => {
+export const MovieList = ({movieData, setMovieId, loading}) => {
 
     return (
     <div>
-       {movieData.map((movie) => (
+
+       { loading ? <p>Loading data...</p> : 
+        movieData.map((movie) => (
         <MovieItem 
         setMovieId={setMovieId} 
-        setIsClicked={setIsClicked}
         key={movie.id} 
         movie={movie} />
       ))}

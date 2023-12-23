@@ -1,7 +1,8 @@
-import {React,useState} from 'react';
+import {React} from 'react';
 import styles from './movieitem.module.css';
+import {Link} from 'react-router-dom'
 
-export const MovieItem = ({movie, setMovieId, setIsClicked}) => {
+export const MovieItem = ({movie, setMovieId}) => {
 
   return (
     <div className={styles.itemContainer}>
@@ -10,10 +11,11 @@ export const MovieItem = ({movie, setMovieId, setIsClicked}) => {
         <p className={styles.itemName}>{movie.title}</p>
       </div>
       <div className={styles.buttonContainer}>
+      <Link to={`/details/${movie.id}`}>
         <button onClick={() => {
           setMovieId(movie.id)
-          setIsClicked(true)
         }} className={styles.itemButton}>View Movie</button>
+        </Link>
       </div>
     </div>
   )

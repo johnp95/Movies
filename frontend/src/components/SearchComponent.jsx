@@ -9,17 +9,18 @@ import {MovieDetails} from './MovieDetails';
 export const SearchComponent = () => {
     const [movieData, setMovieData] = useState([])
     const [movieId, setMovieId] = useState('')
-    const [isClicked,setIsClicked] = useState(false)
+    const [loading,setLoading] = useState(true)
   
   return (
     <div>
-        <Search setMovieData={setMovieData} setIsClicked={setIsClicked} />
+        <Search setMovieData={setMovieData} setLoading={setLoading} />
       <Container>
         <InnerContainer>
-          <MovieList setMovieId={setMovieId} movieData={movieData} setIsClicked={setIsClicked}/>
-        </InnerContainer>
-        <InnerContainer>
-          <MovieDetails movieId={movieId} isClicked={isClicked}/>
+          <MovieList 
+           setMovieId={setMovieId}
+           movieData={movieData}
+           loading={loading}
+           />
         </InnerContainer>
       </Container>
       

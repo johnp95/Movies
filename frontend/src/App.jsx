@@ -6,7 +6,7 @@ import { Navbar } from './components/Navbar';
 import Edit from './components/Edit';
 import Delete from './components/Delete';
 import { SearchComponent } from './components/SearchComponent';
-
+import {MovieDetails} from './components/MovieDetails';
 function App() {
   
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route path="/AddMovie" element={<AddMovie />}/>
         <Route path='/edit/:id' element={<Edit />}  />
         <Route path='/delete/:id' element={<Delete />} />
+        <Route path='/details/:id' element={<MovieDetails />} />
       </Routes> 
     </div>
   );

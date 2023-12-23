@@ -4,7 +4,6 @@ from rest_framework import status, generics
 from MovieApp.models import Movie
 from .serializers import MovieSerializer
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAdminUser
 
 @api_view(['GET', 'POST'])
 def movie_list(request):
@@ -21,13 +20,11 @@ def movie_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieList(generics.ListCreateAPIView):
-    permission_classes = [IsAdminUser]
     queryset = Movie.objects.all().order_by('id')
     serializer_class = MovieSerializer
 
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAdminUser]
     queryset = Movie.objects.all().order_by('id')
     serializer_class = MovieSerializer
 
