@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Add Movie', 'Search'];
-const routePaths = ['/home', '/about', '/AddMovie', 'Search']; // Add corresponding route paths
+const routePaths = ['/', '/about', '/AddMovie', 'Search']; // Add corresponding route paths
 
 
 export const Navbar = (props) => {

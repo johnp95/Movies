@@ -27,7 +27,6 @@ export const Search = ({ setMovieData, setLoading}) => {
         
         onChange={(e) => {
             setQuery(e.target.value)
-            setIsClicked(false)
             }}
         type='text'
         />

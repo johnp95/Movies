@@ -7,13 +7,14 @@ import Edit from './components/Edit';
 import Delete from './components/Delete';
 import { SearchComponent } from './components/SearchComponent';
 import {MovieDetails} from './components/MovieDetails';
+import { CardContainer } from './components/CardContainer';
 function App() {
   
   return (
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/home" element={<Home />}/>
+        <Route path="/" element={<Home />}/>
         <Route path="/about" element={<About />}/>
         <Route path="/search" element={<SearchComponent />}/>
         <Route path="/AddMovie" element={<AddMovie />}/>
