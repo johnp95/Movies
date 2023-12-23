@@ -12,7 +12,7 @@ export const MovieItem = ({movie, setMovieId}) => {
         <p className={styles.itemName}>{movie.title}</p>
       </div>
       <div className={styles.buttonContainer}>
-      <Link to={`/details/${movie.id}`}>
+      <Link to={`/movie_details/${movie.id}`}>
         <Button onClick={() => {
           setMovieId(movie.id)
         }} 

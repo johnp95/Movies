@@ -1,18 +1,14 @@
 .movieCard {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgb(0,0,0,0.2);
-    border-radius: 10px;
-    font-family: Polysans,sans-serif;
-    color: #393e46
+    max-width: 300px;
+    margin-top: 80px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
 }
 
-.recipleName{
-    font-size: 24px;
-    margin-bottom: 10px; 
-}
+
 .movieImage{
     max-width: 100%;
     height: auto;
@@ -32,4 +28,20 @@
 }
 .movieActors{
     margin-bottom: 20px;
+}
+.itemButton{
+    background-color: #29bb89;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    
+}
+.buttonContainer{
+    margin-bottom: 20px; 
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
 }

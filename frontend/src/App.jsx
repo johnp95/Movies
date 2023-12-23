@@ -7,7 +7,8 @@ import Edit from './components/Edit';
 import Delete from './components/Delete';
 import { SearchComponent } from './components/SearchComponent';
 import {MovieDetails} from './components/MovieDetails';
-import { CardContainer } from './components/CardContainer';
+import { BestPicture } from './components/BestPicture';
+
 function App() {
   
   return (
@@ -20,7 +21,8 @@ function App() {
         <Route path="/AddMovie" element={<AddMovie />}/>
         <Route path='/edit/:id' element={<Edit />}  />
         <Route path='/delete/:id' element={<Delete />} />
-        <Route path='/details/:id' element={<MovieDetails />} />
+        <Route path='/movie_details/:id' element={<MovieDetails />} />
+        <Route path='/best_picture' element={<BestPicture />} />
       </Routes> 
     </div>
   );

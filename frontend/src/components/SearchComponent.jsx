@@ -23,17 +23,17 @@ export const SearchComponent = () => {
   
   return (
     <div>
-        <Search setMovieData={setMovieData} setLoading={setLoading} />
-      <Container>
-        <InnerContainer>
-          <MovieList 
-           setMovieId={setMovieId}
-           movieData={movieData}
-           loading={loading}
-           currentCards={currentCards}
-           />
-        </InnerContainer>
-      </Container>
+      <Search setMovieData={setMovieData} setLoading={setLoading} />
+        <Container>
+          <InnerContainer>
+            <MovieList 
+            setMovieId={setMovieId}
+            movieData={movieData}
+            loading={loading}
+            currentCards={currentCards}
+            />
+          </InnerContainer>
+       </Container>
       <div className={styles.paginationContainer}>
         <Pagination 
         size='large'
