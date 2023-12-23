@@ -1,6 +1,7 @@
 import {React} from 'react';
 import styles from './movieitem.module.css';
 import {Link} from 'react-router-dom'
+import Button from '@mui/material/Button';
 
 export const MovieItem = ({movie, setMovieId}) => {
 
@@ -12,9 +13,14 @@ export const MovieItem = ({movie, setMovieId}) => {
       </div>
       <div className={styles.buttonContainer}>
       <Link to={`/details/${movie.id}`}>
-        <button onClick={() => {
+        <Button onClick={() => {
           setMovieId(movie.id)
-        }} className={styles.itemButton}>View Movie</button>
+        }} 
+        style={{backgroundColor:'#000d33', color:'white'}}
+        size='large'
+        variant='outlined'
+        className={styles.itemButton}>View Movie
+        </Button>
         </Link>
       </div>
     </div>

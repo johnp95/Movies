@@ -1,3 +1,6 @@
+.inputPlaceholder {
+    text-align: center;
+  }
 .searchContainer{
     margin: 20px auto;
     width: 300px;
