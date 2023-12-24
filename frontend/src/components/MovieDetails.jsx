@@ -7,6 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import {Link} from 'react-router-dom';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
@@ -55,7 +57,7 @@ export const MovieDetails = () => {
           Released: {movie.released}
           </Typography>
           <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          {movie.best_picture ? 'Best Picture Winner' : ''}
+          {movie.best_picture ? <Alert severity="info">Best Picture Winner</Alert> : ''}
           </Typography>
         </CardContent>
       </CardActionArea>

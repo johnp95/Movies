@@ -19,7 +19,7 @@ export const BestPicture = () => {
     <div className={styles.cardContainer}>
     {movies.map((movie) => (
       movie.best_picture ?
-      <MovieItem movie={movie}/>  : ''
+      <MovieItem key={movie.id} movie={movie}/>  : ''
     ))}    
     </div>
   );

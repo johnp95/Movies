@@ -5,6 +5,7 @@ import Dayjs from 'dayjs';
 import { Box, IconButton } from '@mui/material'
 import { Edit as EditIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import {Link} from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress';
 export const Home = () => {
 
   const [myData,setMyData] = useState()
@@ -60,7 +61,11 @@ export const Home = () => {
   return (
     <div>
     
-        { loading ? <p>Loading data...</p> : 
+        { loading ? 
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
+         : 
         <MaterialReactTable 
         columns={columns}
          data={myData} 
