@@ -14,6 +14,7 @@ export const MovieItem = ({movie, setMovieId}) => {
       <div className={styles.buttonContainer}>
       <Link to={`/movie_details/${movie.id}`}>
         <Button onClick={() => {
+          console.log(`movie.id: ${movie.id}`)
           setMovieId(movie.id)
         }} 
         style={{backgroundColor:'#000d33', color:'white'}}

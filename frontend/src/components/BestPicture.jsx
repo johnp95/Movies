@@ -14,7 +14,6 @@ export const BestPicture = () => {
     };
     fetchMovie();
   }, []);
-
   return (
     <div className={styles.cardContainer}>
     {movies.map((movie) => (

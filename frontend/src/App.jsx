@@ -8,14 +8,15 @@ import Delete from './components/Delete';
 import { SearchComponent } from './components/SearchComponent';
 import {MovieDetails} from './components/MovieDetails';
 import { BestPicture } from './components/BestPicture';
-
+import {Test}  from './components/Test';
 function App() {
   
   return (
     <div className="App">
-      <Navbar />
+      {/* <Navbar /> */}
+      <Test />
       <Routes>
-        <Route path="/" element={<Home />}/>
+        {/* <Route path="/" element={<Home />}/> */}
         <Route path="/about" element={<About />}/>
         <Route path="/search" element={<SearchComponent />}/>
         <Route path="/AddMovie" element={<AddMovie />}/>
@@ -23,7 +24,8 @@ function App() {
         <Route path='/delete/:id' element={<Delete />} />
         <Route path='/movie_details/:id' element={<MovieDetails />} />
         <Route path='/best_picture' element={<BestPicture />} />
-      </Routes> 
+      </Routes>  
+     
     </div>
   );
 }

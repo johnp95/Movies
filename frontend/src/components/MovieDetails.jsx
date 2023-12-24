@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import {Link} from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 export const MovieDetails = () => {
@@ -36,7 +38,7 @@ export const MovieDetails = () => {
           alt=""
         />
         <CardContent>
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography fontWeight='bold' gutterBottom variant="h4" component="div">
             {movie.title}
           </Typography>
           <Typography fontWeight='bold' variant="body2" color="text.secondary">
@@ -55,43 +57,22 @@ export const MovieDetails = () => {
           Released: {movie.released}
           </Typography>
           <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          {movie.best_picture ? 'Best Picture Winner' : ''}
+          {movie.best_picture ? 
+          <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="info">Best Picture Winner!</Alert></Stack>
+           : ''}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions className={styles.buttonContainer}>
       
-      <Link to={`/search/`}>
+      <Link to={`/`}>
         <Tooltip title="Go back to Movies">
         <KeyboardReturnIcon style={{ cursor: 'pointer' }} />
       </Tooltip>
         </Link>
       </CardActions>
     </Card>
-    // <div>
-    //     <div className={styles.movieCard}>
-    //         <h1 className={styles.movieName}>
-    //             {movie.title}
-    //         </h1>
-    //         <img className={styles.movieImage} src={movie.image} alt='' />
-    //         <div className={styles.movieDetails}>
-    //             <span><strong>Director: {movie.director}</strong></span>
-    //             <span>{movie.best_picture ? "Best Picture Winner" : ""}</span>
-    //         </div>
-    //         <div className={styles.movieActors}>
-    //             <strong>Actors: </strong> 
-    //             <span><strong>{movie.actor}, </strong></span>
-    //             <span><strong>{movie.actress}</strong></span>
-    //         </div>
-    //         <div className={styles.movieData}>
-    //             <strong>Date Watched: </strong>
-    //             <span><strong>{movie.date_watched}</strong></span>
-    //         </div>
-    //         <div className={styles.movieData}>
-    //             <strong>Released: </strong>
-    //             <span><strong>{movie.released}</strong></span>
-    //         </div>
-    //     </div>
-    // </div>
+    
   )
 }
