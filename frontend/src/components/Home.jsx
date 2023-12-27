@@ -6,6 +6,7 @@ import { Box, IconButton } from '@mui/material'
 import { Edit as EditIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import {Link} from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress';
+
 export const Home = () => {
 
   const [myData,setMyData] = useState()
@@ -33,6 +34,11 @@ export const Home = () => {
           size: 150,
         },
         {
+          accessorKey: 'released', //access nested data with dot notation
+          header: 'Released',
+          size: 150,
+        },
+        {
           accessorKey: 'director', //access nested data with dot notation
           header: 'Director',
           size: 150,
@@ -53,7 +59,7 @@ export const Home = () => {
           header: 'Date Watched',
           size: 150,
         },
-        
+ 
       ],
       [],
     );
