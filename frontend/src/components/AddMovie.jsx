@@ -5,7 +5,7 @@ import MyTextField from './forms/MyTextField';
 import { useForm } from 'react-hook-form';
 import AxiosInstance from './Axios';
 import { useNavigate } from 'react-router-dom';
-import {yupResolver} from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import styles from './styles/addmovie.module.css';
 import * as yup from 'yup'
 
@@ -19,6 +19,7 @@ export const AddMovie = () => {
     actress: '',
     date_watched: '',
     released: '',
+    image: '',
   };
   const schema = yup
   .object({
@@ -28,6 +29,7 @@ export const AddMovie = () => {
     actress: yup.string(),
     date_watched: yup.date().required('Date Watched is required field'),
     released: yup.string().required('Released is required field'),
+    image: yup.string(),
   })
   .required()
 
@@ -42,6 +44,7 @@ export const AddMovie = () => {
       actress: data.actress,
       date_watched: date_watched,
       released: data.released,
+      image: data.image,
     }).then((res) => {
       navigate(`/`);
     });
@@ -92,6 +95,12 @@ export const AddMovie = () => {
               name="released"
               control={control}
               placeholder="Provide released date"
+            />
+            <MyTextField
+              label="Image"
+              name="image"
+              control={control}
+              placeholder="Provide image"
             />
           <Box> 
             <Button variant="contained" type="submit" size='large' >
