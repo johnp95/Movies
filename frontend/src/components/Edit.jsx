@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import AxiosInstance from './Axios';
 import Dayjs from 'dayjs'
 import { useNavigate, useParams} from 'react-router-dom'
+import styles from './styles/editmovie.module.css';
 
 const Edit = () => {
 
@@ -28,10 +29,13 @@ const Edit = () => {
       },[])
     const navigate = useNavigate()
     const defaultValues = {
-        name: '',
-        comments: '',
-        status: '',
-    }
+      title: '',
+      director: '',
+      actor: '',
+      actress: '',
+      date_watched: '',
+      released: '',
+    };
     const {handleSubmit,setValue, control} = useForm({defaultValues:defaultValues})
     const submission = (data) => {
     const date_watched = Dayjs(data.date_watched["$d"]).format('YYYY-MM-DD')
@@ -50,25 +54,15 @@ const Edit = () => {
     })
   }
   return (
-    <div>
-    <form onSubmit={handleSubmit(submission)}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '80%', // Adjust the width as needed
-            justifyContent: 'center',
-            color: 'white',
-            padding: 4,
-            borderRadius: 8,
-            boxShadow: 3,
-            marginTop: 'irem'
-          }}
-        >
-          <Typography variant="h6" noWrap component="div" align="center" color="primary">
-            Enter Movie
-          </Typography>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit(submission)}>
 
+        <Box className={styles.title}>
+          <Typography sx={{color: '#fff'}}>
+            Edit Movie
+          </Typography>
+        </Box>
+        <Box className={styles.textContainer}>
           <MyTextField
             label="Title"
             name="title"
@@ -104,11 +98,12 @@ const Edit = () => {
             control={control}
             placeholder="Provide released date"
           />
-
+          <Box>
           <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
             Submit
           </Button>
         </Box>
+      </Box>
       </form>
     </div>
   )

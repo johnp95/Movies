@@ -34,17 +34,17 @@ export const AddMovie = () => {
   const {handleSubmit,control} = useForm({defaultValues:defaultValues,resolver: yupResolver(schema)})
 
   const submission = (data) => {
-    const date_watched = data.date_watched.toISOString().split('T')[0];
-      AxiosInstance.post(`api/movies/`, {
-        title: data.title,
-        director: data.director,
-        actor: data.actor,
-        actress: data.actress,
-        date_watched: date_watched,
-        released: data.released,
-      }).then((res) => {
-        navigate(`/`);
-      });
+  const date_watched = data.date_watched.toISOString().split('T')[0];
+    AxiosInstance.post(`api/movies/`, {
+      title: data.title,
+      director: data.director,
+      actor: data.actor,
+      actress: data.actress,
+      date_watched: date_watched,
+      released: data.released,
+    }).then((res) => {
+      navigate(`/`);
+    });
   };
 
   return (
