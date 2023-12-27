@@ -20,7 +20,7 @@ def movie_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieList(generics.ListCreateAPIView):
-    queryset = Movie.objects.all().order_by('id')
+    queryset = Movie.objects.all().order_by('-date_watched')
     serializer_class = MovieSerializer
 
 
