@@ -15,13 +15,13 @@ export const MovieItem = ({movie, setMovieId}) => {
         <Link to={`/movie_details/${movie.id}`}>
           <Button onClick={() => {
             setMovieId(movie.id)
-          }} 
-          style={{backgroundColor:'#000d33', color:'white'}}
-          size='large'
-          variant='outlined'
-          className={styles.itemButton}>View Movie
+            }} 
+            style={{backgroundColor:'#000d33', color:'white'}}
+            size='large'
+            variant='outlined'
+          >View Movie
           </Button>
-          </Link>
+        </Link>
       </div>
     </div>
   )

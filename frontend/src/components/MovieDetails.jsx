@@ -12,6 +12,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import styles from './styles/moviedetails.module.css';
 
 export const MovieDetails = () => {
+  
     const [movie, setMovie] = useState('');
     const MyParam = useParams()
     const myId = MyParam.id
@@ -29,7 +30,24 @@ export const MovieDetails = () => {
   
   return (
     <Card className={styles.movieCard}>
+    <Typography 
+            gutterBottom 
+            variant="h5" 
+            component="div"
+            fontWeight='bold'
+            >
+            <Link
+            
+              to={`https://en.wikipedia.org/wiki/${movie.title}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              {movie.title}
+            </Link>
+          </Typography>
       <CardActionArea>
+      
         <CardMedia
           component="img"
           height="auto"
@@ -37,27 +55,86 @@ export const MovieDetails = () => {
           alt=""
         />
         <CardContent>
-          <Typography gutterBottom variant="h4" component="div">
-            {movie.title}
+ 
+          <Typography 
+          gutterBottom 
+          fontWeight='bold' 
+          variant="body2" 
+          >
+          Director:{' '}
+            <Link
+              to={`https://en.wikipedia.org/wiki/${movie.director}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              {movie.director}
+            </Link>
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          Director: {movie.director}
+
+          <Typography 
+            gutterBottom
+            fontWeight='bold' 
+            variant="body2" 
+            >
+             Actor:{' '}
+            {movie.actor ? (
+              <Link
+                to={`https://en.wikipedia.org/wiki/${movie.actor}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {movie.actor}
+              </Link>
+            ) : (
+              ''
+            )}
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          Actor: {movie.actor ? movie.actor : ''}
+
+          <Typography 
+            gutterBottom
+            fontWeight='bold' 
+            variant="body2" 
+            >
+            Actress:{' '}
+            {movie.actress ? (
+              <Link
+                to={`https://en.wikipedia.org/wiki/${movie.actress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {movie.actress}
+              </Link>
+            ) : (
+              ''
+            )}
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          Actress: {movie.actress ? movie.actress : ''}
+
+          <Typography 
+            gutterBottom
+            fontWeight='bold' 
+            variant="body2" 
+            >
+            Date Watched: {movie.date_watched}
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          Date Watched: {movie.date_watched}
+
+          <Typography 
+            gutterBottom
+            fontWeight='bold' 
+            variant="body2" 
+            >
+            Released: {movie.released}
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          Released: {movie.released}
+
+          <Typography 
+            fontWeight='bold' 
+            variant="body2" 
+            color="text.secondary">
+            {movie.best_picture ? <Alert severity="info">Best Picture Winner</Alert> : ''}
           </Typography>
-          <Typography fontWeight='bold' variant="body2" color="text.secondary">
-          {movie.best_picture ? <Alert severity="info">Best Picture Winner</Alert> : ''}
-          </Typography>
+
         </CardContent>
       </CardActionArea>
       <CardActions className={styles.buttonContainer}>

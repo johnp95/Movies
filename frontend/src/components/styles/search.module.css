@@ -1,12 +1,14 @@
 .inputPlaceholder {
     text-align: center;
   }
+
 .searchContainer{
     margin: 20px auto;
     width: 300px;
     position: relative;
 
 }
+
 .input{
     border: none;
     border-bottom: 1px solid #e3e4dc;
