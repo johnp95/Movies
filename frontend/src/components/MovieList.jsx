@@ -1,10 +1,10 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import { MovieItem } from './MovieItem'
-import styles from './cardcontainer.module.css'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-export const MovieList = ({movieData, setMovieId, loading,currentCards}) => {
+import styles from './styles/movielist.module.css'
 
+export const MovieList = ({movieData, setMovieId, loading,currentCards}) => {
 
     return (
     <div className={styles.cardContainer}>
@@ -15,12 +15,11 @@ export const MovieList = ({movieData, setMovieId, loading,currentCards}) => {
         : 
         currentCards.map((movie) => (
         <MovieItem 
-        setMovieId={setMovieId} 
-        key={movie.id} 
-        movie={movie} />
-      ))}
-      
+          setMovieId={setMovieId} 
+          key={movie.id} 
+          movie={movie} />
+        ))
+      }
     </div>
-    
     )
 }

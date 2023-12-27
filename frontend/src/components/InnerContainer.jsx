@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './innercontainer.module.css';
+import styles from './styles/innercontainer.module.css';
 
 export const InnerContainer = ({children}) => {
     return (

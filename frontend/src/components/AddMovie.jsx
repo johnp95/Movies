@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import { React } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import MyDatePickerField from './forms/MyDatePickerField';
 import MyTextField from './forms/MyTextField';
@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import AxiosInstance from './Axios';
 import { useNavigate } from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup'
-import styles from './addmovie.module.css';
+import styles from './styles/addmovie.module.css';
 import * as yup from 'yup'
 
 export const AddMovie = () => {

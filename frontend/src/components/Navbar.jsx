@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,11 +16,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Add Movie', 'Search', 'Best Picture'];
-const routePaths = ['/', '/about', '/add_movie', 'Search','best_picture']; 
-
+const navItems = ['Home','Add Movie', 'Search', 'Best Picture'];
+const routePaths = ['/','/add_movie', 'Search','best_picture']; 
 
 export const Navbar = (props) => {
+  
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -87,7 +86,7 @@ export const Navbar = (props) => {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true, 
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

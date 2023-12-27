@@ -29,27 +29,27 @@ export const Home = () => {
     const columns = useMemo(
       () => [
         {
-          accessorKey: 'title', //access nested data with dot notation
+          accessorKey: 'title', 
           header: 'Title',
           size: 150,
         },
         {
-          accessorKey: 'released', //access nested data with dot notation
+          accessorKey: 'released', 
           header: 'Released',
           size: 150,
         },
         {
-          accessorKey: 'director', //access nested data with dot notation
+          accessorKey: 'director', 
           header: 'Director',
           size: 150,
         },
         {
-          accessorKey: 'actor', //access nested data with dot notation
+          accessorKey: 'actor', 
           header: 'Actor',
           size: 150,
         },
         {
-          accessorKey: 'actress', //access nested data with dot notation
+          accessorKey: 'actress', 
           header: 'Actress',
           size: 150,
         },
@@ -66,31 +66,28 @@ export const Home = () => {
   
   return (
     <div>
-    
-        { loading ? 
+      { loading ? 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
          : 
         <MaterialReactTable 
-        columns={columns}
-         data={myData} 
-         enableRowActions
-      renderRowActions={({row}) => (
-        <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
-          <IconButton color="secondary" component={Link} to={`edit/${row.original.id}`}>
-            <EditIcon />
-          </IconButton>
+          columns={columns}
+          data={myData} 
+          enableRowActions
+          renderRowActions={({row}) => (
+            <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+              <IconButton color="secondary" component={Link} to={`edit/${row.original.id}`}>
+                <EditIcon />
+              </IconButton>
 
-          <IconButton color="error" component={Link} to={`delete/${row.original.id}`}>
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      )}
-
-
+              <IconButton color="error" component={Link} to={`delete/${row.original.id}`}>
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          )}
          />
-        }
+      }
     </div>
   )
 }
