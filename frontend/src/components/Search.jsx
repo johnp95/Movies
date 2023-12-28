@@ -31,6 +31,7 @@ export const Search = ({ setMovieData, setLoading }) => {
           setQuery(e.target.value);
         }}
         type="text"
+        id="searchInput"
         classes={{ input: styles.inputPlaceholder }}
         endAdornment={
           <InputAdornment position="end">

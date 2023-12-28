@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import AxiosInstance from './Axios';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 import styles from './styles/addmovie.module.css';
-import * as yup from 'yup'
 
 export const AddMovie = () => {
   
@@ -21,6 +21,7 @@ export const AddMovie = () => {
     released: '',
     image: '',
   };
+
   const schema = yup
   .object({
     title: yup.string().required('Title is required field'),
@@ -34,32 +35,29 @@ export const AddMovie = () => {
   .required()
 
   const {handleSubmit,control} = useForm({defaultValues:defaultValues,resolver: yupResolver(schema)})
-
-  const submission = (data) => {
-  const date_watched = data.date_watched.toISOString().split('T')[0];
-    AxiosInstance.post(`api/movies/`, {
-      title: data.title,
-      director: data.director,
-      actor: data.actor,
-      actress: data.actress,
-      date_watched: date_watched,
-      released: data.released,
-      image: data.image,
-    }).then((res) => {
-      navigate(`/`);
-    });
-  };
+    const submission = (data) => {
+      const date_watched = data.date_watched.toISOString().split('T')[0];
+        AxiosInstance.post(`api/movies/`, {
+          title: data.title,
+          director: data.director,
+          actor: data.actor,
+          actress: data.actress,
+          date_watched: date_watched,
+          released: data.released,
+          image: data.image,
+        }).then((res) => {
+          navigate(`/`);
+        });
+    };
 
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit(submission)}>
-
         <Box className={styles.title}>
           <Typography sx={{color:'#fff'}}>
             Enter Movie
           </Typography>
         </Box>
-      
         <Box className={styles.textContainer}>
             <MyTextField
               label="Title"
@@ -108,7 +106,6 @@ export const AddMovie = () => {
             </Button>
           </Box>
         </Box>
-
       </form> 
     </div>
   );

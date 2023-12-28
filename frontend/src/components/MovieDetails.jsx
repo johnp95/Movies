@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,16 +14,16 @@ import styles from './styles/moviedetails.module.css';
 export const MovieDetails = () => {
   
     const [movie, setMovie] = useState('');
-    const MyParam = useParams()
-    const myId = MyParam.id
+    const MyParam = useParams();
+    const myId = MyParam.id;
     const url = `http://127.0.0.1:8000/api/movies/${myId}`;
 
     useEffect(() => {
         const fetchMovie = async () => {
             const res = await fetch(`${url}`);
             const data = await res.json();
-            console.log(data)
-            setMovie(data)
+            console.log(data);
+            setMovie(data);
         }
         fetchMovie();
     },[] )

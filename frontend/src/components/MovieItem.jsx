@@ -1,9 +1,9 @@
 import { React } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import styles from './styles/movieitem.module.css';
 
-export const MovieItem = ({movie, setMovieId}) => {
+export const MovieItem = ({ movie, setMovieId }) => {
 
   return (
     <div className={styles.itemContainer}>

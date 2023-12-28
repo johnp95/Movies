@@ -4,25 +4,24 @@ import { MovieItem } from './MovieItem';
 import { Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import styles from './styles/directordetail.module.css'
+import styles from './styles/directordetail.module.css';
 
 export const ActressDetail = () => {
 
     const [movies, setMovies] = useState([]);
-    const [loading,setLoading] = useState(true)
-    const myParam = useParams()
-    const actress = myParam.id
+    const [loading,setLoading] = useState(true);
+    const myParam = useParams();
+    const actress = myParam.id;
     const url = 'http://127.0.0.1:8000/api/movies/actress';
 
     useEffect(() => {
-    const fetchMovie = async () => {
-      const res = await fetch(`${url}?actress=${actress}`);
-      const data = await res.json();
-      console.log(data);
-      setMovies(data);
-      setLoading(false)
-
-    };
+        const fetchMovie = async () => {
+            const res = await fetch(`${url}?actress=${actress}`);
+            const data = await res.json();
+            console.log(data);
+            setMovies(data);
+            setLoading(false);
+        };
     fetchMovie();
   }, []);
 
@@ -38,15 +37,14 @@ export const ActressDetail = () => {
                 <CircularProgress />
             </Box>
             :
-        <div className={styles.cardContainer}>
-            {movies.map((movie) => (
-                <MovieItem 
-                    key={movie.id} 
-                    movie={movie} /> 
-                ))}
+            <div className={styles.cardContainer}>
+                {movies.map((movie) => (
+                    <MovieItem 
+                        key={movie.id} 
+                        movie={movie} /> 
+                    ))}
         </div>
         }
    </Box>
-   
   );
 };

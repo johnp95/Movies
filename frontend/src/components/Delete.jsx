@@ -3,30 +3,27 @@ import { Box, Button, Typography} from '@mui/material';
 import AxiosInstance from './Axios';
 import { useNavigate, useParams} from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress';
-import styles from './styles/deletemodule.module.css'
+import styles from './styles/deletemodule.module.css';
 
-const Delete = () => {
+export const Delete = () => {
 
-    const MyParam = useParams()
-    const MyId = MyParam.id
-    const [myData,setMyData] = useState()
-    const [loading,setLoading] = useState(true)
+    const MyParam = useParams();
+    const MyId = MyParam.id;
+    const [myData,setMyData] = useState();
+    const [loading,setLoading] = useState(true);
   
     const GetData = () => {
         AxiosInstance.get(`api/movies/${MyId}`).then((res) => {
-            setMyData(res.data)
-            console.log(res.data)
-            setLoading(false)
+            setMyData(res.data);
+            console.log(res.data);
+            setLoading(false);
         })
     }
-
     useEffect(() => {
         GetData();
-    
       },[])
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const submission = (data) => {
-
         AxiosInstance.delete(`api/movies/${MyId}/`)
         .then((res) => {
         navigate(`/`)
@@ -67,5 +64,3 @@ const Delete = () => {
     </div>
     )
 }
-
-export default Delete

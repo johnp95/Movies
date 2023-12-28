@@ -28,7 +28,6 @@ export const SearchComponent = () => {
           <InnerContainer>
             <MovieList 
             setMovieId={setMovieId}
-            movieData={movieData}
             loading={loading}
             currentCards={currentCards}
             />
