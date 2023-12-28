@@ -37,7 +37,6 @@ export const MovieDetails = () => {
             fontWeight='bold'
             >
             <Link
-            
               to={`https://en.wikipedia.org/wiki/${movie.title}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -63,7 +62,7 @@ export const MovieDetails = () => {
           >
           Director:{' '}
             <Link
-              to={`https://en.wikipedia.org/wiki/${movie.director}`}
+              to={`/director_detail/${movie.director}`}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}

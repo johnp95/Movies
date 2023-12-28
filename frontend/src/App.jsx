@@ -7,6 +7,7 @@ import Delete from './components/Delete';
 import { SearchComponent } from './components/SearchComponent';
 import { MovieDetails } from './components/MovieDetails';
 import { BestPicture } from './components/BestPicture';
+import { DirectorDetail } from './components/DirectorDetail';
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
         <Route path='/edit/:id' element={<Edit />}  />
         <Route path='/delete/:id' element={<Delete />} />
         <Route path='/movie_details/:id' element={<MovieDetails />} />
+        <Route path='/director_detail/:id' element={<DirectorDetail />} />
         <Route path='/best_picture' element={<BestPicture />} />
       </Routes> 
     </div>

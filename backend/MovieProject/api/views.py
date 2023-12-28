@@ -38,3 +38,11 @@ class MovieSearchView(APIView):
 
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
+
+class DirectorDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        director = request.GET.get('director', '')
+        results = Movie.objects.filter(director=director).distinct('title')
+
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
