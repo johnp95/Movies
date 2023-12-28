@@ -25,7 +25,7 @@ export const Search = ({ setMovieData, setLoading }) => {
   return (
     <div className={styles.searchContainer}>
       <Input
-        placeholder="Search Movie"
+        placeholder="Movie, Director, or Actor"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);

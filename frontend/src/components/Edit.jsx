@@ -20,6 +20,7 @@ const Edit = () => {
           setValue('actress',res.data.actress)
           setValue('date_watched',Dayjs(res.data.date_watched))
           setValue('released',res.data.released)
+          setValue('image',res.data.image)
         })
       }
     
@@ -35,6 +36,7 @@ const Edit = () => {
       actress: '',
       date_watched: '',
       released: '',
+      image: '',
     };
     const {handleSubmit,setValue, control} = useForm({defaultValues:defaultValues})
     const submission = (data) => {
@@ -47,7 +49,7 @@ const Edit = () => {
         actress: data.actress,
         date_watched: date_watched,
         released: data.released,
-
+        image: data.image,
     })
     .then((res) => {
       navigate(`/`)
@@ -97,6 +99,12 @@ const Edit = () => {
             name="released"
             control={control}
             placeholder="Provide released date"
+          />
+          <MyTextField
+            label="Image"
+            name="image"
+            control={control}
+            placeholder="Provide image"
           />
           <Box>
           <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>

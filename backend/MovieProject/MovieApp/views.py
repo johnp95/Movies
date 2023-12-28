@@ -18,7 +18,6 @@ def update_movie(request, pk):
         form.save()
         messages.success(request, f"You successfully updated {movie}")
         
-        # Get the URL for the movie-detail view with the updated movie's pk
         movie_detail_url = reverse('movie-detail', kwargs={'pk': movie.pk})
         
         return redirect(movie_detail_url)

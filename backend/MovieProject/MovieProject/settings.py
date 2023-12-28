@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MovieApp',
-    'events',
-    'members',
     'rest_framework',
     'corsheaders', # added to conntect front to back
 
