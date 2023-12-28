@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MovieItem } from './MovieItem';
-import styles from './styles/bestpicture.module.css'
+import styles from './styles/bestpicture.module.css';
+
 const url = 'http://127.0.0.1:8000/api/movies/';
 
 export const BestPicture = () => {

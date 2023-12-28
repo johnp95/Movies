@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MovieItem } from './MovieItem';
 import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 import styles from './styles/directordetail.module.css'
 
 export const DirectorDetail = () => {
@@ -22,11 +23,11 @@ export const DirectorDetail = () => {
   }, []);
 
   return (
+    <Box className={styles.container}>
+      <Typography variant='h3' fontWeight='bold'>
+        {myDirector}  Movies Seen: {movies.length}
+      </Typography>
     <div className={styles.cardContainer}>
-    {/* to do */}
-        <Typography>
-            Movies Seen: {movies.length}
-        </Typography>
       {movies.map((movie) => (
         <MovieItem 
             key={movie.id} 
@@ -34,7 +35,7 @@ export const DirectorDetail = () => {
         /> 
       ))}    
     </div>
- 
+  </Box>
    
   );
 };
