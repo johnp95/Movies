@@ -10,7 +10,7 @@ cd into MovieProject directory -> cd MovieProject
 while in the virtual environment pip install required dependencies -> pip install django djangorestframework Pillow psycopg2 django-cors-headers
 apply migrations -> python manage.py makemigrations, python manage.py migrate
 run server -> python manage.py runserver
-access api at -> localhost:8000/api/movies
+access api at -> http:localhost:8000/api/movies
 
 frontend setup
 open a new terminal while the backend server is running
