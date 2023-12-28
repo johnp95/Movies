@@ -8,6 +8,8 @@ import { SearchComponent } from './components/SearchComponent';
 import { MovieDetails } from './components/MovieDetails';
 import { BestPicture } from './components/BestPicture';
 import { DirectorDetail } from './components/DirectorDetail';
+import { ActorDetail } from './components/ActorDetail';
+import { ActressDetail } from './components/ActressDetail';
 
 function App() {
   
@@ -23,6 +25,8 @@ function App() {
         <Route path='/delete/:id' element={<Delete />} />
         <Route path='/movie_details/:id' element={<MovieDetails />} />
         <Route path='/director_detail/:id' element={<DirectorDetail />} />
+        <Route path='/actor_detail/:id' element={<ActorDetail />} />
+        <Route path='/actress_detail/:id' element={<ActressDetail />} />
         <Route path='/best_picture' element={<BestPicture />} />
       </Routes> 
     </div>

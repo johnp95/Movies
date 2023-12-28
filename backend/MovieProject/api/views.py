@@ -46,3 +46,19 @@ class DirectorDetailView(APIView):
 
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
+
+class ActorDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        actor = request.GET.get('actor', '')
+        results = Movie.objects.filter(actor=actor).distinct('title') \
+
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
+
+class ActressDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        actress = request.GET.get('actress', '')
+        results = Movie.objects.filter(actress=actress).distinct('title') \
+
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)

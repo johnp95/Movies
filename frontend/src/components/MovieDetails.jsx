@@ -79,7 +79,7 @@ export const MovieDetails = () => {
              Actor:{' '}
             {movie.actor ? (
               <Link
-                to={`https://en.wikipedia.org/wiki/${movie.actor}`}
+                to={`/actor_detail/${movie.actor}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.link}
@@ -99,7 +99,7 @@ export const MovieDetails = () => {
             Actress:{' '}
             {movie.actress ? (
               <Link
-                to={`https://en.wikipedia.org/wiki/${movie.actress}`}
+                to={`/actress_detail/${movie.actress}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.link}
