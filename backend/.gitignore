@@ -1,9 +1,9 @@
 static
-postgres.session.sql
 db.sqlite3
+.vscode
+__pycache__
 media
-my_venv
-node_modules
+postgres.session.sql
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -69,6 +69,7 @@ __pypackages__/
 .venv
 env/
 venv/
+my_venv/
 ENV/
 env.bak/
 venv.bak/
