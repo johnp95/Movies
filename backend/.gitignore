@@ -3,7 +3,7 @@ db.sqlite3
 .vscode
 __pycache__
 media
-postgres.session.sql
+./postgres.session.sql
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
