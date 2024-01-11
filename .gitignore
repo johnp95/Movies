@@ -1,8 +1,8 @@
-events
 static
 db.sqlite3
 postgres.session.sql
 media
 my_venv
-frontend2
 node_modules
+venv
+__pycache__
