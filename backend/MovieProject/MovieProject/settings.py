@@ -46,7 +46,8 @@ MIDDLEWARE = [
 # added to conntect front to back
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://localhost:8080',
 ]
 
 ROOT_URLCONF = 'MovieProject.urls'
@@ -79,8 +80,8 @@ DATABASES = {
         'NAME': 'movies',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        # 'HOST': 'localhost',
-        'HOST': 'db',
+        'HOST': 'localhost',
+        # 'HOST': 'db',
         'PORT': '5432',
     }   
 }
