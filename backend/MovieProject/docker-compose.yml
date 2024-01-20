@@ -15,7 +15,7 @@ services:
     environment: 
       POSTGRES_DB: movies
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: sexy5231
+      POSTGRES_PASSWORD: password
 
 volumes: 
   postgres_data:

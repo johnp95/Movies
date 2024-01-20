@@ -1,5 +1,6 @@
 static
 db.sqlite3
+dump.sql
 .vscode
 __pycache__
 media
