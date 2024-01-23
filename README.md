@@ -1,4 +1,27 @@
-To run application
+To run the application with docker
+
+Have docker installed
+
+open the IDE of your choice
+
+create a directory, open a terminal, and run ->
+
+git clone https://github.com/johnp95/Movies.git
+
+cd into directory where docker-compose.yml is located (top level)
+
+run commands ->
+
+docker compose pull
+
+docker compose up
+
+access api at -> http://localhost:8000/api/movies
+
+access react app  at -> http://localhost:5173
+
+Without docker ->
+
 open the IDE of your choice
 create a directory, open a terminal, and run ->
 
@@ -42,7 +65,7 @@ cd .. , cd frontend
 
 run npm -> npm install
 
-run server -> npm run dev
+run react app  -> npm run dev
 
 access server at -> http://localhost:5173
 
