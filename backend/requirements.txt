@@ -1,10 +1,10 @@
 asgiref==3.7.2
-Django==5.0.1
+Django==4.2
 django-cors-headers==4.3.1
 djangorestframework==3.14.0
 pillow==10.2.0
-psycopg2-binary==2.9.9
-pytz==2023.3.post1
+psycopg==3.1.12
+psycopg-binary==3.1.12
 sqlparse==0.4.4
+typing_extensions==4.9.0
 tzdata==2023.4
-whitenoise==6.6.0

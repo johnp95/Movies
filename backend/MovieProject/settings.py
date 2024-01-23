@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'MovieApp',
     'rest_framework',
     'corsheaders', 
+    'api',
 
 ]
 
@@ -44,7 +45,7 @@ MIDDLEWARE = [
 ]
 
 # added to conntect front to back
-CORS_ALLOWED_ORIGINS = [
+CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:5173'
 ]
@@ -74,14 +75,17 @@ WSGI_APPLICATION = 'MovieProject.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'db',
-        'PORT': '5432',
-    }   
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        # "NAME": "movies", # local
+        "NAME": "postgres", #docker
+        "USER": "postgres",
+        # "PASSWORD": "password", # local
+        "PASSWORD": "postgres", # docker
+        "HOST": "db",  # docker
+        # "HOST": "localhost",  # local
+        "PORT": 5432,  # default postgres port
+    }
 }
 
 # Password validation
