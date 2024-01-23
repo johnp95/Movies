@@ -1,11 +1,13 @@
 services:
   react-app:
-        build:
-          context: ./frontend
-        ports:
-          - "5173:5173"
+    build:
+      context: ./frontend
+    image: johnpennyman/react-app:1.0
+    ports:
+      - "5173:5173"
   backend:
     build: ./backend
+    image: johnpennyman/backend:1.0
     ports:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
