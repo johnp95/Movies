@@ -1,6 +1,6 @@
 static
-db.sqlite3
 .vscode
+backup.sql
 __pycache__
 media
 # Byte-compiled / optimized / DLL files
@@ -57,7 +57,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
