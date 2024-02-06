@@ -72,10 +72,10 @@ WSGI_APPLICATION = 'MovieProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
+        "NAME": "movies",
         "USER": "postgres",
-        "PASSWORD": "postgres", 
-        "HOST": "db",  
+        "PASSWORD": "password", 
+        "HOST": "localhost",  
         "PORT": 5432,  
     }
 }
