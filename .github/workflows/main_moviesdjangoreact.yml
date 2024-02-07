@@ -75,6 +75,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'idkbropleasework'
+          app-name: 'MoviesDjangoReact'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_07380AA1CDF54226A15EFE0C41F00FE5 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7F1C262BD10242B6823BAE38DC6897F3 }}
