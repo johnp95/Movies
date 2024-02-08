@@ -46,6 +46,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
     'ashy-cliff-0dda47b10.4.azurestaticapps.net'
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'MovieProject.urls'
 
