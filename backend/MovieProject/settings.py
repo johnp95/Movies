@@ -13,7 +13,8 @@ SECRET_KEY = 'django-insecure-lqf5=q*-w*wl94c-agfdi!mg@_k(-(=8abj-x#oicm_l*8*#_f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['ashy-cliff-0dda47b10.4.azurestaticapps.net']
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -41,9 +42,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# added to conntect front to back
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'ashy-cliff-0dda47b10.4.azurestaticapps.net'
 ]
 
 ROOT_URLCONF = 'MovieProject.urls'
