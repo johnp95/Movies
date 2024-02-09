@@ -1,3 +1,9 @@
+To run on Azure (Servers are down, need a job to afford costs :) )
+
+access api at > https://moviesdjangoreact.azurewebsites.net/api/movies/
+
+access frontend at -> https://ashy-cliff-0dda47b10.4.azurestaticapps.net/
+
 To run the application with docker
 
 Have docker installed
