@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-lqf5=q*-w*wl94c-agfdi!mg@_k(-(=8abj-x#oicm_l*8*#_f
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['ashy-cliff-0dda47b10.4.azurestaticapps.net']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
