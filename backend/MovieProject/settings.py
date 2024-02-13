@@ -37,7 +37,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
-    'ashy-cliff-0dda47b10.4.azurestaticapps.net'
+    'http://ashy-cliff-0dda47b10.4.azurestaticapps.net'
 ]
 
 ROOT_URLCONF = 'MovieProject.urls'
