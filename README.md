@@ -1,9 +1,10 @@
+***
 To run on Azure (Servers are down, need a job to afford costs :) )
 
 access api at > https://moviesdjangoreact.azurewebsites.net/api/movies/
 
 access frontend at -> https://ashy-cliff-0dda47b10.4.azurestaticapps.net/
-
+***
 To run the application with docker
 
 Have docker installed
@@ -25,7 +26,7 @@ docker compose up
 access api at -> http://localhost:8000/api/movies
 
 access react app  at -> http://localhost:5173
-
+***
 Without docker ->
 
 open the IDE of your choice
@@ -75,3 +76,10 @@ run react app  -> npm run dev
 
 access server at -> http://localhost:5173
 
+*** 
+To See Movies From My Local Database (With postgres installed. Change user/localhost if needed)
+
+create local database name 'movies'
+
+run -> psql -h localhost -U postgres -d movies -f latest.sql
+***
