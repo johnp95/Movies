@@ -3,7 +3,7 @@ from datetime import date
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
-    director = models.CharField(max_length=50)
+    director = models.CharField(max_length=100)
     actor = models.CharField(max_length=50,null=True,blank=True)
     actress = models.CharField(max_length=50,null=True,blank=True)
     date_watched = models.DateField()
