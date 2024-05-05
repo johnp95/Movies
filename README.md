@@ -1,85 +1,45 @@
-***
-To run on Azure (Servers are down, need a job to afford costs :) )
+#  To run on Azure (Servers are down, need a job to afford costs 😊 )
+- Access API [Api](https://moviesdjangoreact.azurewebsites.net/api/movies/)
 
-access api at > https://moviesdjangoreact.azurewebsites.net/api/movies/
+- Access UI [UI](https://ashy-cliff-0dda47b10.4.azurestaticapps.net/)
+# To run The Application With Docker
+- With docker installed, open the IDE of your choice
 
-access frontend at -> https://ashy-cliff-0dda47b10.4.azurestaticapps.net/
-***
-To run the application with docker
+- Create a directory, open a terminal, and run ```git clone https://github.com/johnp95/Movies.git```
 
-Have docker installed
+- cd into directory where docker-compose.yml is located (top level)
 
-open the IDE of your choice
+- Run commands ```docker compose pull``` ```docker compose up```
 
-create a directory, open a terminal, and run ->
+- Access API http://localhost:8000/api/movies
+  
+- Access UI http://localhost:5173
+# Instructions Without Docker
+- Open the IDE of your choice and install node.js, npm, and python if necessary
 
-git clone https://github.com/johnp95/Movies.git
+- Create a directory, open a terminal, and run ```git clone https://github.com/johnp95/Movies.git```
 
-cd into directory where docker-compose.yml is located (top level)
+- Enter backend directory ```cd backend```
 
-run commands ->
+- create virtual environment ```python -m venv *name* ```
 
-docker compose pull
+- cd into *MovieProject* directory ```cd MovieProject```
 
-docker compose up
+- while in the virtual environment install dependencies ```pip install django djangorestframework Pillow psycopg2 django-cors-headers```
 
-access api at -> http://localhost:8000/api/movies
+- Apply migrations ```python manage.py makemigrations``` ```python manage.py migrate```
 
-access react app  at -> http://localhost:5173
-***
-Without docker ->
+- Run server ```python manage.py runserver```
 
-open the IDE of your choice
-create a directory, open a terminal, and run ->
+- Access api at http://localhost:8000/api/movies
 
-git clone https://github.com/johnp95/Movies.git
+- Open a new terminal while the backend server is running and cd into frontend directory
 
-install Node.js, npm, and Python if necessary
+- install dependencies and run server ```npm install``` ```npm run dev```
 
-backend setup
+- access server http://localhost:5173
 
-enter backend directory -> cd backend
+# To See Movies From My Local Database (With postgres installed. Change user/localhost if needed)
+- create local database named *movies*
 
-create virtual environment -> 
-
-python -m venv *name*
-
-cd into MovieProject directory ->
-
-cd MovieProject
-
-while in the virtual environment pip install required dependencies -> 
-
-pip install django djangorestframework Pillow psycopg2 django-cors-headers
-
-apply migrations -> 
-
-python manage.py makemigrations, python manage.py migrate
-
-run server -> 
-
-python manage.py runserver
-
-access api at -> http://localhost:8000/api/movies
-
-frontend setup
-
-open a new terminal while the backend server is running
-
-enter frontend directory -> (if in backend directory)
-
-cd .. , cd frontend
-
-run npm -> npm install
-
-run react app  -> npm run dev
-
-access server at -> http://localhost:5173
-
-*** 
-To See Movies From My Local Database (With postgres installed. Change user/localhost if needed)
-
-create local database name 'movies'
-
-run -> psql -h localhost -U postgres -d movies -f latest.sql
-***
+- ```psql -h localhost -U postgres -d movies -f latest.sql``` 
