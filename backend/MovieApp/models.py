@@ -9,7 +9,6 @@ class Movie(models.Model):
     date_watched = models.DateField()
     released = models.IntegerField()
     language = models.CharField(max_length=50,null=True,blank=True)
-    movie_images = models.ImageField(null=True,blank=True,upload_to="images/")
     best_picture = models.BooleanField(null=True,blank=True,default=False)
     female_director = models.BooleanField(null=True,blank=True,default=False)
     image = models.CharField(max_length=200, null=True,blank=True)
