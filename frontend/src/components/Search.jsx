@@ -18,7 +18,7 @@ export const Search = ({ setMovieData, setLoading }) => {
             setLoading(false);
         };
         fetchMovie();
-    }, [query]);
+    }, [query, setLoading, setMovieData]);
 
     return (
         <div className={styles.searchContainer}>
