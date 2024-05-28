@@ -4,7 +4,7 @@ from .models import Movie
 class MovieForm(forms.ModelForm):
     class Meta:
         model  = Movie
-        fields = ['title','director','actor','actress','date_watched','released','language','movie_images','best_picture','female_director']
+        fields = ['title','director','actor','actress','date_watched','released','language','best_picture','female_director']
         labels = {
             'title': '',
             'director': '',
@@ -13,7 +13,6 @@ class MovieForm(forms.ModelForm):
             'date_watched': '',
             'released': '',
             'language': '',
-            'movie_images':'',
             'best_picture': 'Best Picture Winner?',
             'female_director': 'Female Directed?',
 
@@ -26,5 +25,4 @@ class MovieForm(forms.ModelForm):
             'date_watched': forms.TextInput(attrs={'class':'form-control-sm', 'placeholder': 'Date Watched'}),
             'released': forms.TextInput(attrs={'class':'form-control-sm', 'placeholder': 'Year Released'}),
             'language': forms.TextInput(attrs={'class':'form-control-sm', 'placeholder': 'Language'}),
-            'movie_images': forms.ClearableFileInput(attrs={'class':'form-control-sm'}),
         }
