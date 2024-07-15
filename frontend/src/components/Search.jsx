@@ -12,10 +12,15 @@ export const Search = ({ setMovieData, setLoading }) => {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await fetch(`${url}?query=${query}`);
-            const data = await res.json();
-            setMovieData(data);
-            setLoading(false);
+            try {
+                const res = await fetch(`${url}?query=${query}`);
+                const data = await res.json();
+                setMovieData(data);
+            } catch (error) {
+                console.log("Error fetching data", error);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchMovie();
     }, [query, setLoading, setMovieData]);
