@@ -6,11 +6,16 @@ const url = "http://127.0.0.1:8000/api/movies/";
 
 export const BestPicture = () => {
     const [movies, setMovies] = useState([]);
+
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await fetch(`${url}`);
-            const data = await res.json();
-            setMovies(data);
+            try {
+                const res = await fetch(`${url}`);
+                const data = await res.json();
+                setMovies(data);
+            } catch (error) {
+                console.log("Error fetching data", error);
+            }
         };
         fetchMovie();
     }, []);
