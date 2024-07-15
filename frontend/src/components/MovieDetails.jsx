@@ -20,17 +20,19 @@ export const MovieDetails = () => {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await fetch(url);
-            const data = await res.json();
-            setMovie(data);
-
-            const allMoviesRes = await fetch(allMoviesUrl);
-            const allMoviesData = await allMoviesRes.json();
-
-            const count = allMoviesData.filter(
-                (m) => m.title === data.title
-            ).length;
-            setWatchCount(count);
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                const allMoviesRes = await fetch(allMoviesUrl);
+                const allMoviesData = await allMoviesRes.json();
+                setMovie(data);
+                const count = allMoviesData.filter(
+                    (m) => m.title === data.title
+                ).length;
+                setWatchCount(count);
+            } catch (error) {
+                console.log("Error fetching data", error);
+            }
         };
         fetchMovie();
     }, [url, allMoviesUrl]);
