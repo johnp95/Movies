@@ -15,10 +15,15 @@ export const ActorDetail = () => {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await fetch(`${url}?actor=${actor}`);
-            const data = await res.json();
-            setMovies(data);
-            setLoading(false);
+            try {
+                const res = await fetch(`${url}?actor=${actor}`);
+                const data = await res.json();
+                setMovies(data);
+            } catch (error) {
+                console.log("Error fetching data", error);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchMovie();
     }, [actor]);
