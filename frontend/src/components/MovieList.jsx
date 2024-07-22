@@ -1,23 +1,22 @@
 import { MovieItem } from "./MovieItem";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import styles from "./styles/movielist.module.css";
 
 export const MovieList = ({ setMovieId, loading, currentCards }) => {
     return (
-        <div className={styles.cardContainer}>
+        <div className="container mx-auto">
             {loading ? (
-                <Box sx={{ display: "flex" }}>
-                    <CircularProgress />
-                </Box>
+                <div className="flex justify-center items-center h-screen">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
             ) : (
-                currentCards.map((movie) => (
-                    <MovieItem
-                        setMovieId={setMovieId}
-                        key={movie.id}
-                        movie={movie}
-                    />
-                ))
+                <div className="flex justify-around flex-wrap">
+                    {currentCards.map((movie) => (
+                        <MovieItem
+                            setMovieId={setMovieId}
+                            key={movie.id}
+                            movie={movie}
+                        />
+                    ))}
+                </div>
             )}
         </div>
     );
