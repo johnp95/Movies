@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActions, Button } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
-import Alert from "@mui/material/Alert";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import styles from "./styles/moviedetails.module.css";
 
 export const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
@@ -38,126 +30,99 @@ export const MovieDetails = () => {
     }, [url, allMoviesUrl]);
 
     if (!movie) {
-        return <div>Loading...</div>;
+        return <div className="text-center mt-8">Loading...</div>;
     }
 
     return (
-        <Card className={styles.movieCard}>
-            <div className={styles.cardContent}>
-                <div className={styles.leftColumn}>
-                    <Typography
-                        gutterBottom
-                        variant="h6"
-                        className={styles.movieData}
-                    >
+        <div className="max-w-2xl mx-auto mt-20 bg-gray-100 rounded-lg shadow-md overflow-hidden">
+            <div className="flex p-6">
+                <div className="flex-1">
+                    <h6 className="text-sm mb-2 text-gray-700">
                         Director:{" "}
                         <Link
                             to={`/director_detail/${movie.director}`}
-                            rel="noopener noreferrer"
-                            className={styles.link}
+                            className="text-purple-700 hover:text-purple-900"
                         >
                             {movie.director}
                         </Link>
-                    </Typography>
+                    </h6>
 
-                    <Typography
-                        gutterBottom
-                        variant="h6"
-                        className={styles.movieActors}
-                    >
+                    <h6 className="text-sm mb-2 text-gray-700">
                         Actor:{" "}
                         {movie.actor ? (
                             <Link
                                 to={`/actor_detail/${movie.actor}`}
-                                rel="noopener noreferrer"
-                                className={styles.link}
+                                className="text-purple-700 hover:text-purple-900"
                             >
                                 {movie.actor}
                             </Link>
                         ) : (
                             "N/A"
                         )}
-                    </Typography>
+                    </h6>
 
-                    <Typography
-                        gutterBottom
-                        variant="h6"
-                        className={styles.movieActors}
-                    >
+                    <h6 className="text-sm mb-2 text-gray-700">
                         Actress:{" "}
                         {movie.actress ? (
                             <Link
                                 to={`/actress_detail/${movie.actress}`}
-                                rel="noopener noreferrer"
-                                className={styles.link}
+                                className="text-purple-700 hover:text-purple-900"
                             >
                                 {movie.actress}
                             </Link>
                         ) : (
                             "N/A"
                         )}
-                    </Typography>
+                    </h6>
                 </div>
 
-                <CardMedia
-                    component="img"
-                    image={movie.image}
+                <img
+                    src={movie.image}
                     alt={movie.title}
-                    className={styles.movieImage}
+                    className="w-36 h-auto rounded-lg cursor-pointer"
                     onClick={() =>
                         window.open(
                             `https://en.wikipedia.org/wiki/${movie.title}`,
                             "_blank"
                         )
                     }
-                    style={{ cursor: "pointer" }}
                 />
 
-                <div className={styles.rightColumn}>
-                    <Typography
-                        gutterBottom
-                        variant="body1"
-                        className={styles.movieDetails}
-                    >
+                <div className="flex-1 ml-4">
+                    <p className="text-sm mb-2 text-gray-700">
                         Date Watched: {movie.date_watched}
-                    </Typography>
+                    </p>
 
-                    <Typography
-                        gutterBottom
-                        variant="body1"
-                        className={styles.movieDetails}
-                    >
+                    <p className="text-sm mb-2 text-gray-700">
                         Released: {movie.released}
-                    </Typography>
+                    </p>
 
-                    <Typography
-                        gutterBottom
-                        variant="body1"
-                        className={styles.movieDetails}
-                    >
+                    <p className="text-sm mb-2 text-gray-700">
                         Times Watched: {watchCount}
-                    </Typography>
+                    </p>
 
                     {movie.best_picture && (
-                        <Alert severity="info" className={styles.alert}>
+                        <div
+                            className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mt-2"
+                            role="alert"
+                        >
                             Best Picture Winner
-                        </Alert>
+                        </div>
                     )}
                 </div>
             </div>
 
-            <CardActions className={styles.buttonContainer}>
+            <div className="flex justify-center p-4">
                 <Link to={`/search/`}>
-                    <Tooltip title="Go back to Movies">
-                        <Button
-                            className={styles.itemButton}
-                            startIcon={<KeyboardReturnIcon />}
-                        >
-                            Go Back
-                        </Button>
-                    </Tooltip>
+                    <button
+                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded flex items-center"
+                        title="Go back to Movies"
+                    >
+                        <KeyboardReturnIcon className="mr-2" />
+                        Go Back
+                    </button>
                 </Link>
-            </CardActions>
-        </Card>
+            </div>
+        </div>
     );
 };
