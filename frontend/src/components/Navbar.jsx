@@ -1,113 +1,81 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { NavLink } from "react-router-dom";
 
-const drawerWidth = 240;
 const navItems = ["Home", "Add Movie", "Search", "Best Picture"];
 const routePaths = ["/", "/add_movie", "Search", "best_picture"];
 
-export const Navbar = (props) => {
-    const { window } = props;
+const Navbar = () => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const handleDrawerToggle = () => {
+    const toggleDrawer = () => {
         setMobileOpen((prevState) => !prevState);
     };
 
-    const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-                Movies
-            </Typography>
-            <Divider />
-            <List>
-                {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: "center" }}>
-                            <ListItemText primary={item} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    );
-    const container =
-        window !== undefined ? () => window().document.body : undefined;
-
     return (
-        <Box sx={{ display: "flex" }}>
-            <CssBaseline />
-            <AppBar component="nav">
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: "none" } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: "none", sm: "block" },
-                        }}
-                    >
-                        Movies
-                    </Typography>
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                        {navItems.map((item, index) => (
-                            <Link
-                                key={item}
-                                to={routePaths[index]}
-                                style={{ textDecoration: "none" }}
+        <div className="flex flex-col">
+            <nav className="bg-blue-600 text-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between h-16">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0">
+                                <span className="text-xl font-bold">
+                                    Movies
+                                </span>
+                            </div>
+                        </div>
+                        <div className="hidden sm:block">
+                            <div className="ml-10 flex items-baseline space-x-4">
+                                {navItems.map((item, index) => (
+                                    <NavLink
+                                        key={item}
+                                        to={routePaths[index]}
+                                        className="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium"
+                                    >
+                                        {item}
+                                    </NavLink>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="sm:hidden">
+                            <button
+                                onClick={toggleDrawer}
+                                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             >
-                                <Button sx={{ color: "#fff" }}>{item}</Button>
-                            </Link>
-                        ))}
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            <nav>
-                <Drawer
-                    container={container}
-                    variant="temporary"
-                    open={mobileOpen}
-                    onClose={handleDrawerToggle}
-                    ModalProps={{
-                        keepMounted: true,
-                    }}
-                    sx={{
-                        display: { xs: "block", sm: "none" },
-                        "& .MuiDrawer-paper": {
-                            boxSizing: "border-box",
-                            width: drawerWidth,
-                        },
-                    }}
-                >
-                    {drawer}
-                </Drawer>
+                                <svg
+                                    className="h-6 w-6"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </nav>
-            <Box component="main" sx={{ p: 3 }}>
-                <Toolbar />
-                <Typography></Typography>
-            </Box>
-        </Box>
+
+            <div className={`sm:hidden ${mobileOpen ? "block" : "hidden"}`}>
+                <div className="px-2 pt-2 pb-3 space-y-1">
+                    {navItems.map((item, index) => (
+                        <NavLink
+                            key={item}
+                            to={routePaths[index]}
+                            className="text-gray-800 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        >
+                            {item}
+                        </NavLink>
+                    ))}
+                </div>
+            </div>
+        </div>
     );
 };
+
+export default Navbar;
