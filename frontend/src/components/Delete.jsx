@@ -9,7 +9,7 @@ const GetData = (id) => {
     return AxiosInstance.get(`api/movies/${id}`);
 };
 
-export const Delete = () => {
+const Delete = () => {
     const MyParam = useParams();
     const MyId = MyParam.id;
     const [myData, setMyData] = useState();
@@ -81,3 +81,5 @@ export const Delete = () => {
         </div>
     );
 };
+
+export default Delete;
