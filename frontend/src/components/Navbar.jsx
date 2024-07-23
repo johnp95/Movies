@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
-const navItems = ["Home", "Add Movie", "Search", "Best Picture"];
-const routePaths = ["/", "/add_movie", "Search", "best_picture"];
+const navItems = ["Home", "Add Movie", "Search", "Best Picture", "Test Search"];
+const routePaths = ["/", "/add_movie", "Search", "best_picture", "test-search"];
 
 const Navbar = () => {
     const linkClass = ({ isActive }) =>
