@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const url = "http://127.0.0.1:8000/api/movies";
+// const url = "http://localhost:8080/movies"; // Json Server
 
 export const Home = () => {
     const [myData, setMyData] = useState([]);
