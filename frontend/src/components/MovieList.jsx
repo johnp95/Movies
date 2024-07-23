@@ -1,6 +1,6 @@
-import { MovieItem } from "./MovieItem";
+import MovieItem from "./MovieItem";
 
-export const MovieList = ({ setMovieId, loading, currentCards }) => {
+const MovieList = ({ setMovieId, loading, currentCards }) => {
     return (
         <div className="container mx-auto">
             {loading ? (
@@ -21,3 +21,5 @@ export const MovieList = ({ setMovieId, loading, currentCards }) => {
         </div>
     );
 };
+
+export default MovieList;
