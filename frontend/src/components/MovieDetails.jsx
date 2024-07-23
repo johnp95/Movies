@@ -1,128 +1,131 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { FaArrowLeft } from "react-icons/fa6";
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
-    const MyParam = useParams();
-    const myId = MyParam.id;
+    const { id: myId } = useParams();
     const url = `http://127.0.0.1:8000/api/movies/${myId}`;
     const allMoviesUrl = `http://127.0.0.1:8000/api/movies/`;
 
     useEffect(() => {
         const fetchMovie = async () => {
             try {
-                const res = await fetch(url);
-                const data = await res.json();
-                const allMoviesRes = await fetch(allMoviesUrl);
-                const allMoviesData = await allMoviesRes.json();
-                setMovie(data);
+                const [movieRes, allMoviesRes] = await Promise.all([
+                    fetch(url),
+                    fetch(allMoviesUrl),
+                ]);
+                const [movieData, allMoviesData] = await Promise.all([
+                    movieRes.json(),
+                    allMoviesRes.json(),
+                ]);
+                setMovie(movieData);
                 const count = allMoviesData.filter(
-                    (m) => m.title === data.title
+                    (m) => m.title === movieData.title
                 ).length;
                 setWatchCount(count);
             } catch (error) {
-                console.log("Error fetching data", error);
+                console.error("Error fetching data", error);
             }
         };
         fetchMovie();
     }, [url, allMoviesUrl]);
 
     if (!movie) {
-        return <div className="text-center mt-8">Loading...</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+            </div>
+        );
     }
 
     return (
-        <div className="max-w-2xl mx-auto mt-20 bg-gray-100 rounded-lg shadow-md overflow-hidden">
-            <div className="flex p-6">
-                <div className="flex-1">
-                    <h6 className="text-sm mb-2 text-gray-700">
-                        Director:{" "}
-                        <Link
-                            to={`/director_detail/${movie.director}`}
-                            className="text-purple-700 hover:text-purple-900"
-                        >
-                            {movie.director}
-                        </Link>
-                    </h6>
-
-                    <h6 className="text-sm mb-2 text-gray-700">
-                        Actor:{" "}
-                        {movie.actor ? (
-                            <Link
-                                to={`/actor_detail/${movie.actor}`}
-                                className="text-purple-700 hover:text-purple-900"
-                            >
-                                {movie.actor}
-                            </Link>
-                        ) : (
-                            "N/A"
-                        )}
-                    </h6>
-
-                    <h6 className="text-sm mb-2 text-gray-700">
-                        Actress:{" "}
-                        {movie.actress ? (
-                            <Link
-                                to={`/actress_detail/${movie.actress}`}
-                                className="text-purple-700 hover:text-purple-900"
-                            >
-                                {movie.actress}
-                            </Link>
-                        ) : (
-                            "N/A"
-                        )}
-                    </h6>
+        <div className="max-w-4xl mx-auto mt-10 bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="md:flex">
+                <div className="md:flex-shrink-0">
+                    <img
+                        className="h-48 w-full object-cover md:w-48 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+                        src={movie.image}
+                        alt={movie.title}
+                        onClick={() =>
+                            window.open(
+                                `https://en.wikipedia.org/wiki/${movie.title}`,
+                                "_blank"
+                            )
+                        }
+                    />
                 </div>
-
-                <img
-                    src={movie.image}
-                    alt={movie.title}
-                    className="w-36 h-auto rounded-lg cursor-pointer"
-                    onClick={() =>
-                        window.open(
-                            `https://en.wikipedia.org/wiki/${movie.title}`,
-                            "_blank"
-                        )
-                    }
-                />
-
-                <div className="flex-1 ml-4">
-                    <p className="text-sm mb-2 text-gray-700">
-                        Date Watched: {movie.date_watched}
-                    </p>
-
-                    <p className="text-sm mb-2 text-gray-700">
-                        Released: {movie.released}
-                    </p>
-
-                    <p className="text-sm mb-2 text-gray-700">
-                        Times Watched: {watchCount}
-                    </p>
-
+                <div className="p-8">
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                        {movie.title}
+                    </h1>
+                    <div className="grid grid-cols-2 gap-4">
+                        <MovieDetailItem
+                            label="Director"
+                            value={movie.director}
+                            link={`/director_detail/${movie.director}`}
+                        />
+                        <MovieDetailItem
+                            label="Actor"
+                            value={movie.actor}
+                            link={`/actor_detail/${movie.actor}`}
+                        />
+                        <MovieDetailItem
+                            label="Actress"
+                            value={movie.actress}
+                            link={`/actress_detail/${movie.actress}`}
+                        />
+                        <MovieDetailItem
+                            label="Date Watched"
+                            value={movie.date_watched}
+                        />
+                        <MovieDetailItem
+                            label="Released"
+                            value={movie.released}
+                        />
+                        <MovieDetailItem
+                            label="Times Watched"
+                            value={watchCount}
+                        />
+                    </div>
                     {movie.best_picture && (
                         <div
-                            className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mt-2"
+                            className="mt-4 bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4"
                             role="alert"
                         >
-                            Best Picture Winner
+                            <p className="font-bold">Best Picture Winner</p>
                         </div>
                     )}
                 </div>
             </div>
-
-            <div className="flex justify-center p-4">
-                <Link to={`/search/`}>
-                    <button
-                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded flex items-center"
-                        title="Go back to Movies"
-                    >
-                        <KeyboardReturnIcon className="mr-2" />
-                        Go Back
-                    </button>
+            <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center">
+                <Link
+                    to="/search/"
+                    className="inline-flex items-center justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out"
+                >
+                    <FaArrowLeft className="mr-2 text-xl" />
+                    Go Back
                 </Link>
             </div>
         </div>
     );
 };
+
+const MovieDetailItem = ({ label, value, link }) => (
+    <div className="mb-2">
+        <span className="text-gray-600 font-semibold">{label}: </span>
+        {link ? (
+            <Link
+                to={link}
+                className="text-purple-600 hover:text-purple-800 transition duration-300 ease-in-out"
+            >
+                {value || "N/A"}
+            </Link>
+        ) : (
+            <span className="text-gray-800">{value || "N/A"}</span>
+        )}
+    </div>
+);
+
+export default MovieDetails;
