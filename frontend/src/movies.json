@@ -1,0 +1,104 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "title": "How to Steal a Million",
+            "director": "William Wyler",
+            "actor": "Peter O'Toole",
+            "actress": "Audrey Hepburn",
+            "date_watched": "2024-07-13",
+            "released": 1966,
+            "image": "https://upload.wikimedia.org/wikipedia/en/8/8a/Howtostealamillion.jpg"
+        },
+        {
+            "id": 2,
+            "title": "Jojo Rabbit",
+            "director": "Taika Waititi",
+            "actor": "Roman Griffin Davis",
+            "actress": "Thomasin McKenzie",
+            "date_watched": "2024-07-11",
+            "released": 2019,
+            "image": "https://upload.wikimedia.org/wikipedia/en/a/a2/Jojo_Rabbit_%282019%29_poster.jpg"
+        },
+        {
+            "id": 3,
+            "title": "Kelly's Heroes",
+            "director": "Brian G. Hutton",
+            "actor": "Clint Eastwood",
+            "actress": "",
+            "date_watched": "2024-07-09",
+            "released": 1970,
+            "image": "https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Kelly%27s_Heroes_film_poster.jpg/220px-Kelly%27s_Heroes_film_poster.jpg"
+        },
+        {
+            "id": 4,
+            "title": "Schindler's List",
+            "director": "Steven Spielberg",
+            "actor": "Liam Neeson",
+            "actress": "Caroline Goodall",
+            "date_watched": "2024-07-08",
+            "released": 1993,
+            "image": "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg"
+        },
+        {
+            "id": 5,
+            "title": "The Victors (1963 film)",
+            "director": "Carl Foreman",
+            "actor": "Vincent Edwards",
+            "actress": "Melina Mercouri",
+            "date_watched": "2024-07-07",
+            "released": 1963,
+            "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/The_Victors_poster.jpg"
+        },
+        {
+            "id": 6,
+            "title": "Walk the Proud Land",
+            "director": "Jesse Hibbs",
+            "actor": "Audie Murphy",
+            "actress": "Anne Bancroft",
+            "date_watched": "2024-07-06",
+            "released": 1956,
+            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Walk_the_Proud_Land.jpg/220px-Walk_the_Proud_Land.jpg"
+        },
+        {
+            "id": 7,
+            "title": "Counterpoint (film)",
+            "director": "Ralph Nelson",
+            "actor": "Charlton Heston",
+            "actress": "Kathryn Hays",
+            "date_watched": "2024-07-05",
+            "released": 1968,
+            "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Counterpoint.jpg/220px-Counterpoint.jpg"
+        },
+        {
+            "id": 8,
+            "title": "Foreign Correspondent (film)",
+            "director": "Alfred Hitchcock",
+            "actor": "Joel McCrea",
+            "actress": "Laraine Day",
+            "date_watched": "2024-07-03",
+            "released": 1940,
+            "image": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/ForeignCorrespondent.jpg/220px-ForeignCorrespondent.jpg"
+        },
+        {
+            "id": 9,
+            "title": "Monsieur Klein",
+            "director": "Joseph Losey",
+            "actor": "Alain Delon",
+            "actress": "Jeanne Moreau",
+            "date_watched": "2024-07-02",
+            "released": 1976,
+            "image": "https://upload.wikimedia.org/wikipedia/en/thumb/4/45/Monsieur_Klein_film.jpg/220px-Monsieur_Klein_film.jpg"
+        },
+        {
+            "id": 10,
+            "title": "Belle de Jour (film)",
+            "director": "Luis Buñuel",
+            "actor": "Jean Sorel",
+            "actress": "Catherine Deneuve",
+            "date_watched": "2024-07-01",
+            "released": 1967,
+            "image": "https://upload.wikimedia.org/wikipedia/en/e/e6/Belle_de_jour_poster.jpg"
+        }
+    ]
+}
