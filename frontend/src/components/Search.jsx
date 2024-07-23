@@ -6,8 +6,9 @@ import { Input } from "@mui/material";
 import styles from "./styles/search.module.css";
 
 const url = "http://127.0.0.1:8000/api/movies/search";
+// const url = "http://localhost/movies/search";
 
-export const Search = ({ setMovieData, setLoading }) => {
+const Search = ({ setMovieData, setLoading }) => {
     const [query, setQuery] = useState("");
     useEffect(() => {
         const fetchMovie = async () => {
@@ -46,3 +47,5 @@ export const Search = ({ setMovieData, setLoading }) => {
         </div>
     );
 };
+
+export default Search;
