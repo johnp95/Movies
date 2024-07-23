@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const MovieItem = ({ movie, setMovieId }) => {
+const MovieItem = ({ movie }) => {
     return (
         <div className="w-64 rounded-lg shadow-md m-5 overflow-hidden font-sans">
             <img
@@ -15,10 +15,7 @@ const MovieItem = ({ movie, setMovieId }) => {
             </div>
             <div className="mb-5 flex justify-around text-center mt-4">
                 <Link to={`/movie_details/${movie.id}`}>
-                    <button
-                        onClick={() => setMovieId(movie.id)}
-                        className="bg-[#000d33] text-white px-4 py-2 rounded hover:bg-[#001a66] transition duration-300"
-                    >
+                    <button className="bg-[#000d33] text-white px-4 py-2 rounded hover:bg-[#001a66] transition duration-300">
                         View Movie
                     </button>
                 </Link>
