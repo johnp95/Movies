@@ -14,12 +14,14 @@ import MovieDetails from "./components/MovieDetails";
 import DirectorDetail from "./components/DirectorDetail";
 import ActorDetail from "./components/ActorDetail";
 import ActressDetail from "./components/ActressDetail";
+import TestSearch from "./components/TestSearch";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="search" element={<SearchComponent />} />
+            <Route path="test-search" element={<TestSearch />} />
             <Route path="/movie_details/:id" element={<MovieDetails />} />
             <Route path="/actor_detail/:id" element={<ActorDetail />} />
             <Route path="/actress_detail/:id" element={<ActressDetail />} />
