@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./styles/addmovie.module.css";
 
-export const AddMovie = () => {
+const AddMovie = () => {
     const navigate = useNavigate();
     const defaultValues = {
         title: "",
@@ -109,3 +109,5 @@ export const AddMovie = () => {
         </div>
     );
 };
+
+export default AddMovie;
