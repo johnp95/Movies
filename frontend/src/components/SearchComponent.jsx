@@ -1,12 +1,12 @@
-import { Search } from "./Search";
+import Search from "./Search";
 import { useState } from "react";
-import { MovieList } from "./MovieList";
+import MovieList from "./MovieList";
 import { Container } from "./Container";
 import { InnerContainer } from "./InnerContainer";
 import Pagination from "@mui/material/Pagination";
 import styles from "./styles/page.module.css";
 
-export const SearchComponent = () => {
+const SearchComponent = () => {
     const [movieData, setMovieData] = useState([]);
     const [movieId, setMovieId] = useState("");
     const [loading, setLoading] = useState(true);
@@ -43,3 +43,5 @@ export const SearchComponent = () => {
         </div>
     );
 };
+
+export default SearchComponent;
