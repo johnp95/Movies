@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MovieItem from "./MovieItem";
 
-const url = "http://127.0.0.1:8000/api/movies/";
+const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/`;
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     const pageNumbers = [];
@@ -76,12 +76,10 @@ const BestPicture = () => {
         fetchMovie();
     }, []);
 
-    // Get current movies
     const indexOfLastMovie = currentPage * moviesPerPage;
     const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
     const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
 
-    // Change page
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
