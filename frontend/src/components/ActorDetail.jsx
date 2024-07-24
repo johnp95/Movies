@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieItem from "./MovieItem";
 
+const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/actor`;
+
 const ActorDetail = () => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [moviesPerPage] = useState(10);
     const { id: actor } = useParams();
-    const url = "http://127.0.0.1:8000/api/movies/actor";
-
     useEffect(() => {
         const fetchMovie = async () => {
             try {
@@ -23,7 +23,7 @@ const ActorDetail = () => {
             }
         };
         fetchMovie();
-    }, [actor]);
+    }, []);
 
     const indexOfLastMovie = currentPage * moviesPerPage;
     const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
