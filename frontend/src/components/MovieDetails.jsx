@@ -6,8 +6,8 @@ const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
     const { id: myId } = useParams();
-    const url = `http://127.0.0.1:8000/api/movies/${myId}`;
-    const allMoviesUrl = `http://127.0.0.1:8000/api/movies/`;
+    const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/${myId}`;
+    const allMoviesUrl = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -30,7 +30,7 @@ const MovieDetails = () => {
             }
         };
         fetchMovie();
-    }, [url, allMoviesUrl]);
+    }, []);
 
     if (!movie) {
         return (

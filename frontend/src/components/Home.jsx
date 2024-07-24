@@ -6,7 +6,7 @@ import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const url = "http://127.0.0.1:8000/api/movies";
+const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
 // const url = "http://localhost:8080/movies"; // Json Server
 
 export const Home = () => {

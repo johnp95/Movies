@@ -1,6 +1,6 @@
 import MovieItem from "./MovieItem";
 
-const MovieList = ({ setMovieId, loading, currentCards }) => {
+const MovieList = ({ loading, movies }) => {
     return (
         <div className="container mx-auto">
             {loading ? (
@@ -9,12 +9,8 @@ const MovieList = ({ setMovieId, loading, currentCards }) => {
                 </div>
             ) : (
                 <div className="flex justify-around flex-wrap">
-                    {currentCards.map((movie) => (
-                        <MovieItem
-                            setMovieId={setMovieId}
-                            key={movie.id}
-                            movie={movie}
-                        />
+                    {movies.map((movie) => (
+                        <MovieItem key={movie.id} movie={movie} />
                     ))}
                 </div>
             )}

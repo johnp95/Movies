@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import MovieIcon from "@mui/icons-material/Movie";
-import { Input } from "@mui/material";
-import styles from "./styles/search.module.css";
+import { MdMovie } from "react-icons/md";
 
-const url = "http://127.0.0.1:8000/api/movies/search";
-// const url = "http://localhost/movies/search";
+const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/search`;
 
 const Search = ({ setMovieData, setLoading }) => {
     const [query, setQuery] = useState("");
+
     useEffect(() => {
         const fetchMovie = async () => {
             try {
@@ -26,24 +22,22 @@ const Search = ({ setMovieData, setLoading }) => {
     }, [query, setLoading, setMovieData]);
 
     return (
-        <div className={styles.searchContainer}>
-            <Input
-                placeholder="Movie, Director, or Actor"
-                value={query}
-                onChange={(e) => {
-                    setQuery(e.target.value);
-                }}
-                type="text"
-                id="searchInput"
-                classes={{ input: styles.inputPlaceholder }}
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton>
-                            <MovieIcon />
-                        </IconButton>
-                    </InputAdornment>
-                }
-            />
+        <div className="mx-auto my-5 w-full max-w-md relative">
+            <div className="relative">
+                <input
+                    type="text"
+                    placeholder="Movie, Director, or Actor"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="text-center w-full px-5 py-2.5 text-base text-gray-700 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-200 placeholder-center"
+                />
+                <div
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    aria-label="Search"
+                >
+                    <MdMovie className="text-4xl text-gray-900" />
+                </div>
+            </div>
         </div>
     );
 };

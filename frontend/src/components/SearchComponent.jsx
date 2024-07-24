@@ -8,7 +8,6 @@ import styles from "./styles/page.module.css";
 
 const SearchComponent = () => {
     const [movieData, setMovieData] = useState([]);
-    const [movieId, setMovieId] = useState("");
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const cardsPerPage = 10;
@@ -24,11 +23,7 @@ const SearchComponent = () => {
             <Search setMovieData={setMovieData} setLoading={setLoading} />
             <Container>
                 <InnerContainer>
-                    <MovieList
-                        setMovieId={setMovieId}
-                        loading={loading}
-                        currentCards={currentCards}
-                    />
+                    <MovieList loading={loading} movies={currentCards} />
                 </InnerContainer>
             </Container>
             <div className={styles.paginationContainer}>
