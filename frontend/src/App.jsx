@@ -15,6 +15,7 @@ import DirectorDetail from "./components/DirectorDetail";
 import ActorDetail from "./components/ActorDetail";
 import ActressDetail from "./components/ActressDetail";
 import TestSearch from "./components/TestSearch";
+import ForeignFilms from "./components/ForeignFilms";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
             <Route path="/add_movie" element={<AddMovie />} />
             <Route path="/best_picture" element={<BestPicture />} />
+            <Route path="/foreign-films" element={<ForeignFilms />} />
             <Route path="*" element={<NotFoundPage />} />
         </Route>
     )
