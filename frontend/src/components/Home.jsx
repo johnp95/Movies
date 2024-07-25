@@ -1,15 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { MaterialReactTable } from "material-react-table";
 import Dayjs from "dayjs";
-import { Box, IconButton } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
+import Spinner from "./Spinner";
 
 const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
-// const url = "http://localhost:8080/movies"; // Json Server
 
-export const Home = () => {
+const Home = () => {
     const [myData, setMyData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -33,77 +29,98 @@ export const Home = () => {
             {
                 accessorKey: "title",
                 header: "Title",
-                size: 150,
             },
             {
                 accessorKey: "released",
                 header: "Released",
-                size: 150,
             },
             {
                 accessorKey: "director",
                 header: "Director",
-                size: 150,
             },
             {
                 accessorKey: "actor",
                 header: "Actor",
-                size: 150,
             },
             {
                 accessorKey: "actress",
                 header: "Actress",
-                size: 150,
             },
-
             {
                 accessorFn: (row) =>
                     Dayjs(row.date_watched).format("YYYY-MM-DD"),
                 header: "Date Watched",
-                size: 150,
             },
         ],
         []
     );
 
     return (
-        <div>
+        <div className="container mx-auto p-4">
             {loading ? (
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <CircularProgress />
-                </Box>
+                <div className="flex justify-center">
+                    <Spinner loading={loading} />
+                </div>
             ) : (
-                <MaterialReactTable
-                    columns={columns}
-                    data={myData}
-                    enableRowActions
-                    renderRowActions={({ row }) => (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexWrap: "nowrap",
-                                gap: "8px",
-                            }}
-                        >
-                            <IconButton
-                                color="secondary"
-                                component={Link}
-                                to={`edit/${row.original.id}`}
-                            >
-                                <EditIcon />
-                            </IconButton>
-
-                            <IconButton
-                                color="error"
-                                component={Link}
-                                to={`delete/${row.original.id}`}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        </Box>
-                    )}
-                />
+                <div className="overflow-x-auto">
+                    <table className="w-full table-auto border-collapse">
+                        <thead>
+                            <tr>
+                                {columns.map((column) => (
+                                    <th
+                                        key={
+                                            column.accessorKey || column.header
+                                        }
+                                        className="p-2 border bg-gray-100"
+                                    >
+                                        {column.header}
+                                    </th>
+                                ))}
+                                <th className="p-2 border bg-gray-100">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {myData.map((row) => (
+                                <tr key={row.id}>
+                                    {columns.map((column) => (
+                                        <td
+                                            key={
+                                                column.accessorKey ||
+                                                column.header
+                                            }
+                                            className="p-2 border"
+                                        >
+                                            {column.accessorFn
+                                                ? column.accessorFn(row)
+                                                : row[column.accessorKey]}
+                                        </td>
+                                    ))}
+                                    <td className="p-2 border">
+                                        <div className="flex gap-2">
+                                            <Link
+                                                to={`edit/${row.id}`}
+                                                className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                            >
+                                                Edit
+                                            </Link>
+                                            <Link
+                                                to={`delete/${row.id}`}
+                                                className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                            >
+                                                Delete
+                                            </Link>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
 };
+
+export default Home;
