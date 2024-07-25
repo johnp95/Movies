@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MdMovie } from "react-icons/md";
 
 const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/search`;
+// const url = `http://localhost:8080/movies`;
 
 const Search = ({ setMovieData, setLoading }) => {
     const [query, setQuery] = useState("");
