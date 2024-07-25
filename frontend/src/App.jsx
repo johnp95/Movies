@@ -16,6 +16,8 @@ import ActorDetail from "./components/ActorDetail";
 import ActressDetail from "./components/ActressDetail";
 import TestSearch from "./components/TestSearch";
 import ForeignFilms from "./components/ForeignFilms";
+import Delete from "./components/Delete";
+import Edit, { movieLoader } from "./components/Edit";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,9 +27,12 @@ const router = createBrowserRouter(
             <Route path="test-search" element={<TestSearch />} />
             <Route path="/movie_details/:id" element={<MovieDetails />} />
             <Route path="/actor_detail/:id" element={<ActorDetail />} />
+            <Route path="/delete/:id" element={<Delete />} />
+
             <Route path="/actress_detail/:id" element={<ActressDetail />} />
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
             <Route path="/add_movie" element={<AddMovie />} />
+            <Route path="/edit/:id" element={<Edit />} loader={movieLoader} />
             <Route path="/best_picture" element={<BestPicture />} />
             <Route path="/foreign-films" element={<ForeignFilms />} />
             <Route path="*" element={<NotFoundPage />} />
