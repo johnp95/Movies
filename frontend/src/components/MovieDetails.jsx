@@ -84,10 +84,17 @@ const MovieDetails = () => {
                             label="Released"
                             value={movie.released}
                         />
+
                         <MovieDetailItem
                             label="Times Watched"
                             value={watchCount}
                         />
+                        {movie.language && (
+                            <MovieDetailItem
+                                label="Language"
+                                value={movie.language}
+                            />
+                        )}
                     </div>
                     {movie.best_picture && (
                         <div
