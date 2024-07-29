@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/`;
 
@@ -26,7 +27,6 @@ const AddMovie = () => {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json();
-            console.log("Movie added successfully:", data);
         } catch (error) {
             console.error("Error adding movie:", error);
         }
@@ -44,6 +44,7 @@ const AddMovie = () => {
             image,
         };
         addMovie(newMovie);
+        toast.success("Job Added Sucessfully");
         navigate("/");
     };
 
