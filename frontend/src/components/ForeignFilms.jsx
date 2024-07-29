@@ -61,7 +61,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 const ForeignFilms = () => {
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const moviesPerPage = 10; // Adjust as needed
+    const moviesPerPage = 10;
 
     useEffect(() => {
         const fetchMovie = async () => {
