@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import { Box, Button, Typography } from "@mui/material";
 import AxiosInstance from "./Axios";
 import { useNavigate, useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import styles from "./styles/deletemodule.module.css";
+import { toast } from "react-toastify";
 
 const GetData = (id) => {
     return AxiosInstance.get(`api/movies/${id}`);
@@ -37,45 +35,36 @@ const Delete = () => {
         AxiosInstance.delete(`api/movies/${MyId}/`).then(() => {
             navigate(`/`);
         });
+        toast.success("Job Deleted Sucessfully");
     };
 
     return (
-        <div className={styles.Container}>
+        <div className="container mx-auto p-4">
             {loading ? (
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <CircularProgress />
-                </Box>
+                <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                </div>
             ) : (
                 <div>
-                    <Box className={styles.title}>
-                        <Typography sx={{ color: "#fff" }}>
+                    <div className="bg-blue-500 text-white p-4 mb-4">
+                        <h1 className="text-2xl font-bold">
                             Delete Movie {myData.name}
-                        </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            width: "100%",
-                            boxShadow: 3,
-                            padding: 4,
-                            flexDirection: "column",
-                        }}
-                    >
-                        <Box className={styles.text}>
+                        </h1>
+                    </div>
+                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <p className="mb-4">
                             Are you sure that you want to delete:{" "}
                             <strong>{myData.title}</strong>
-                        </Box>
-                        <Box className={styles.Container}>
-                            <Button
-                                variant="contained"
+                        </p>
+                        <div className="flex justify-center">
+                            <button
                                 onClick={submission}
-                                color="error"
-                                size="large"
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
                                 Delete
-                            </Button>
-                        </Box>
-                    </Box>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
