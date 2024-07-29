@@ -1,10 +1,9 @@
 import Search from "./Search";
 import { useState } from "react";
 import MovieList from "./MovieList";
-import { Container } from "./Container";
-import { InnerContainer } from "./InnerContainer";
+import Container from "./Container";
+import InnerContainer from "./InnerContainer";
 import Pagination from "@mui/material/Pagination";
-import styles from "./styles/page.module.css";
 
 const SearchComponent = () => {
     const [movieData, setMovieData] = useState([]);
@@ -26,7 +25,7 @@ const SearchComponent = () => {
                     <MovieList loading={loading} movies={currentCards} />
                 </InnerContainer>
             </Container>
-            <div className={styles.paginationContainer}>
+            <div className="flex items-center justify-center m-0">
                 <Pagination
                     size="large"
                     count={Math.ceil(movieData.length / cardsPerPage)}
