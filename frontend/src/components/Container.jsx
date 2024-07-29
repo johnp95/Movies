@@ -1,5 +1,5 @@
-import styles from "./styles/container.module.css";
-
-export const Container = ({ children }) => {
-    return <div className={styles.parentContainer}>{children}</div>;
+const Container = ({ children }) => {
+    return <div className="flex">{children}</div>;
 };
+
+export default Container;
