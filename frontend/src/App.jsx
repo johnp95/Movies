@@ -14,8 +14,9 @@ import MovieDetails from "./components/MovieDetails";
 import DirectorDetail from "./components/DirectorDetail";
 import ActorDetail from "./components/ActorDetail";
 import ActressDetail from "./components/ActressDetail";
-import TestSearch from "./components/TestSearch";
 import ForeignFilms from "./components/ForeignFilms";
+import OldestFilms from "./components/OldestFilms";
+
 import Delete from "./components/Delete";
 import Edit, { movieLoader } from "./components/Edit";
 
@@ -24,10 +25,10 @@ const router = createBrowserRouter(
         <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="search" element={<SearchComponent />} />
-            <Route path="test-search" element={<TestSearch />} />
             <Route path="/movie_details/:id" element={<MovieDetails />} />
             <Route path="/actor_detail/:id" element={<ActorDetail />} />
             <Route path="/delete/:id" element={<Delete />} />
+            <Route path="/oldest_films" element={<OldestFilms />} />
 
             <Route path="/actress_detail/:id" element={<ActressDetail />} />
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
