@@ -1,5 +1,5 @@
-import styles from "./styles/innercontainer.module.css";
-
-export const InnerContainer = ({ children }) => {
-    return <div className={styles.innerContainer}>{children}</div>;
+const InnerContainer = ({ children }) => {
+    return <div className="flex-1 p-2 m-2">{children}</div>;
 };
+
+export default InnerContainer;
