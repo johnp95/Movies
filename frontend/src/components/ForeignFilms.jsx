@@ -75,10 +75,18 @@ const ForeignFilms = () => {
         };
         fetchMovie();
     }, []);
-
+    const seenTitles = new Set();
+    const uniqueMovies = movies.filter((movie) => {
+        if (seenTitles.has(movie.title)) {
+            return false;
+        } else {
+            seenTitles.add(movie.title);
+            return true;
+        }
+    });
     const indexOfLastMovie = currentPage * moviesPerPage;
     const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+    const currentMovies = uniqueMovies.slice(indexOfFirstMovie, indexOfLastMovie);
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
