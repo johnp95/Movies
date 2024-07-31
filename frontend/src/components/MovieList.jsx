@@ -1,17 +1,19 @@
 import MovieItem from "./MovieItem";
+import Spinner from './Spinner'
 
 const MovieList = ({ loading, movies }) => {
+
+    const myMovies = movies.map((movie) => <MovieItem key={movie.id} movie={movie} />);
+
     return (
         <div className="container mx-auto">
             {loading ? (
                 <div className="flex justify-center items-center h-screen">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+                    <Spinner loading={loading} />
                 </div>
             ) : (
                 <div className="flex justify-around flex-wrap">
-                    {movies.map((movie) => (
-                        <MovieItem key={movie.id} movie={movie} />
-                    ))}
+                    {myMovies}
                 </div>
             )}
         </div>
