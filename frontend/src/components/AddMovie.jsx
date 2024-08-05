@@ -44,7 +44,7 @@ const AddMovie = () => {
             image,
         };
         addMovie(newMovie);
-        toast.success("Job Added Sucessfully");
+        toast.success("Film Added Sucessfully");
         navigate("/");
     };
 
