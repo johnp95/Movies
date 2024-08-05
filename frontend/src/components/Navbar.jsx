@@ -8,7 +8,6 @@ const navItems = [
     "Search",
     "Best Picture",
     "Foreign Films",
-    "Oldest Films",
 ];
 
 const routePaths = [
@@ -17,7 +16,6 @@ const routePaths = [
     "Search",
     "best_picture",
     "foreign-films",
-    "oldest_films",
 ];
 
 const Navbar = () => {
