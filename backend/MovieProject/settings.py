@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-lqf5=q*-w*wl94c-agfdi!mg@_k(-(=8abj-x#oicm_l*8*#_f
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -35,10 +35,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:5173',
-    'http://ashy-cliff-0dda47b10.4.azurestaticapps.net'
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:5173',
+#     'http://ashy-cliff-0dda47b10.4.azurestaticapps.net'
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'MovieProject.urls'
 
@@ -67,11 +68,13 @@ WSGI_APPLICATION = 'MovieProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "movies",
-        "USER": "postgres",
-        "PASSWORD": "password", 
-        "HOST": "localhost",  
-        "PORT": 5432,  
+        'NAME': os.environ.get('DB_NAME', 'movies'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        "HOST": "db",  #For Docker Compose To Work
+        # "HOST": "host.docker.internal",  #For Docker run server To Work
+        # "HOST": "localhost",  
+        "PORT": os.environ.get('DB_PORT',5432) 
     }
 }
 
