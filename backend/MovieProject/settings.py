@@ -71,8 +71,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'movies'),
         'USER': os.environ.get('DB_USER', 'postgres'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
-        "HOST": "db",  #For Docker Compose To Work
-        # "HOST": "host.docker.internal",  #For Docker run server To Work
+        # "HOST": "db",  #For Docker To Use Database In Container
+        "HOST": "host.docker.internal",  #For Docker To Use Local Database
         # "HOST": "localhost",  
         "PORT": os.environ.get('DB_PORT',5432) 
     }

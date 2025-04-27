@@ -8,6 +8,9 @@ services:
     container_name: movies-react-app-1
     ports:
       - "5173:5173"
+    volumes:
+      - ./frontend:/app  # Mount local frontend directory to /app in container
+      - /app/node_modules # Keep container's node_modules 
     networks:
       - app-network
     depends_on:
@@ -26,36 +29,14 @@ services:
       - DB_NAME=movies
       - DB_USER=postgres
       - DB_PASSWORD=password
-      - DB_HOST=db
+      - DB_HOST=host.docker.internal
       - DB_PORT=5432
     networks:
       - app-network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    image: postgres:15
-    container_name: postgres_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: movies
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 networks:
   app-network:
     driver: bridge
 
-volumes:
-  postgres_data:
+
