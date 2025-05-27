@@ -4,7 +4,7 @@ services:
   react-app:
     build:
       context: ./frontend
-    image: johnpennyman/react-app:1.1
+    image: johnpennyman/react-app:1.0
     container_name: movies-react-app-1
     ports:
       - "5173:5173"
@@ -18,7 +18,7 @@ services:
   
   backend:
     build: ./backend
-    image: johnpennyman/backend:1.1
+    image: johnpennyman/backend:1.0
     container_name: movies-backend-1
     ports:
       - "8000:8000"
