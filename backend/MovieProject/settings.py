@@ -73,7 +73,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
         # "HOST": "db",  #For Docker To Use Database In Container
         "HOST": "host.docker.internal",  #For Docker To Use Local Database
-        # "HOST": "localhost",  
+        # "HOST": "localhost",  # To run locally
         "PORT": os.environ.get('DB_PORT',5432) 
     }
 }
