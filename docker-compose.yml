@@ -1,42 +1,38 @@
-version: '3'
-
 services:
-  react-app:
-    build:
-      context: ./frontend
-    image: johnpennyman/react-app:1.0
-    container_name: movies-react-app-1
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app  # Mount local frontend directory to /app in container
-      - /app/node_modules # Keep container's node_modules 
-    networks:
-      - app-network
-    depends_on:
-      - backend
-  
-  backend:
-    build: ./backend
-    image: johnpennyman/backend:1.0
-    container_name: movies-backend-1
-    ports:
-      - "8000:8000"
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/code
-    environment:
-      - DB_NAME=movies
-      - DB_USER=postgres
-      - DB_PASSWORD=password
-      - DB_HOST=host.docker.internal
-      - DB_PORT=5432
-    networks:
-      - app-network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    react-app:
+        build:
+            context: ./frontend
+        image: johnpennyman/react-app:1.0
+        container_name: movies-react-app-1
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./frontend:/app # Mount local frontend directory to /app in container
+            - /app/node_modules # Keep container's node_modules
+        networks:
+            - app-network
+        depends_on:
+            - backend
+
+    backend:
+        build: ./backend
+        image: johnpennyman/backend:1.0
+        container_name: movies-backend-1
+        ports:
+            - "8000:8000"
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./backend:/code
+        environment:
+            - DB_NAME=movies
+            - DB_USER=postgres
+            - DB_PASSWORD=password
+            - DB_HOST=host.docker.internal
+            - DB_PORT=5432
+        networks:
+            - app-network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
 networks:
-  app-network:
-    driver: bridge
-
-
+    app-network:
+        driver: bridge
