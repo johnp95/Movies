@@ -5,20 +5,6 @@ from MovieApp.models import Movie
 from .serializers import MovieSerializer
 from rest_framework.views import APIView
 
-@api_view(['GET', 'POST'])
-def movie_list(request):
-    if request.method == 'GET':
-        queryset = Movie.objects.all().order_by('id')
-        serializer = MovieSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = MovieSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class MovieList(generics.ListCreateAPIView):
     queryset = Movie.objects.all().order_by('-date_watched')
     serializer_class = MovieSerializer
