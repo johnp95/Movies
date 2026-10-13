@@ -24,11 +24,11 @@ services:
         volumes:
             - ./backend:/code
         environment:
-            - DB_NAME=movies_prod
-            - DB_USER=postgres
-            - DB_PASSWORD=password
-            - DB_HOST=host.docker.internal
-            - DB_PORT=5432
+            - DB_NAME=${DB_NAME}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
         networks:
             - app-network
         extra_hosts:

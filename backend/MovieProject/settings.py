@@ -68,13 +68,12 @@ WSGI_APPLICATION = 'MovieProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': os.environ.get('DB_NAME', 'movies_prod'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
         # "HOST": "db",  #For Docker To Use Database In Container
-        "HOST": "host.docker.internal",  #For Docker To Use Local Database
-        # "HOST": "localhost",  # To run locally
-        "PORT": os.environ.get('DB_PORT',5432) 
+        "HOST": os.environ['DB_HOST'],
+        "PORT": os.environ['DB_PORT']
     }
 }
 
