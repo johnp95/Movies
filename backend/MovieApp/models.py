@@ -12,6 +12,9 @@ class Movie(models.Model):
     best_picture = models.BooleanField(null=True,blank=True,default=False)
     female_director = models.BooleanField(null=True,blank=True,default=False)
     image = models.CharField(max_length=200, null=True,blank=True)
+
+    class Meta:
+        db_table = "movies"
     
     def __str__(self):
         return self.title
