@@ -11,7 +11,7 @@ class Movie(models.Model):
     language = models.CharField(max_length=50,null=True,blank=True)
     best_picture = models.BooleanField(null=True,blank=True,default=False)
     female_director = models.BooleanField(null=True,blank=True,default=False)
-    image = models.CharField(max_length=200, null=True,blank=True)
+    image = models.CharField(max_length=250, null=True,blank=True)
 
     class Meta:
         db_table = "movies"
