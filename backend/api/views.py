@@ -17,10 +17,10 @@ class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
 class MovieSearchView(APIView):
     def get(self, request, *args, **kwargs):
         query = request.GET.get('query', '')
-        results = Movie.objects.filter(title__icontains=query).order_by('id') | \
-                  Movie.objects.filter(director__icontains=query).order_by('id') | \
-                  Movie.objects.filter(actor__icontains=query).order_by('id') | \
-                  Movie.objects.filter(actress__icontains=query).order_by('id')
+        results = Movie.objects.filter(title__icontains=query).order_by('title').distinct('title') | \
+                  Movie.objects.filter(director__icontains=query).order_by('title').distinct('title') | \
+                  Movie.objects.filter(actor__icontains=query).order_by('title').distinct('title') | \
+                  Movie.objects.filter(actress__icontains=query).order_by('title').distinct('title')
 
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)

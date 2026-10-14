@@ -9,6 +9,7 @@ packaging==26.3
 peppercorn==0.6
 pillow==12.3.0
 psycopg2-binary==2.9.13
+python-dotenv==1.2.4
 pytz==2026.5
 requests==2.34.2
 sqlparse==0.6.0

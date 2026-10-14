@@ -3,6 +3,10 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+load_dotenv(BASE_DIR.parent / '.env')
+
+
 SECRET_KEY = 'django-insecure-lqf5=q*-w*wl94c-agfdi!mg@_k(-(=8abj-x#oicm_l*8*#_f'
 
 DEBUG = True
