@@ -1,16 +1,17 @@
-FROM python:3.10-alpine
+FROM python:3.14.8-slim-bookworm
 
-ENV PIP_DISABLE_PIP_VERSION_CHECK 1 
-ENV PYTHONDONTWRITEBYTECODE 1 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+PYTHONUNBUFFERED=1
 
 WORKDIR /code
 
-RUN apk add --no-cache jpeg-dev zlib-dev gcc musl-dev
+RUN apt-get update && apt-get install -y curl 
+
+COPY --from=docker.io/astral/uv:latest /uv /uvx /bin/
 
 COPY ./requirements.txt . 
 
-RUN pip install -r requirements.txt
+RUN uv pip install -r requirements.txt --system
 
 COPY . .
 
