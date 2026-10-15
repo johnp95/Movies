@@ -39,7 +39,7 @@ const Navbar = () => {
     const authLink = isAuthenticated ? (
         <button
             onClick={handleLogout}
-            className="text-white hover:bg-gray-900 rounded-md px-3 py-2"
+            className="text-left text-white hover:bg-gray-900 rounded-md px-3 py-2"
         >
             Logout
         </button>
@@ -61,7 +61,7 @@ const Navbar = () => {
                         <div className="flex-shrink-0">
                             <span className="text-xl font-bold">Movies</span>
                         </div>
-                        <div className="hidden sm:flex flex-grow justify-center items-center space-x-8">
+                        <div className="hidden md:flex flex-grow justify-center items-center space-x-4 lg:space-x-8">
                             {visibleItems.map((item, index) => (
                                 <React.Fragment key={item.path}>
                                     <NavLink
@@ -77,11 +77,12 @@ const Navbar = () => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <div className="hidden sm:block">{authLink}</div>
-                        <div className="sm:hidden">
+                        <div className="hidden md:block">{authLink}</div>
+                        <div className="md:hidden">
                             <button
                                 onClick={toggleMenu}
-                                className="text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                aria-expanded={isMenuOpen}
+                                className="p-2 rounded-md text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             >
                                 <span className="sr-only">Open main menu</span>
                                 <svg
@@ -104,8 +105,8 @@ const Navbar = () => {
                 </div>
             </nav>
             {isMenuOpen && (
-                <div className="sm:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1 flex flex-col">
+                <div className="md:hidden">
+                    <div className="bg-blue-600 px-2 pt-2 pb-3 space-y-1 flex flex-col">
                         {visibleItems.map((item) => (
                             <NavLink
                                 key={item.path}

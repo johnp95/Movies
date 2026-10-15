@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieItem from "./MovieItem";
+import PageControls from "./PageControls";
+import usePagination from "../hooks/usePagination";
+import { API_BASE_URL } from "../config";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/actor`;
+const url = API_BASE_URL + `api/movies/actor`;
 
 const ActorDetail = () => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [moviesPerPage] = useState(10);
     const { id: actor } = useParams();
     useEffect(() => {
         const fetchMovie = async () => {
@@ -23,18 +24,18 @@ const ActorDetail = () => {
             }
         };
         fetchMovie();
-    }, []);
+    }, [actor]);
 
-    const indexOfLastMovie = currentPage * moviesPerPage;
-    const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const {
+        currentItems: currentMovies,
+        page,
+        totalPages,
+        handlePageChange,
+    } = usePagination(movies, 10);
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6 text-center">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
                 {actor} Movies Seen: {movies.length}
             </h1>
             {loading ? (
@@ -43,49 +44,19 @@ const ActorDetail = () => {
                 </div>
             ) : (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="flex flex-wrap justify-center">
                         {currentMovies.map((movie) => (
                             <MovieItem key={movie.id} movie={movie} />
                         ))}
                     </div>
-                    <Pagination
-                        moviesPerPage={moviesPerPage}
-                        totalMovies={movies.length}
-                        paginate={paginate}
-                        currentPage={currentPage}
+                    <PageControls
+                        page={page}
+                        totalPages={totalPages}
+                        onChange={handlePageChange}
                     />
                 </>
             )}
         </div>
-    );
-};
-
-const Pagination = ({ moviesPerPage, totalMovies, paginate, currentPage }) => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= Math.ceil(totalMovies / moviesPerPage); i++) {
-        pageNumbers.push(i);
-    }
-
-    return (
-        <nav className="mt-8">
-            <ul className="flex justify-center space-x-2">
-                {pageNumbers.map((number) => (
-                    <li key={number}>
-                        <button
-                            onClick={() => paginate(number)}
-                            className={`px-3 py-2 rounded-md focus:outline-none ${
-                                currentPage === number
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
-                        >
-                            {number}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </nav>
     );
 };
 

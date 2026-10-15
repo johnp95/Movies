@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import MovieItem from "./MovieItem";
 import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
+import { API_BASE_URL } from "../config";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/`;
+const url = API_BASE_URL + `api/movies/`;
 
 const ForeignFilms = () => {
     const [movies, setMovies] = useState([]);
@@ -30,8 +31,12 @@ const ForeignFilms = () => {
             return true;
         }
     });
-    const { currentItems: currentMovies, page, totalPages, handlePageChange } =
-        usePagination(uniqueMovies, moviesPerPage);
+    const {
+        currentItems: currentMovies,
+        page,
+        totalPages,
+        handlePageChange,
+    } = usePagination(uniqueMovies, moviesPerPage);
 
     return (
         <div className="container mx-auto">

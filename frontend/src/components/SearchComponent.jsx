@@ -6,8 +6,9 @@ import Container from "./Container";
 import InnerContainer from "./InnerContainer";
 import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
+import { API_BASE_URL } from "../config";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/search`;
+const url = API_BASE_URL + `api/movies/search`;
 const cardsPerPage = 20;
 
 const sortMovies = (movies, method) => {
@@ -123,45 +124,50 @@ const SearchComponent = () => {
     } = usePagination(displayedMovies, cardsPerPage);
 
     return (
-        <div className="relative">
-            <div className="absolute top-0 right-0 z-10" ref={dropdownRef}>
-                <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                    Sort By
-                </button>
-                {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                        <div
-                            className="py-1"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                        >
-                            <button
-                                onClick={() => handleSortSelect("recent")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+        <div>
+            {/* Search and sort share a row so the button never covers the input */}
+            <div className="flex items-center gap-2 px-4 max-w-2xl mx-auto">
+                <div className="flex-1 min-w-0">
+                    <Search value={input} onChange={setInput} />
+                </div>
+                <div className="relative z-10 shrink-0" ref={dropdownRef}>
+                    <button
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    >
+                        Sort By
+                    </button>
+                    {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div
+                                className="py-1"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="options-menu"
                             >
-                                Recently Watched
-                            </button>
-                            <button
-                                onClick={() => handleSortSelect("oldest")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                            >
-                                Oldest
-                            </button>
-                            <button
-                                onClick={() => handleSortSelect("newest")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                            >
-                                Newest
-                            </button>
+                                <button
+                                    onClick={() => handleSortSelect("recent")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Recently Watched
+                                </button>
+                                <button
+                                    onClick={() => handleSortSelect("oldest")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Oldest
+                                </button>
+                                <button
+                                    onClick={() => handleSortSelect("newest")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Newest
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-            <Search value={input} onChange={setInput} />
             <Container>
                 <InnerContainer>
                     <MovieList loading={loading} movies={currentCards} />

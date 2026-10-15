@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
+import { API_BASE_URL } from "../config";
 
 const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
     const { id: myId } = useParams();
-    const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/${myId}`;
-    const allMoviesUrl = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
+    const url = API_BASE_URL + `api/movies/${myId}`;
+    const allMoviesUrl = API_BASE_URL + `api/movies`;
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -22,7 +23,7 @@ const MovieDetails = () => {
                 ]);
                 setMovie(movieData);
                 const count = allMoviesData.filter(
-                    (m) => m.title === movieData.title
+                    (m) => m.title === movieData.title,
                 ).length;
                 setWatchCount(count);
             } catch (error) {
@@ -41,26 +42,26 @@ const MovieDetails = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="max-w-4xl mx-4 sm:mx-auto my-6 sm:mt-10 bg-white rounded-xl shadow-md overflow-hidden">
             <div className="md:flex">
                 <div className="md:flex-shrink-0">
                     <img
-                        className="h-48 w-full object-cover md:w-48 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+                        className="w-40 mx-auto mt-6 rounded-md md:mt-0 md:rounded-none md:h-full md:w-48 object-cover cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         src={movie.image}
                         alt={movie.title}
                         onClick={() =>
                             window.open(
                                 `https://en.wikipedia.org/wiki/${movie.title}`,
-                                "_blank"
+                                "_blank",
                             )
                         }
                     />
                 </div>
-                <div className="p-8">
+                <div className="p-6 sm:p-8">
                     <h1 className="text-2xl font-bold text-gray-800 mb-4">
                         {movie.title}
                     </h1>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-y-4">
                         <MovieDetailItem
                             label="Director"
                             value={movie.director}
