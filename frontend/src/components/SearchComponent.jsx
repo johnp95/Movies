@@ -8,13 +8,13 @@ import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
 
 const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/search`;
-const cardsPerPage = 10;
+const cardsPerPage = 20;
 
 const sortMovies = (movies, method) => {
     switch (method) {
         case "recent":
             return [...movies].sort(
-                (a, b) => new Date(b.date_watched) - new Date(a.date_watched)
+                (a, b) => new Date(b.date_watched) - new Date(a.date_watched),
             );
         case "oldest":
             return [...movies].sort((a, b) => a.released - b.released);
@@ -61,7 +61,7 @@ const SearchComponent = () => {
                     next.delete("page");
                     return next;
                 },
-                { replace: true }
+                { replace: true },
             );
         }, 300);
         return () => clearTimeout(timeout);
@@ -73,7 +73,7 @@ const SearchComponent = () => {
             try {
                 const res = await fetch(
                     `${url}?query=${encodeURIComponent(query)}`,
-                    { signal: controller.signal }
+                    { signal: controller.signal },
                 );
                 const data = await res.json();
                 setMovies(data);
@@ -112,7 +112,7 @@ const SearchComponent = () => {
 
     const displayedMovies = useMemo(
         () => sortMovies(movies, sortMethod),
-        [movies, sortMethod]
+        [movies, sortMethod],
     );
 
     const {
