@@ -1,34 +1,14 @@
-import { useState, useEffect } from "react";
 import { MdMovie } from "react-icons/md";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/search`;
-
-const Search = ({ setMovieData, setLoading }) => {
-    const [query, setQuery] = useState("");
-
-    useEffect(() => {
-        const fetchMovie = async () => {
-            try {
-                const res = await fetch(`${url}?query=${query}`);
-                const data = await res.json();
-                setMovieData(data);
-            } catch (error) {
-                console.log("Error fetching data", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchMovie();
-    }, [query, setLoading, setMovieData]);
-
+const Search = ({ value, onChange }) => {
     return (
         <div className="mx-auto my-5 w-full max-w-md relative">
             <div className="relative">
                 <input
                     type="text"
                     placeholder="Movie, Director, or Actor"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
                     className="text-center w-full px-5 py-2.5 text-base text-gray-700 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-200 placeholder-center"
                 />
                 <div
