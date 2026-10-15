@@ -21,9 +21,17 @@ const BestPicture = () => {
         };
         fetchMovie();
     }, []);
-
+    const seenTitles = new Set();
+    const uniqueMovies = movies.filter((movie) => {
+        if (seenTitles.has(movie.title)) {
+            return false;
+        } else {
+            seenTitles.add(movie.title);
+            return true;
+        }
+    });
     const { currentItems: currentMovies, page, totalPages, handlePageChange } =
-        usePagination(movies, moviesPerPage);
+        usePagination(uniqueMovies, moviesPerPage);
 
     return (
         <div className="container mx-auto">
