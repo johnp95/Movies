@@ -1,3 +1,4 @@
+from django.db.models import Q
 from MovieApp.models import Movie
 from rest_framework import generics
 from rest_framework.response import Response
@@ -19,18 +20,16 @@ class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
 class MovieSearchView(APIView):
     def get(self, request, *args, **kwargs):
         query = request.GET.get("query", "")
+        # A rewatched movie has one row per viewing; keep the first viewing
+        # so DISTINCT ON picks a predictable row instead of an arbitrary one.
         results = (
-            Movie.objects.filter(title__icontains=query)
-            .order_by("title")
-            .distinct("title")
-            | Movie.objects.filter(director__icontains=query)
-            .order_by("title")
-            .distinct("title")
-            | Movie.objects.filter(actor__icontains=query)
-            .order_by("title")
-            .distinct("title")
-            | Movie.objects.filter(actress__icontains=query)
-            .order_by("title")
+            Movie.objects.filter(
+                Q(title__icontains=query)
+                | Q(director__icontains=query)
+                | Q(actor__icontains=query)
+                | Q(actress__icontains=query)
+            )
+            .order_by("title", "date_watched", "id")
             .distinct("title")
         )
 
