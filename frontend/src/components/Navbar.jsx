@@ -1,25 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import React from "react";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
-    "Home",
-    "Add Movie",
-    "Search",
-    "Best Picture",
-    "Foreign Films",
-];
-
-const routePaths = [
-    "/",
-    "/add_movie",
-    "Search",
-    "best_picture",
-    "foreign-films",
+    { label: "Home", path: "/", protected: true },
+    { label: "Add Movie", path: "/add_movie", protected: true },
+    { label: "Search", path: "/search" },
+    { label: "Best Picture", path: "/best_picture" },
+    { label: "Foreign Films", path: "/foreign-films" },
 ];
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const visibleItems = navItems.filter(
+        (item) => !item.protected || isAuthenticated,
+    );
 
     const linkClass = ({ isActive }) =>
         isActive
@@ -30,6 +29,30 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const handleLogout = () => {
+        logout();
+        setIsMenuOpen(false);
+        navigate("/login");
+    };
+
+    // Login link or Logout button, shared by both menus
+    const authLink = isAuthenticated ? (
+        <button
+            onClick={handleLogout}
+            className="text-white hover:bg-gray-900 rounded-md px-3 py-2"
+        >
+            Logout
+        </button>
+    ) : (
+        <NavLink
+            to="/login"
+            className={linkClass}
+            onClick={() => setIsMenuOpen(false)}
+        >
+            Login
+        </NavLink>
+    );
+
     return (
         <div className="flex flex-col">
             <nav className="bg-blue-600 text-white">
@@ -39,20 +62,22 @@ const Navbar = () => {
                             <span className="text-xl font-bold">Movies</span>
                         </div>
                         <div className="hidden sm:flex flex-grow justify-center items-center space-x-8">
-                            {navItems.map((item, index) => (
-                                <React.Fragment key={item}>
+                            {visibleItems.map((item, index) => (
+                                <React.Fragment key={item.path}>
                                     <NavLink
-                                        to={routePaths[index]}
+                                        to={item.path}
+                                        end={item.path === "/"}
                                         className={linkClass}
                                     >
-                                        {item}
+                                        {item.label}
                                     </NavLink>
-                                    {index < navItems.length - 1 && (
+                                    {index < visibleItems.length - 1 && (
                                         <span className="text-white">|</span>
                                     )}
                                 </React.Fragment>
                             ))}
                         </div>
+                        <div className="hidden sm:block">{authLink}</div>
                         <div className="sm:hidden">
                             <button
                                 onClick={toggleMenu}
@@ -80,17 +105,19 @@ const Navbar = () => {
             </nav>
             {isMenuOpen && (
                 <div className="sm:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
-                        {navItems.map((item, index) => (
+                    <div className="px-2 pt-2 pb-3 space-y-1 flex flex-col">
+                        {visibleItems.map((item) => (
                             <NavLink
-                                key={item}
-                                to={routePaths[index]}
+                                key={item.path}
+                                to={item.path}
+                                end={item.path === "/"}
                                 className={linkClass}
                                 onClick={toggleMenu}
                             >
-                                {item}
+                                {item.label}
                             </NavLink>
                         ))}
+                        {authLink}
                     </div>
                 </div>
             )}

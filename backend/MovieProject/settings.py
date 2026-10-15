@@ -24,9 +24,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "MovieApp",
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
     "api",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    # anyone can read; only logged-in users can add/edit/delete
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
