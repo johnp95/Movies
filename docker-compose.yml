@@ -7,8 +7,8 @@ services:
         ports:
             - "5173:5173"
         volumes:
-            - ./frontend:/app # Mount local frontend directory to /app in container
-            - /app/node_modules # Keep container's node_modules
+            - ./frontend:/app
+            - /app/node_modules
         networks:
             - app-network
         depends_on:
