@@ -31,11 +31,15 @@ const Delete = () => {
 
     const navigate = useNavigate();
 
-    const submission = () => {
-        AxiosInstance.delete(`api/movies/${MyId}/`).then(() => {
+    const submission = async () => {
+        try {
+            await AxiosInstance.delete(`api/movies/${MyId}/`);
+            toast.success("Film Deleted Successfully");
             navigate(`/`);
-        });
-        toast.success("Job Deleted Sucessfully");
+        } catch (error) {
+            console.error("Error deleting movie:", error);
+            toast.error("Could not delete the film");
+        }
     };
 
     return (
@@ -51,7 +55,7 @@ const Delete = () => {
                             Delete Movie {myData.name}
                         </h1>
                     </div>
-                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <div className="bg-white shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
                         <p className="mb-4">
                             Are you sure that you want to delete:{" "}
                             <strong>{myData.title}</strong>

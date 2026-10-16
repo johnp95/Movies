@@ -1,63 +1,94 @@
 import Search from "./Search";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import MovieList from "./MovieList";
 import Container from "./Container";
 import InnerContainer from "./InnerContainer";
-import Pagination from "@mui/material/Pagination";
+import PageControls from "./PageControls";
+import usePagination from "../hooks/usePagination";
+import { API_BASE_URL } from "../config";
+
+const url = API_BASE_URL + `api/movies/search`;
+const cardsPerPage = 20;
+
+const sortMovies = (movies, method) => {
+    switch (method) {
+        case "recent":
+            return [...movies].sort(
+                (a, b) => new Date(b.date_watched) - new Date(a.date_watched),
+            );
+        case "oldest":
+            return [...movies].sort((a, b) => a.released - b.released);
+        case "newest":
+            return [...movies].sort((a, b) => b.released - a.released);
+        default:
+            return [...movies];
+    }
+};
 
 const SearchComponent = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get("q") ?? "";
+    const sortMethod = searchParams.get("sort") ?? "recent";
+
+    const [input, setInput] = useState(query);
     const [movies, setMovies] = useState([]);
-    const [displayedMovies, setDisplayedMovies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [sortMethod, setSortMethod] = useState("recent");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const cardsPerPage = 10;
 
-    const handlePageChange = (event, value) => {
-        setCurrentPage(value);
+    // Merge param changes into the URL; a null/empty value removes the param.
+    const updateParams = (updates, options) => {
+        setSearchParams((prev) => {
+            const next = new URLSearchParams(prev);
+            Object.entries(updates).forEach(([key, value]) => {
+                if (value == null || value === "") next.delete(key);
+                else next.set(key, value);
+            });
+            return next;
+        }, options);
     };
 
-    const handleSortSelect = (method) => {
-        setSortMethod(method);
-        setIsDropdownOpen(false);
-        sortMovies(method);
-    };
+    // Debounce typing, then write the query to the URL and reset to page 1.
+    // `replace` keeps each keystroke out of the browser history.
+    useEffect(() => {
+        if (input === query) return;
+        const timeout = setTimeout(() => {
+            setSearchParams(
+                (prev) => {
+                    const next = new URLSearchParams(prev);
+                    if (input) next.set("q", input);
+                    else next.delete("q");
+                    next.delete("page");
+                    return next;
+                },
+                { replace: true },
+            );
+        }, 300);
+        return () => clearTimeout(timeout);
+    }, [input, query, setSearchParams]);
 
-    const sortMovies = (method) => {
-        let sortedMovies = [];
-        switch (method) {
-            case "recent":
-                sortedMovies = [...movies].sort(
-                    (a, b) =>
-                        new Date(b.date_watched) - new Date(a.date_watched)
+    useEffect(() => {
+        const controller = new AbortController();
+        const fetchMovies = async () => {
+            try {
+                const res = await fetch(
+                    `${url}?query=${encodeURIComponent(query)}`,
+                    { signal: controller.signal },
                 );
-                break;
-            case "oldest":
-                const moviesByYear = movies.reduce((acc, movie) => {
-                    if (
-                        !acc[movie.released] ||
-                        movie.id < acc[movie.released].id
-                    ) {
-                        acc[movie.released] = movie;
-                    }
-                    return acc;
-                }, {});
-                sortedMovies = Object.values(moviesByYear).sort(
-                    (a, b) => a.released - b.released
-                );
-                break;
-            case "newest":
-                sortedMovies = [...movies].sort(
-                    (a, b) => b.released - a.released
-                );
-                break;
-            default:
-                sortedMovies = [...movies];
-        }
-        setDisplayedMovies(sortedMovies);
-    };
+                const data = await res.json();
+                setMovies(data);
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    console.log("Error fetching data", error);
+                }
+            } finally {
+                if (!controller.signal.aborted) setLoading(false);
+            }
+        };
+        fetchMovies();
+        return () => controller.abort();
+    }, [query]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -75,68 +106,78 @@ const SearchComponent = () => {
         };
     }, []);
 
-    useEffect(() => {
-        sortMovies(sortMethod);
-    }, [movies]);
+    const handleSortSelect = (method) => {
+        setIsDropdownOpen(false);
+        updateParams({ sort: method === "recent" ? null : method, page: null });
+    };
 
-    const startIndex = (currentPage - 1) * cardsPerPage;
-    const endIndex = startIndex + cardsPerPage;
-    const currentCards = displayedMovies.slice(startIndex, endIndex);
+    const displayedMovies = useMemo(
+        () => sortMovies(movies, sortMethod),
+        [movies, sortMethod],
+    );
+
+    const {
+        currentItems: currentCards,
+        page,
+        totalPages,
+        handlePageChange,
+    } = usePagination(displayedMovies, cardsPerPage);
 
     return (
-        <div className="relative">
-            <div className="absolute top-0 right-0 z-10" ref={dropdownRef}>
-                <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                    Sort By
-                </button>
-                {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                        <div
-                            className="py-1"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                        >
-                            <button
-                                onClick={() => handleSortSelect("recent")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+        <div>
+            {/* Search and sort share a row so the button never covers the input */}
+            <div className="flex items-center gap-2 px-4 max-w-2xl mx-auto">
+                <div className="flex-1 min-w-0">
+                    <Search value={input} onChange={setInput} />
+                </div>
+                <div className="relative z-10 shrink-0" ref={dropdownRef}>
+                    <button
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    >
+                        Sort By
+                    </button>
+                    {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div
+                                className="py-1"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="options-menu"
                             >
-                                Recently Watched
-                            </button>
-                            <button
-                                onClick={() => handleSortSelect("oldest")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                            >
-                                Oldest
-                            </button>
-                            <button
-                                onClick={() => handleSortSelect("newest")}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                            >
-                                Newest
-                            </button>
+                                <button
+                                    onClick={() => handleSortSelect("recent")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Recently Watched
+                                </button>
+                                <button
+                                    onClick={() => handleSortSelect("oldest")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Oldest
+                                </button>
+                                <button
+                                    onClick={() => handleSortSelect("newest")}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                >
+                                    Newest
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-            <Search setMovieData={setMovies} setLoading={setLoading} />
             <Container>
                 <InnerContainer>
                     <MovieList loading={loading} movies={currentCards} />
                 </InnerContainer>
             </Container>
-            <div className="flex items-center justify-center m-0">
-                <Pagination
-                    size="large"
-                    count={Math.ceil(displayedMovies.length / cardsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                />
-            </div>
+            <PageControls
+                page={page}
+                totalPages={totalPages}
+                onChange={handlePageChange}
+            />
         </div>
     );
 };

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies/`;
+import AxiosInstance from "./Axios";
 
 const AddMovie = () => {
     const [title, setTitle] = useState("");
@@ -14,24 +13,7 @@ const AddMovie = () => {
     const [image, setImage] = useState("");
 
     const navigate = useNavigate();
-    const addMovie = async (newMovie) => {
-        try {
-            const res = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newMovie),
-            });
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json();
-        } catch (error) {
-            console.error("Error adding movie:", error);
-        }
-    };
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
 
         const newMovie = {
@@ -43,15 +25,21 @@ const AddMovie = () => {
             released: Number(released),
             image,
         };
-        addMovie(newMovie);
-        toast.success("Film Added Sucessfully");
-        navigate("/");
+        try {
+            // AxiosInstance attaches the auth token the API requires for writes
+            await AxiosInstance.post("api/movies/", newMovie);
+            toast.success("Film Added Successfully");
+            navigate("/");
+        } catch (error) {
+            console.error("Error adding movie:", error);
+            toast.error("Could not add the film");
+        }
     };
 
     return (
         <>
             <section className="bg-indigo-50">
-                <div className="container m-auto max-w-2xl py-24">
+                <div className="container m-auto max-w-2xl py-6 md:py-24">
                     <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
                         <form onSubmit={submitForm}>
                             <h2 className="text-3xl text-center font-semibold mb-6">

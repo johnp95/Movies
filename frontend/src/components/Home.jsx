@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
+import { API_BASE_URL } from "../config";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
+const url = API_BASE_URL + `api/movies`;
 
 const Home = () => {
     const [myData, setMyData] = useState([]);
@@ -52,7 +53,7 @@ const Home = () => {
                 header: "Date Watched",
             },
         ],
-        []
+        [],
     );
 
     return (
@@ -62,62 +63,125 @@ const Home = () => {
                     <Spinner loading={loading} />
                 </div>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="w-full table-auto border-collapse">
-                        <thead>
-                            <tr>
-                                {columns.map((column) => (
-                                    <th
-                                        key={
-                                            column.accessorKey || column.header
-                                        }
-                                        className="p-2 border bg-gray-100"
+                <>
+                    {/* Phones: one card per movie instead of a wide table */}
+                    <ul className="md:hidden space-y-3">
+                        {myData.map((row) => (
+                            <li
+                                key={row.id}
+                                className="border rounded-md p-4 shadow-sm bg-white"
+                            >
+                                <div className="flex items-baseline justify-between gap-2">
+                                    <h2 className="font-semibold text-lg">
+                                        {row.title}
+                                    </h2>
+                                    <span className="text-sm text-gray-500 shrink-0">
+                                        {row.released}
+                                    </span>
+                                </div>
+                                <dl className="mt-2 grid grid-cols-[auto,1fr] gap-x-3 gap-y-1 text-sm">
+                                    {columns
+                                        .filter(
+                                            (column) =>
+                                                !["title", "released"].includes(
+                                                    column.accessorKey,
+                                                ),
+                                        )
+                                        .map((column) => (
+                                            <React.Fragment
+                                                key={
+                                                    column.accessorKey ||
+                                                    column.header
+                                                }
+                                            >
+                                                <dt className="text-gray-500">
+                                                    {column.header}
+                                                </dt>
+                                                <dd>
+                                                    {column.accessorFn
+                                                        ? column.accessorFn(row)
+                                                        : row[
+                                                              column.accessorKey
+                                                          ]}
+                                                </dd>
+                                            </React.Fragment>
+                                        ))}
+                                </dl>
+                                <div className="mt-3 flex gap-2">
+                                    <Link
+                                        to={`edit/${row.id}`}
+                                        className="flex-1 text-center p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                                     >
-                                        {column.header}
-                                    </th>
-                                ))}
-                                <th className="p-2 border bg-gray-100">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {myData.map((row) => (
-                                <tr key={row.id}>
+                                        Edit
+                                    </Link>
+                                    <Link
+                                        to={`delete/${row.id}`}
+                                        className="flex-1 text-center p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                    >
+                                        Delete
+                                    </Link>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="hidden md:block overflow-x-auto">
+                        <table className="w-full table-auto border-collapse">
+                            <thead>
+                                <tr>
                                     {columns.map((column) => (
-                                        <td
+                                        <th
                                             key={
                                                 column.accessorKey ||
                                                 column.header
                                             }
-                                            className="p-2 border"
+                                            className="p-2 border bg-gray-100"
                                         >
-                                            {column.accessorFn
-                                                ? column.accessorFn(row)
-                                                : row[column.accessorKey]}
-                                        </td>
+                                            {column.header}
+                                        </th>
                                     ))}
-                                    <td className="p-2 border">
-                                        <div className="flex gap-2">
-                                            <Link
-                                                to={`edit/${row.id}`}
-                                                className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                            >
-                                                Edit
-                                            </Link>
-                                            <Link
-                                                to={`delete/${row.id}`}
-                                                className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                            >
-                                                Delete
-                                            </Link>
-                                        </div>
-                                    </td>
+                                    <th className="p-2 border bg-gray-100">
+                                        Actions
+                                    </th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {myData.map((row) => (
+                                    <tr key={row.id}>
+                                        {columns.map((column) => (
+                                            <td
+                                                key={
+                                                    column.accessorKey ||
+                                                    column.header
+                                                }
+                                                className="p-2 border"
+                                            >
+                                                {column.accessorFn
+                                                    ? column.accessorFn(row)
+                                                    : row[column.accessorKey]}
+                                            </td>
+                                        ))}
+                                        <td className="p-2 border">
+                                            <div className="flex gap-2">
+                                                <Link
+                                                    to={`edit/${row.id}`}
+                                                    className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                                >
+                                                    Edit
+                                                </Link>
+                                                <Link
+                                                    to={`delete/${row.id}`}
+                                                    className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                                >
+                                                    Delete
+                                                </Link>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             )}
         </div>
     );

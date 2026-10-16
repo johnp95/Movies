@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate, useParams, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
+import AxiosInstance from "./Axios";
 
-const url = import.meta.env.VITE_API_BASE_URL_LOCAL + `api/movies`;
+const url = API_BASE_URL + `api/movies`;
 
 const Edit = () => {
     const movie = useLoaderData();
@@ -18,17 +20,7 @@ const Edit = () => {
     const [released, setReleased] = useState(movie.released);
     const [image, setImage] = useState(movie.image);
     const { id } = useParams();
-    const updateMovie = async (movie) => {
-        const res = await fetch(`${url}/${id}/`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(movie),
-        });
-        return;
-    };
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
 
         const editMovie = {
@@ -41,15 +33,21 @@ const Edit = () => {
             released: Number(released),
             image,
         };
-        updateMovie(editMovie);
-        toast.success("Job Updated Successfully");
-        return navigate("/");
+        try {
+            // AxiosInstance attaches the auth token the API requires for writes
+            await AxiosInstance.put(`api/movies/${id}/`, editMovie);
+            toast.success("Film Updated Successfully");
+            navigate("/");
+        } catch (error) {
+            console.error("Error updating movie:", error);
+            toast.error("Could not update the film");
+        }
     };
 
     return (
         <>
             <section className="bg-indigo-50">
-                <div className="container m-auto max-w-2xl py-24">
+                <div className="container m-auto max-w-2xl py-6 md:py-24">
                     <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
                         <form onSubmit={submitForm}>
                             <h2 className="text-3xl text-center font-semibold mb-6">

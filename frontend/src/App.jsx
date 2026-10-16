@@ -17,15 +17,26 @@ import ActressDetail from "./components/ActressDetail";
 import ForeignFilms from "./components/ForeignFilms";
 import Delete from "./components/Delete";
 import Edit, { movieLoader } from "./components/Edit";
+import RequireAuth from "./components/RequireAuth";
+import LoginPage from "./Pages/LoginPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="search" element={<SearchComponent />} />
+            <Route element={<RequireAuth />}>
+                <Route index element={<HomePage />} />
+                <Route path="search" element={<SearchComponent />} />
+                <Route path="/add_movie" element={<AddMovie />} />
+                <Route
+                    path="/edit/:id"
+                    element={<Edit />}
+                    loader={movieLoader}
+                />
+                <Route path="/delete/:id" element={<Delete />} />
+            </Route>
             <Route path="/movie_details/:id" element={<MovieDetails />} />
             <Route path="/actor_detail/:id" element={<ActorDetail />} />
-            <Route path="/delete/:id" element={<Delete />} />
+            <Route path="login" element={<LoginPage />} />
             <Route path="/actress_detail/:id" element={<ActressDetail />} />
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
             <Route path="/add_movie" element={<AddMovie />} />
@@ -33,8 +44,8 @@ const router = createBrowserRouter(
             <Route path="/best_picture" element={<BestPicture />} />
             <Route path="/foreign-films" element={<ForeignFilms />} />
             <Route path="*" element={<NotFoundPage />} />
-        </Route>
-    )
+        </Route>,
+    ),
 );
 
 const App = () => {

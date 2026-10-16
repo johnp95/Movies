@@ -1,9 +1,10 @@
 import MovieItem from "./MovieItem";
-import Spinner from './Spinner'
+import Spinner from "./Spinner";
 
 const MovieList = ({ loading, movies }) => {
-
-    const myMovies = movies.map((movie) => <MovieItem key={movie.id} movie={movie} />);
+    const myMovies = movies.map((movie) => (
+        <MovieItem key={movie.id} movie={movie} />
+    ));
 
     return (
         <div className="container mx-auto">
@@ -12,9 +13,7 @@ const MovieList = ({ loading, movies }) => {
                     <Spinner loading={loading} />
                 </div>
             ) : (
-                <div className="flex justify-around flex-wrap">
-                    {myMovies}
-                </div>
+                <div className="flex justify-around flex-wrap">{myMovies}</div>
             )}
         </div>
     );
