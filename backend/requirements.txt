@@ -1,6 +1,8 @@
-Django
-django-cors-headers
-djangorestframework
-psycopg[binary]
-python-dotenv
-whitenoise
+Django==6.1.2
+django-cors-headers==4.9.0
+djangorestframework==3.18.3
+psycopg==3.3.6
+# psycopg[binary]
+python-dotenv==1.2.4
+whitenoise==6.12.0
+gunicorn==26.2.2
