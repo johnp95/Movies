@@ -1,6 +1,7 @@
 from django.db.models import Q
 from MovieApp.models import Movie
 from rest_framework import generics
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -60,3 +61,12 @@ class ActressDetailView(APIView):
         results = Movie.objects.filter(actress=actress).distinct("title")
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
+
+
+class HealthView(APIView):
+    # public liveness check; skip auth so a bad token header can't fail it
+    authentication_classes = ()
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        return Response({"ok": True})
