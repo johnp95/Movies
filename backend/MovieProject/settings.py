@@ -1,18 +1,29 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR.parent / ".env")
 
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-SECRET_KEY = "django-insecure-lqf5=q*-w*wl94c-agfdi!mg@_k(-(=8abj-x#oicm_l*8*#_f"
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
-DEBUG = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1", "*"]
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = 0 if DEBUG else 3600
+
+SECRET_KEY = os.environ["SECRET_KEY"]
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+# Admin lives at a non-obvious path in production to cut down on bot login attempts
+ADMIN_URL = os.environ.get("ADMIN_URL", "admin/").strip("/") + "/"
 
 # Application definition
 INSTALLED_APPS = [
@@ -37,11 +48,15 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
+    "DEFAULT_THROTTLE_RATES": {
+        "token": "5/min",
+    },
 }
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -50,11 +65,16 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:5173',
-#     'http://ashy-cliff-0dda47b10.4.azurestaticapps.net'
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS]
 
 ROOT_URLCONF = "MovieProject.urls"
 
@@ -132,3 +152,36 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Send logs to stdout so they show up in `docker logs`. Django's default
+# console handler only runs when DEBUG=True, so errors were being dropped.
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {name} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": False,
+        },
+    },
+}
