@@ -1,0 +1,88 @@
+services:
+    # Caddy: serves the React build and reverse-proxies Django, terminates HTTPS
+    react-app:
+        build:
+            context: ./frontend
+            target: prod
+            args:
+                # Same origin as the site, so no CORS and no hard-coded domain
+                VITE_API_BASE_URL_PROD: /
+        image: johnpennyman/react-app:2.0-prod
+        ports:
+            - "80:80"
+            - "443:443"
+            - "443:443/udp" # HTTP/3
+        environment:
+            DOMAIN: ${DOMAIN:-localhost}
+            ADMIN_URL: ${ADMIN_URL:-admin}
+        volumes:
+            # Persist certificates, otherwise every restart re-requests them
+            - caddy_data:/data
+            - caddy_config:/config
+        networks:
+            - app-network
+        depends_on:
+            - backend
+        restart: unless-stopped
+
+    # One-off: apply migrations before gunicorn starts
+    migrate:
+        image: johnpennyman/backend:2.0-prod
+        command: python manage.py migrate --noinput
+        env_file:
+            - .env
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - app-network
+        restart: "no"
+
+    backend:
+        build: ./backend
+        image: johnpennyman/backend:2.0-prod
+        env_file:
+            - .env
+        environment:
+            # .env is shared with dev, where DEBUG=True
+            DEBUG: "False"
+        depends_on:
+            db:
+                condition: service_healthy
+                restart: true
+            migrate:
+                condition: service_completed_successfully
+        networks:
+            - app-network
+        restart: unless-stopped
+
+    db:
+        image: postgres:17
+        networks:
+            - app-network
+        volumes:
+            - postgres_db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}",
+                ]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
+        restart: unless-stopped
+
+volumes:
+    postgres_db:
+    caddy_data:
+    caddy_config:
+
+networks:
+    app-network:
+        driver: bridge
