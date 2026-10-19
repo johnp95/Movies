@@ -1,4 +1,9 @@
 # DOMAIN=localhost uses Caddy's local CA; a real domain gets a Let's Encrypt cert
+# One canonical host: www gets its own cert and redirects to the bare domain
+www.{$DOMAIN:localhost} {
+	redir https://{$DOMAIN:localhost}{uri} permanent
+}
+
 {$DOMAIN:localhost} {
 	encode zstd gzip
 
