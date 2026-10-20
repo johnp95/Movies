@@ -1,6 +1,10 @@
 venv
 .git
+.gitignore
 *.pyc
 __pycache__
-static
-.gitignore
+staticfiles
+.env
+.env.*
+Dockerfile
+.dockerignore
