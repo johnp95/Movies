@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../config";
 const MovieDetails = () => {
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
+    const [watchDates, setWatchDates] = useState([]);
     const { id: myId } = useParams();
     const url = API_BASE_URL + `api/movies/${myId}`;
     const allMoviesUrl = API_BASE_URL + `api/movies`;
@@ -22,10 +23,16 @@ const MovieDetails = () => {
                     allMoviesRes.json(),
                 ]);
                 setMovie(movieData);
-                const count = allMoviesData.filter(
+                const viewings = allMoviesData.filter(
                     (m) => m.title === movieData.title,
-                ).length;
-                setWatchCount(count);
+                );
+                setWatchCount(viewings.length);
+                setWatchDates(
+                    viewings
+                        .map((m) => m.date_watched)
+                        .filter(Boolean)
+                        .sort(),
+                );
             } catch (error) {
                 console.error("Error fetching data", error);
             }
@@ -78,8 +85,8 @@ const MovieDetails = () => {
                             link={`/actress_detail/${movie.actress}`}
                         />
                         <MovieDetailItem
-                            label="Date Watched"
-                            value={movie.date_watched}
+                            label="Date(s) Watched"
+                            value={watchDates.join(", ")}
                         />
                         <MovieDetailItem
                             label="Released"
