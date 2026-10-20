@@ -29,13 +29,7 @@ services:
                 condition: service_healthy
                 restart: true
         env_file:
-            - .env
-        environment:
-            - POSTGRES_DB=${POSTGRES_DB}
-            - POSTGRES_USER=${POSTGRES_USER}
-            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-            - DB_HOST=${DB_HOST}
-            - DB_PORT=${DB_PORT}
+            - .env.dev
         networks:
             - app-network
         extra_hosts:
@@ -48,15 +42,13 @@ services:
             - app-network
         volumes:
             - postgres_db:/var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_DB: ${POSTGRES_DB}
-            POSTGRES_USER: ${POSTGRES_USER}
+        env_file:
+            - .env.dev
         healthcheck:
             test:
                 [
                     "CMD-SHELL",
-                    "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}",
+                    "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
                 ]
             interval: 10s
             retries: 5

@@ -1,3 +1,6 @@
+# Separate project name so prod gets its own volumes instead of sharing dev's
+name: movies-prod
+
 services:
     # Caddy: serves the React build and reverse-proxies Django, terminates HTTPS
     react-app:
@@ -12,9 +15,8 @@ services:
             - "80:80"
             - "443:443"
             - "443:443/udp" # HTTP/3
-        environment:
-            DOMAIN: ${DOMAIN:-localhost}
-            ADMIN_URL: ${ADMIN_URL:-admin}
+        env_file:
+            - .env.prod
         volumes:
             # Persist certificates, otherwise every restart re-requests them
             - caddy_data:/data
@@ -30,7 +32,7 @@ services:
         image: johnpennyman/backend:2.0-prod
         command: python manage.py migrate --noinput
         env_file:
-            - .env
+            - .env.prod
         depends_on:
             db:
                 condition: service_healthy
@@ -42,9 +44,9 @@ services:
         build: ./backend
         image: johnpennyman/backend:2.0-prod
         env_file:
-            - .env
+            - .env.prod
         environment:
-            # .env is shared with dev, where DEBUG=True
+            # Safety net in case .env.prod is ever edited to DEBUG=True
             DEBUG: "False"
         depends_on:
             db:
@@ -62,15 +64,13 @@ services:
             - app-network
         volumes:
             - postgres_db:/var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_DB: ${POSTGRES_DB}
-            POSTGRES_USER: ${POSTGRES_USER}
+        env_file:
+            - .env.prod
         healthcheck:
             test:
                 [
                     "CMD-SHELL",
-                    "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}",
+                    "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
                 ]
             interval: 10s
             retries: 5

@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR.parent / ".env")
+# Only used when running outside Docker; compose injects env vars itself
+load_dotenv(BASE_DIR.parent / ".env.dev")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
