@@ -52,6 +52,11 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "token": "5/min",
     },
+    # browsable HTML API only in dev; production returns plain JSON
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ]
+    + (["rest_framework.renderers.BrowsableAPIRenderer"] if DEBUG else []),
 }
 
 MIDDLEWARE = [
