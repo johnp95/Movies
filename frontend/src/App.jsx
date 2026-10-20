@@ -19,6 +19,7 @@ import Delete from "./components/Delete";
 import Edit, { movieLoader } from "./components/Edit";
 import RequireAuth from "./components/RequireAuth";
 import LoginPage from "./Pages/LoginPage";
+import ReleasedDetail from "./components/ReleasedDetail";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
             <Route path="/best_picture" element={<BestPicture />} />
             <Route path="/foreign-films" element={<ForeignFilms />} />
+            <Route path="/released_detail/:id" element={<ReleasedDetail />} />
             <Route path="*" element={<NotFoundPage />} />
         </Route>,
     ),

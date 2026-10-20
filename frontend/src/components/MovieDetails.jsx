@@ -84,6 +84,7 @@ const MovieDetails = () => {
                         <MovieDetailItem
                             label="Released"
                             value={movie.released}
+                            link={`/released_detail/${movie.released}`}
                         />
 
                         <MovieDetailItem

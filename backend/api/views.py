@@ -63,6 +63,17 @@ class ActressDetailView(APIView):
         return Response(serialized_results)
 
 
+class ReleasedDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        released = request.GET.get("released", "")
+        # released is an IntegerField; a non-numeric value would raise a 500
+        if not released.isdigit():
+            return Response([])
+        results = Movie.objects.filter(released=released).distinct("title")
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
+
+
 class HealthView(APIView):
     # public liveness check; skip auth so a bad token header can't fail it
     authentication_classes = ()

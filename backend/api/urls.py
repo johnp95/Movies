@@ -13,6 +13,9 @@ urlpatterns = [
     ),
     path("movies/actor/", views.ActorDetailView.as_view(), name="actor-detail"),
     path("movies/actress/", views.ActressDetailView.as_view(), name="actress-detail"),
+    path(
+        "movies/released/", views.ReleasedDetailView.as_view(), name="released-detail"
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
