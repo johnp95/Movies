@@ -25,7 +25,6 @@ const router = createBrowserRouter(
         <Route path="/" element={<MainLayout />}>
             <Route element={<RequireAuth />}>
                 <Route index element={<HomePage />} />
-                <Route path="search" element={<SearchComponent />} />
                 <Route path="/add_movie" element={<AddMovie />} />
                 <Route
                     path="/edit/:id"
@@ -34,13 +33,12 @@ const router = createBrowserRouter(
                 />
                 <Route path="/delete/:id" element={<Delete />} />
             </Route>
+            <Route path="search" element={<SearchComponent />} />
             <Route path="/movie_details/:id" element={<MovieDetails />} />
             <Route path="/actor_detail/:id" element={<ActorDetail />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="/actress_detail/:id" element={<ActressDetail />} />
             <Route path="/director_detail/:id" element={<DirectorDetail />} />
-            <Route path="/add_movie" element={<AddMovie />} />
-            <Route path="/edit/:id" element={<Edit />} loader={movieLoader} />
             <Route path="/best_picture" element={<BestPicture />} />
             <Route path="/foreign-films" element={<ForeignFilms />} />
             <Route path="*" element={<NotFoundPage />} />
