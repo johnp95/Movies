@@ -42,9 +42,11 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    # session auth lets the browsable API's login form work (dev only)
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
-    ],
+    ]
+    + (["rest_framework.authentication.SessionAuthentication"] if DEBUG else []),
     # anyone can read; only logged-in users can add/edit/delete
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
