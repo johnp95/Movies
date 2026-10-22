@@ -1,5 +1,5 @@
 # --- Base: install dependencies (cached unless package*.json changes) ---
-FROM node:24-alpine AS base
+FROM node:25-alpine AS base
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
