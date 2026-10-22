@@ -86,3 +86,21 @@ jobs:
 
             - name: Build
               run: npm run build
+
+    docker:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+
+            # compose refuses to load if env_file is missing; real values aren't needed to build
+            - name: Create placeholder env file
+              run: touch .env.prod
+
+            - name: Build production images
+              run: docker compose -f docker-compose.prod.yml build
+
+            # Validate the Caddyfile inside the built image so the Caddy version always matches prod
+            - name: Validate Caddyfile
+              run: >
+                  docker run --rm johnpennyman/react-app:2.0-prod
+                  caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
