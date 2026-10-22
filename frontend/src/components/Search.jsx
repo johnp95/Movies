@@ -9,7 +9,7 @@ const Search = ({ value, onChange }) => {
                     placeholder="Movie, Director, or Actor"
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className="text-center w-full px-5 py-2.5 text-base text-gray-700 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-200 placeholder-center"
+                    className="text-center w-full px-5 py-2.5 text-base text-gray-700 border-b border-gray-300 focus:outline-hidden focus:border-blue-500 transition-colors duration-200 placeholder-center"
                 />
                 <div
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"

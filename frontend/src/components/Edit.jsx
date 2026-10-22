@@ -61,7 +61,7 @@ const Edit = () => {
                                     type="text"
                                     id="title"
                                     name="title"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setTitle(e.target.value);
                                     }}
@@ -78,7 +78,7 @@ const Edit = () => {
                                     type="text"
                                     id="director"
                                     name="director"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setDirector(e.target.value);
                                     }}
@@ -95,7 +95,7 @@ const Edit = () => {
                                     type="text"
                                     id="actor"
                                     name="actor"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setActor(e.target.value);
                                     }}
@@ -111,7 +111,7 @@ const Edit = () => {
                                     type="text"
                                     id="actress"
                                     name="actress"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setActress(e.target.value);
                                     }}
@@ -127,7 +127,7 @@ const Edit = () => {
                                     type="date"
                                     id="dateWatched"
                                     name="dateWatched"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setDateWatched(e.target.value);
                                     }}
@@ -144,7 +144,7 @@ const Edit = () => {
                                     type="number"
                                     id="released"
                                     name="released"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setReleased(e.target.value);
                                     }}
@@ -161,7 +161,7 @@ const Edit = () => {
                                     type="text"
                                     id="image"
                                     name="image"
-                                    className="border rounded w-full py-2 px-3 mb-2"
+                                    className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
                                         setImage(e.target.value);
                                     }}
@@ -173,12 +173,12 @@ const Edit = () => {
                             <div className="flex gap-4">
                                 <Link
                                     to="/"
-                                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-none focus:shadow-outline text-center"
+                                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-hidden focus:shadow-outline text-center"
                                 >
                                     Go Back
                                 </Link>
                                 <button
-                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-none focus:shadow-outline"
+                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-hidden focus:shadow-outline"
                                     type="submit"
                                 >
                                     Submit

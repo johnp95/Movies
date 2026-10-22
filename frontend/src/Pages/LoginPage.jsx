@@ -49,7 +49,7 @@ const LoginPage = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         autoComplete="username"
                         required
-                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-600"
                     />
                 </label>
                 <label className="flex flex-col gap-1">
@@ -60,7 +60,7 @@ const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         autoComplete="current-password"
                         required
-                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-blue-600"
                     />
                 </label>
                 <button

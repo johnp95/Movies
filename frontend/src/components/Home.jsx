@@ -69,7 +69,7 @@ const Home = () => {
                         {myData.map((row) => (
                             <li
                                 key={row.id}
-                                className="border rounded-md p-4 shadow-sm bg-white"
+                                className="border rounded-md p-4 shadow-xs bg-white"
                             >
                                 <div className="flex items-baseline justify-between gap-2">
                                     <h2 className="font-semibold text-lg">
@@ -79,7 +79,7 @@ const Home = () => {
                                         {row.released}
                                     </span>
                                 </div>
-                                <dl className="mt-2 grid grid-cols-[auto,1fr] gap-x-3 gap-y-1 text-sm">
+                                <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
                                     {columns
                                         .filter(
                                             (column) =>
@@ -110,13 +110,13 @@ const Home = () => {
                                 <div className="mt-3 flex gap-2">
                                     <Link
                                         to={`edit/${row.id}`}
-                                        className="flex-1 text-center p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                        className="flex-1 text-center p-2 bg-blue-500 text-white rounded-sm hover:bg-blue-600"
                                     >
                                         Edit
                                     </Link>
                                     <Link
                                         to={`delete/${row.id}`}
-                                        className="flex-1 text-center p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                        className="flex-1 text-center p-2 bg-red-500 text-white rounded-sm hover:bg-red-600"
                                     >
                                         Delete
                                     </Link>
@@ -164,13 +164,13 @@ const Home = () => {
                                             <div className="flex gap-2">
                                                 <Link
                                                     to={`edit/${row.id}`}
-                                                    className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                                    className="p-2 bg-blue-500 text-white rounded-sm hover:bg-blue-600"
                                                 >
                                                     Edit
                                                 </Link>
                                                 <Link
                                                     to={`delete/${row.id}`}
-                                                    className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                                    className="p-2 bg-red-500 text-white rounded-sm hover:bg-red-600"
                                                 >
                                                     Delete
                                                 </Link>

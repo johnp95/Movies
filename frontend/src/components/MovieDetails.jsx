@@ -51,7 +51,7 @@ const MovieDetails = () => {
     return (
         <div className="max-w-4xl mx-4 sm:mx-auto my-6 sm:mt-10 bg-white rounded-xl shadow-md overflow-hidden">
             <div className="md:flex">
-                <div className="md:flex-shrink-0">
+                <div className="md:shrink-0">
                     <img
                         className="w-40 mx-auto mt-6 rounded-md md:mt-0 md:rounded-none md:h-full md:w-48 object-cover cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         src={movie.image}
@@ -118,7 +118,7 @@ const MovieDetails = () => {
             <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center">
                 <Link
                     to="/search/"
-                    className="inline-flex items-center justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out"
+                    className="inline-flex items-center justify-center rounded-md border border-transparent shadow-xs px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out"
                 >
                     <FaArrowLeft className="mr-2 text-xl" />
                     Go Back

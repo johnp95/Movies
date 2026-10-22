@@ -55,7 +55,7 @@ const Delete = () => {
                             Delete Movie {myData.name}
                         </h1>
                     </div>
-                    <div className="bg-white shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
+                    <div className="bg-white shadow-md rounded-sm px-4 sm:px-8 pt-6 pb-8 mb-4">
                         <p className="mb-4">
                             Are you sure that you want to delete:{" "}
                             <strong>{myData.title}</strong>
@@ -63,7 +63,7 @@ const Delete = () => {
                         <div className="flex justify-center">
                             <button
                                 onClick={submission}
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-hidden focus:shadow-outline"
                             >
                                 Delete
                             </button>

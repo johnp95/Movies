@@ -15,7 +15,7 @@ const MovieItem = ({ movie }) => {
             </div>
             <div className="mb-5 flex justify-around text-center mt-4">
                 <Link to={`/movie_details/${movie.id}`}>
-                    <button className="bg-[#000d33] text-white px-4 py-2 rounded hover:bg-[#001a66] transition duration-300">
+                    <button className="bg-[#000d33] text-white px-4 py-2 rounded-sm hover:bg-[#001a66] transition duration-300">
                         View Movie
                     </button>
                 </Link>
