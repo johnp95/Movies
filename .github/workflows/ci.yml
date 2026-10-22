@@ -42,9 +42,9 @@ jobs:
             DB_PORT: 5432
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v6
               with:
                   python-version: "3.13"
                   cache: pip
@@ -56,6 +56,10 @@ jobs:
             - name: Check for missing migrations
               run: python manage.py makemigrations --check --dry-run
 
+            # WhiteNoise warns if the static dir is missing
+            - name: Collect static files
+              run: python manage.py collectstatic --noinput
+
             - name: Run tests
               run: python manage.py test
 
@@ -66,9 +70,9 @@ jobs:
                 working-directory: frontend
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v5
               with:
                   node-version: "24"
                   cache: npm

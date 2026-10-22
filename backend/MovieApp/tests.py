@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
+from django.test import override_settings
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from .models import Movie
 
 
+# Test client speaks plain HTTP; don't let the prod HTTPS redirect turn every response into a 301
+@override_settings(SECURE_SSL_REDIRECT=False)
 class MovieAPITests(APITestCase):
     def setUp(self):
         self.top_gun = Movie.objects.create(
