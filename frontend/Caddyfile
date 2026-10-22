@@ -7,6 +7,9 @@ www.{$DOMAIN:localhost} {
 {$DOMAIN:localhost} {
 	encode zstd gzip
 
+	# Django only sets HSTS on its own responses, so set it here for the SPA too
+	header Strict-Transport-Security "max-age=31536000"
+
 	# Django: API, DRF login, admin, and its WhiteNoise-served static files
 	@django path /api/* /api-auth/* /static/* /{$ADMIN_URL:admin}*
 	handle @django {

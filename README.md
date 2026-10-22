@@ -1,45 +1,66 @@
-#  To run on Azure (Servers are down, need a job to afford costs 😊 )
-- Access API [Api](https://moviesdjangoreact.azurewebsites.net/api/movies/)
+# Movies
 
-- Access UI [UI](https://ashy-cliff-0dda47b10.4.azurestaticapps.net/)
-# To run The Application With Docker
-- With docker installed, open the IDE of your choice
+A personal movie log: every film I've watched, with search, director/actor
+pages, Best Picture winners and foreign films.
 
-- Create a directory, open a terminal, and run ```git clone https://github.com/johnp95/Movies.git```
+**Live:** https://johnpennyman.com
 
-- cd into directory where docker-compose.yml is located (top level)
+## Tech stack
 
-- Run commands ```docker compose pull``` ```docker compose up```
+- **Frontend:** React + Vite, Tailwind, MUI
+- **Backend:** Django + Django REST Framework (token auth)
+- **Database:** PostgreSQL 17
+- **Hosting:** DigitalOcean droplet running Docker Compose, with Caddy for HTTPS
+- **CI/CD:** GitHub Actions: tests on every PR, automatic deploy on merge to `main`
 
-- Access API http://localhost:8000/api/movies
-  
-- Access UI http://localhost:5173
-# Instructions Without Docker
-- Open the IDE of your choice and install node.js, npm, and python if necessary
+## Run locally
 
-- Create a directory, open a terminal, and run ```git clone https://github.com/johnp95/Movies.git```
+Requires Docker Desktop.
 
-- Enter backend directory ```cd backend```
+1. Clone the repo:
+    ```bash
+    git clone https://github.com/johnp95/Movies.git
+    cd Movies
+    ```
+2. Create your dev settings from the template:
+    ```bash
+    cp .env.example .env.dev
+    ```
+    For local development, set at least:
+    ```
+    DEBUG=True
+    ALLOWED_HOSTS=localhost,127.0.0.1
+    DB_HOST=db
+    DB_PORT=5432
+    ADMIN_URL=admin
+    ```
+3. Start everything:
+    ```bash
+    docker compose up --build
+    ```
+4. In a second terminal, create a login:
+    ```bash
+    docker compose exec backend python manage.py createsuperuser
+    ```
 
-- create virtual environment ```python -m venv *name* ```
+| What  | URL                               |
+| ----- | --------------------------------- |
+| App   | http://localhost:5173             |
+| API   | http://localhost:8000/api/movies/ |
+| Admin | http://localhost:8000/admin/      |
 
-- cd into *MovieProject* directory ```cd MovieProject```
+## Tests
 
-- while in the virtual environment install dependencies ```pip install django djangorestframework Pillow psycopg2 django-cors-headers```
+```bash
+docker compose exec backend python manage.py test
+cd frontend && npm run lint && npm run build
+```
 
-- Apply migrations ```python manage.py makemigrations``` ```python manage.py migrate```
+The same checks run in GitHub Actions on every pull request.
 
-- Run server ```python manage.py runserver```
+## Deployment and maintenance
 
-- Access api at http://localhost:8000/api/movies
-
-- Open a new terminal while the backend server is running and cd into frontend directory
-
-- install dependencies and run server ```npm install``` ```npm run dev```
-
-- access server http://localhost:5173
-
-# To See Movies From My Local Database (With postgres installed. Change user/localhost if needed)
-- create local database named *movies*
-
-- ```psql -h localhost -U postgres -d movies -f latest.sql``` 
+- Work on `dev`, then open a PR into `main`. When the checks pass and it's
+  merged, it deploys automatically. See [DEPLOY.md](DEPLOY.md) for manual
+  deploys and rollbacks.
+- Monthly upkeep: [MAINTENANCE.md](MAINTENANCE.md).
