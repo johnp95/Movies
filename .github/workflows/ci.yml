@@ -7,7 +7,7 @@ on:
 
 concurrency:
     group: ci-${{ github.ref }}
-    cancel-in-progress: true
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
     backend:
@@ -104,3 +104,22 @@ jobs:
               run: >
                   docker run --rm johnpennyman/react-app:2.0-prod
                   caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+    deploy:
+        # only after every check passes, and only for pushes to main (not PRs)
+        needs: [backend, frontend, docker]
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        concurrency:
+            group: deploy-production
+            cancel-in-progress: false
+
+        steps:
+            - name: Set up SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+                  echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+            - name: Deploy
+              run: ssh -i ~/.ssh/deploy_key ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
