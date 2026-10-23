@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # --- Production: serve the static build with Caddy ---
-FROM caddy:2.10-alpine AS prod
+FROM caddy:2.11-alpine AS prod
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /srv
 EXPOSE 80
