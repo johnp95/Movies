@@ -61,8 +61,8 @@ when the checks are green. The deploy runs automatically.
 
 ## 2. Refresh base images (on the server)
 
-The Dockerfiles build on `python:3.13-slim-trixie`, `node:24-alpine` and
-`caddy:2.10-alpine`, and the database runs `postgres:17`. Docker keeps using its
+The Dockerfiles build on `python:3.15-slim-trixie`, `node:24-alpine` and
+`caddy:2.11-alpine`, and the database runs `postgres:17`. Docker keeps using its
 cached copies until told to check for newer ones, so normal deploys never pick
 up their security fixes.
 
@@ -144,12 +144,12 @@ No output is the goal. Any line here is a request where Django crashed.
 
 Check that nothing is approaching end of life:
 
-| Component | Supported until |
-| --- | --- |
-| Ubuntu 24.04 LTS | 2029 |
-| Python 3.13 | 2029 |
-| Node 24 | 2028 |
-| Postgres 17 | 2029 |
+| Component        | Supported until |
+| ---------------- | --------------- |
+| Ubuntu 24.04 LTS | 2029            |
+| Python 3.15      | 2031            |
+| Node 24          | 2028            |
+| Postgres 17      | 2029            |
 
 Upgrading Postgres to a new **major** version (e.g. 17 → 18) is not just a tag
 change: it needs a full dump and restore into a fresh volume.
