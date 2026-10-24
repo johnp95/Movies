@@ -13,16 +13,16 @@ class MovieAPITests(APITestCase):
         self.top_gun = Movie.objects.create(
             title="Top Gun",
             director="Tony Scott",
-            actor="Tom Cruise",
-            actress="",
+            actors=["Tom Cruise"],
+            actresses=[],
             date_watched="2026-01-01",
             released=1986,
         )
         self.barbie = Movie.objects.create(
             title="Barbie",
             director="Greta Gerwig",
-            actor="Ryan Gosling",
-            actress="Margot Robbie",
+            actors=["Ryan Gosling"],
+            actresses=["Margot Robbie"],
             date_watched="2026-01-01",
             released=2023,
         )
@@ -47,8 +47,8 @@ class MovieAPITests(APITestCase):
             {
                 "title": "Edited",
                 "director": "director",
-                "actor": "actor",
-                "actress": "actress",
+                "actors": ["actor"],
+                "actresses": ["actress"],
                 "date_watched": "2026-01-01",
                 "released": 2026,
                 "language": "",
@@ -68,8 +68,8 @@ class MovieAPITests(APITestCase):
             {
                 "title": "title",
                 "director": "director",
-                "actor": "actor",
-                "actress": "actress",
+                "actors": ["actor"],
+                "actresses": ["actress"],
                 "date_watched": "2026-01-01",
                 "released": 2026,
                 "language": "",
@@ -90,12 +90,14 @@ class MovieAPITests(APITestCase):
     def test_actor(self):
         response = self.client.get("/api/movies/actor/", {"actor": "Tom Cruise"})
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["actor"], "Tom Cruise")
+        self.assertEqual(response.data[0]["actors"], ["Tom Cruise"])
 
     def test_actress(self):
-        response = self.client.get("/api/movies/actress/", {"actress": "Margot Robbie"})
+        response = self.client.get(
+            "/api/movies/actress/", {"actress": "Margot Robbie"}
+        )
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["actress"], "Margot Robbie")
+        self.assertEqual(response.data[0]["actresses"], ["Margot Robbie"])
 
     def test_director(self):
         response = self.client.get(

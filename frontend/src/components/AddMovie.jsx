@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AxiosInstance from "./Axios";
+import { textToNames } from "../utils/names";
 
 const AddMovie = () => {
     const [title, setTitle] = useState("");
     const [director, setDirector] = useState("");
-    const [actor, setActor] = useState("");
-    const [actress, setActress] = useState("");
+    const [actors, setActors] = useState("");
+    const [actresses, setActresses] = useState("");
     const [dateWatched, setDateWatched] = useState("");
     const [released, setReleased] = useState("");
     const [image, setImage] = useState("");
@@ -19,8 +20,8 @@ const AddMovie = () => {
         const newMovie = {
             title,
             director,
-            actor,
-            actress,
+            actors: textToNames(actors),
+            actresses: textToNames(actresses),
             date_watched: dateWatched,
             released: Number(released),
             image,
@@ -82,34 +83,34 @@ const AddMovie = () => {
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2">
-                                    Actor
+                                    Actor(s)
                                 </label>
                                 <input
                                     type="text"
-                                    id="actor"
-                                    name="actor"
+                                    id="actors"
+                                    name="actors"
                                     className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
-                                        setActor(e.target.value);
+                                        setActors(e.target.value);
                                     }}
-                                    value={actor}
-                                    placeholder="Actor"
+                                    value={actors}
+                                    placeholder="Actor(s), separated by commas"
                                 />
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2">
-                                    Actress
+                                    Actresses
                                 </label>
                                 <input
                                     type="text"
-                                    id="actress"
-                                    name="actress"
+                                    id="actresses"
+                                    name="actresses"
                                     className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
-                                        setActress(e.target.value);
+                                        setActresses(e.target.value);
                                     }}
-                                    value={actress}
-                                    placeholder="Actress"
+                                    value={actresses}
+                                    placeholder="Actresses, separated by commas"
                                 />
                             </div>
                             <div className="mb-4">

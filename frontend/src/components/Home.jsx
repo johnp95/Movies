@@ -3,6 +3,7 @@ import Dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 import { API_BASE_URL } from "../config";
+import { namesToText } from "../utils/names";
 
 const url = API_BASE_URL + `api/movies`;
 
@@ -40,12 +41,12 @@ const Home = () => {
                 header: "Director",
             },
             {
-                accessorKey: "actor",
-                header: "Actor",
+                accessorFn: (row) => namesToText(row.actors),
+                header: "Actor(s)",
             },
             {
-                accessorKey: "actress",
-                header: "Actress",
+                accessorFn: (row) => namesToText(row.actresses),
+                header: "Actresses",
             },
             {
                 accessorFn: (row) =>
