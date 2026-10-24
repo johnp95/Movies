@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.db.models import Q
 from MovieApp.models import Movie
 from rest_framework import generics
@@ -16,6 +17,32 @@ class MovieList(generics.ListCreateAPIView):
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all().order_by("id")
     serializer_class = MovieSerializer
+
+    # Film details shared by every viewing; date_watched stays per viewing
+    SHARED_FIELDS = [
+        "title",
+        "director",
+        "actors",
+        "actresses",
+        "released",
+        "language",
+        "best_picture",
+        "female_director",
+        "image",
+    ]
+
+    @transaction.atomic
+    def perform_update(self, serializer):
+        # Match on the values before the edit, and on release year too so a
+        # remake with the same title (e.g. Dune 1984 vs 2021) is left alone
+        old = serializer.instance
+        other_viewings = Movie.objects.filter(
+            title=old.title, released=old.released
+        ).exclude(pk=old.pk)
+        movie = serializer.save()
+        other_viewings.update(
+            **{field: getattr(movie, field) for field in self.SHARED_FIELDS}
+        )
 
 
 class MovieSearchView(APIView):
