@@ -62,6 +62,42 @@ class MovieAPITests(APITestCase):
         self.top_gun.refresh_from_db()
         self.assertEqual(self.top_gun.title, "Edited")
 
+    def test_update_movie_updates_other_viewings(self):
+        rewatch = Movie.objects.create(
+            title="Top Gun",
+            director="Tony Scott",
+            actors=["Tom Cruise"],
+            date_watched="2026-02-01",
+            released=1986,
+        )
+        remake = Movie.objects.create(
+            title="Top Gun",
+            director="Someone Else",
+            actors=["Other Actor"],
+            date_watched="2026-03-01",
+            released=2030,
+        )
+        response = self.client.put(
+            f"/api/movies/{self.top_gun.id}/",
+            {
+                "title": "Top Gun",
+                "director": "Tony Scott",
+                "actors": ["Tom Cruise", "Val Kilmer"],
+                "actresses": ["Kelly McGillis"],
+                "date_watched": "2026-01-15",
+                "released": 1986,
+            },
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        rewatch.refresh_from_db()
+        self.assertEqual(rewatch.actors, ["Tom Cruise", "Val Kilmer"])
+        self.assertEqual(rewatch.actresses, ["Kelly McGillis"])
+        # date_watched belongs to each viewing, so it is not copied
+        self.assertEqual(str(rewatch.date_watched), "2026-02-01")
+        remake.refresh_from_db()
+        self.assertEqual(remake.actors, ["Other Actor"])
+
     def test_create_movie(self):
         response = self.client.post(
             "/api/movies/",
