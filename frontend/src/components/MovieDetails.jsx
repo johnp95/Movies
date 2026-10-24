@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import { API_BASE_URL } from "../config";
+import useGoBack from "../hooks/useGoBack";
 
 const MovieDetails = () => {
+    const goBack = useGoBack("/search");
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
     const [watchDates, setWatchDates] = useState([]);
@@ -116,13 +118,14 @@ const MovieDetails = () => {
                 </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center">
-                <Link
-                    to="/search/"
+                <button
+                    type="button"
+                    onClick={goBack}
                     className="inline-flex items-center justify-center rounded-md border border-transparent shadow-xs px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out"
                 >
                     <FaArrowLeft className="mr-2 text-xl" />
                     Go Back
-                </Link>
+                </button>
             </div>
         </div>
     );

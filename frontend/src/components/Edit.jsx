@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config";
 import AxiosInstance from "./Axios";
+import useGoBack from "../hooks/useGoBack";
 
 const url = API_BASE_URL + `api/movies`;
 
@@ -11,6 +11,7 @@ const Edit = () => {
     const movie = useLoaderData();
 
     const navigate = useNavigate();
+    const goBack = useGoBack();
 
     const [title, setTitle] = useState(movie.title);
     const [director, setDirector] = useState(movie.director);
@@ -171,12 +172,13 @@ const Edit = () => {
                                 />
                             </div>
                             <div className="flex gap-4">
-                                <Link
-                                    to="/"
+                                <button
+                                    type="button"
+                                    onClick={goBack}
                                     className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-hidden focus:shadow-outline text-center"
                                 >
                                     Go Back
-                                </Link>
+                                </button>
                                 <button
                                     className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-1/2 focus:outline-hidden focus:shadow-outline"
                                     type="submit"
