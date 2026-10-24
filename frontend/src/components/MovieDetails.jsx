@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import { API_BASE_URL } from "../config";
@@ -24,10 +24,18 @@ const MovieDetails = () => {
                     movieRes.json(),
                     allMoviesRes.json(),
                 ]);
-                setMovie(movieData);
                 const viewings = allMoviesData.filter(
                     (m) => m.title === movieData.title,
                 );
+                // Each viewing is its own row, so show the cast from all of them
+                const allNames = (field) => [
+                    ...new Set(viewings.flatMap((m) => m[field] || [])),
+                ];
+                setMovie({
+                    ...movieData,
+                    actors: allNames("actors"),
+                    actresses: allNames("actresses"),
+                });
                 setWatchCount(viewings.length);
                 setWatchDates(
                     viewings
@@ -76,15 +84,15 @@ const MovieDetails = () => {
                             value={movie.director}
                             link={`/director_detail/${movie.director}`}
                         />
-                        <MovieDetailItem
-                            label="Actor"
-                            value={movie.actor}
-                            link={`/actor_detail/${movie.actor}`}
+                        <MovieDetailNames
+                            label="Actor(s)"
+                            names={movie.actors}
+                            linkBase="/actor_detail"
                         />
-                        <MovieDetailItem
-                            label="Actress"
-                            value={movie.actress}
-                            link={`/actress_detail/${movie.actress}`}
+                        <MovieDetailNames
+                            label="Actresses"
+                            names={movie.actresses}
+                            linkBase="/actress_detail"
                         />
                         <MovieDetailItem
                             label="Date(s) Watched"
@@ -143,6 +151,28 @@ const MovieDetailItem = ({ label, value, link }) => (
             </Link>
         ) : (
             <span className="text-gray-800">{value || "N/A"}</span>
+        )}
+    </div>
+);
+
+// One link per name, so each actor/actress goes to their own page
+const MovieDetailNames = ({ label, names, linkBase }) => (
+    <div className="mb-2">
+        <span className="text-gray-600 font-semibold">{label}: </span>
+        {names?.length ? (
+            names.map((name, i) => (
+                <React.Fragment key={name}>
+                    {i > 0 && ", "}
+                    <Link
+                        to={`${linkBase}/${name}`}
+                        className="text-purple-600 hover:text-purple-800 transition duration-300 ease-in-out"
+                    >
+                        {name}
+                    </Link>
+                </React.Fragment>
+            ))
+        ) : (
+            <span className="text-gray-800">N/A</span>
         )}
     </div>
 );

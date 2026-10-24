@@ -7,5 +7,5 @@ from .models import Movie
 class MovieAdmin(admin.ModelAdmin):
     list_display = ("title", "director")
     ordering = ("id",)
-    search_fields = ("title", "actor", "director", "actress")
+    search_fields = ("title", "actors", "director", "actresses")
     list_filter = ("date_watched", "released")

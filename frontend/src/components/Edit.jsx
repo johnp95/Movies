@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { API_BASE_URL } from "../config";
 import AxiosInstance from "./Axios";
 import useGoBack from "../hooks/useGoBack";
+import { namesToText, textToNames } from "../utils/names";
 
 const url = API_BASE_URL + `api/movies`;
 
@@ -15,8 +16,8 @@ const Edit = () => {
 
     const [title, setTitle] = useState(movie.title);
     const [director, setDirector] = useState(movie.director);
-    const [actor, setActor] = useState(movie.actor);
-    const [actress, setActress] = useState(movie.actress);
+    const [actors, setActors] = useState(namesToText(movie.actors));
+    const [actresses, setActresses] = useState(namesToText(movie.actresses));
     const [dateWatched, setDateWatched] = useState(movie.date_watched);
     const [released, setReleased] = useState(movie.released);
     const [image, setImage] = useState(movie.image);
@@ -28,8 +29,8 @@ const Edit = () => {
             id,
             title,
             director,
-            actor,
-            actress,
+            actors: textToNames(actors),
+            actresses: textToNames(actresses),
             date_watched: dateWatched,
             released: Number(released),
             image,
@@ -90,34 +91,34 @@ const Edit = () => {
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2">
-                                    Actor
+                                    Actor(s)
                                 </label>
                                 <input
                                     type="text"
-                                    id="actor"
-                                    name="actor"
+                                    id="actors"
+                                    name="actors"
                                     className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
-                                        setActor(e.target.value);
+                                        setActors(e.target.value);
                                     }}
-                                    value={actor}
-                                    placeholder="Actor"
+                                    value={actors}
+                                    placeholder="Actor(s), separated by commas"
                                 />
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2">
-                                    Actress
+                                    Actresses
                                 </label>
                                 <input
                                     type="text"
-                                    id="actress"
-                                    name="actress"
+                                    id="actresses"
+                                    name="actresses"
                                     className="border rounded-sm w-full py-2 px-3 mb-2"
                                     onChange={(e) => {
-                                        setActress(e.target.value);
+                                        setActresses(e.target.value);
                                     }}
-                                    value={actress}
-                                    placeholder="Actress"
+                                    value={actresses}
+                                    placeholder="Actresses, separated by commas"
                                 />
                             </div>
                             <div className="mb-4">

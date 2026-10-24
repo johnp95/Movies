@@ -27,8 +27,8 @@ class MovieSearchView(APIView):
             Movie.objects.filter(
                 Q(title__icontains=query)
                 | Q(director__icontains=query)
-                | Q(actor__icontains=query)
-                | Q(actress__icontains=query)
+                | Q(actors__icontains=query)
+                | Q(actresses__icontains=query)
             )
             .order_by("title", "date_watched", "id")
             .distinct("title")
@@ -50,7 +50,7 @@ class DirectorDetailView(APIView):
 class ActorDetailView(APIView):
     def get(self, request, *args, **kwargs):
         actor = request.GET.get("actor", "")
-        results = Movie.objects.filter(actor=actor).distinct("title")
+        results = Movie.objects.filter(actors__contains=[actor]).distinct("title")
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
 
@@ -58,7 +58,7 @@ class ActorDetailView(APIView):
 class ActressDetailView(APIView):
     def get(self, request, *args, **kwargs):
         actress = request.GET.get("actress", "")
-        results = Movie.objects.filter(actress=actress).distinct("title")
+        results = Movie.objects.filter(actresses__contains=[actress]).distinct("title")
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
 
