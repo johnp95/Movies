@@ -69,7 +69,29 @@ class DirectorDetailView(APIView):
     def get(self, request, *args, **kwargs):
         director = request.GET.get("director", "")
         results = Movie.objects.filter(director=director).distinct("title")
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
 
+
+class BestPictureDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        results = (
+            Movie.objects.filter(best_picture=True)
+            .order_by("title", "date_watched", "id")
+            .distinct("title")
+        )
+        serialized_results = MovieSerializer(results, many=True).data
+        return Response(serialized_results)
+
+
+class ForeignFilmsDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        results = (
+            Movie.objects.exclude(language__isnull=True)
+            .exclude(language="")
+            .order_by("title", "date_watched", "id")
+            .distinct("title")
+        )
         serialized_results = MovieSerializer(results, many=True).data
         return Response(serialized_results)
 

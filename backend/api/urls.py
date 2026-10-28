@@ -16,6 +16,16 @@ urlpatterns = [
     path(
         "movies/released/", views.ReleasedDetailView.as_view(), name="released-detail"
     ),
+    path(
+        "movies/best-picture/",
+        views.BestPictureDetailView.as_view(),
+        name="best-picture-detail",
+    ),
+    path(
+        "movies/foreign-films/",
+        views.ForeignFilmsDetailView.as_view(),
+        name="foreign-films-detail",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
