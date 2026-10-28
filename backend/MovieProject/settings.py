@@ -60,8 +60,6 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ]
     + (["rest_framework.renderers.BrowsableAPIRenderer"] if DEBUG else []),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 100,
 }
 
 MIDDLEWARE = [
