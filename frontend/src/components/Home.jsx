@@ -1,15 +1,54 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Spinner from "./Spinner";
+import Search from "./Search";
+import PageControls from "./PageControls";
+import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 import { namesToText } from "../utils/names";
 
 const url = API_BASE_URL + `api/movies`;
+const rowsPerPage = 20;
+
+// Same fields as the API search, but filtered client-side so every viewing
+// (not one row per title) stays listed with its own Edit/Delete.
+const matchesQuery = (movie, query) => {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return true;
+    return [
+        movie.title,
+        movie.director,
+        ...(movie.actors ?? []),
+        ...(movie.actresses ?? []),
+    ].some((value) => value?.toLowerCase().includes(needle));
+};
 
 const Home = () => {
     const [myData, setMyData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get("q") ?? "";
+    const [input, setInput] = useState(query);
+
+    // Debounce typing, then write the query to the URL and reset to page 1.
+    // `replace` keeps each keystroke out of the browser history.
+    useEffect(() => {
+        if (input === query) return;
+        const timeout = setTimeout(() => {
+            setSearchParams(
+                (prev) => {
+                    const next = new URLSearchParams(prev);
+                    if (input) next.set("q", input);
+                    else next.delete("q");
+                    next.delete("page");
+                    return next;
+                },
+                { replace: true },
+            );
+        }, 300);
+        return () => clearTimeout(timeout);
+    }, [input, query, setSearchParams]);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -57,17 +96,35 @@ const Home = () => {
         [],
     );
 
+    const filteredData = useMemo(
+        () => myData.filter((movie) => matchesQuery(movie, query)),
+        [myData, query],
+    );
+
+    const {
+        currentItems: currentRows,
+        page,
+        totalPages,
+        handlePageChange,
+    } = usePagination(filteredData, rowsPerPage);
+
     return (
         <div className="container mx-auto p-4">
+            <Search value={input} onChange={setInput} />
             {loading ? (
                 <div className="flex justify-center">
                     <Spinner loading={loading} />
                 </div>
             ) : (
                 <>
+                    {filteredData.length === 0 && (
+                        <p className="text-center text-gray-500">
+                            No movies match &quot;{query}&quot;.
+                        </p>
+                    )}
                     {/* Phones: one card per movie instead of a wide table */}
                     <ul className="md:hidden space-y-3">
-                        {myData.map((row) => (
+                        {currentRows.map((row) => (
                             <li
                                 key={row.id}
                                 className="border rounded-md p-4 shadow-xs bg-white"
@@ -146,7 +203,7 @@ const Home = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {myData.map((row) => (
+                                {currentRows.map((row) => (
                                     <tr key={row.id}>
                                         {columns.map((column) => (
                                             <td
@@ -182,6 +239,11 @@ const Home = () => {
                             </tbody>
                         </table>
                     </div>
+                    <PageControls
+                        page={page}
+                        totalPages={totalPages}
+                        onChange={handlePageChange}
+                    />
                 </>
             )}
         </div>
