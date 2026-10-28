@@ -3,12 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import { API_BASE_URL } from "../config";
 import useGoBack from "../hooks/useGoBack";
+import { resolveWikiUrl, searchUrl } from "../utils/wikipedia";
 
 const MovieDetails = () => {
     const goBack = useGoBack("/search");
     const [movie, setMovie] = useState(null);
     const [watchCount, setWatchCount] = useState(0);
     const [watchDates, setWatchDates] = useState([]);
+    const [wikiUrl, setWikiUrl] = useState(null);
     const { id: myId } = useParams();
     const url = API_BASE_URL + `api/movies/${myId}`;
     const allMoviesUrl = API_BASE_URL + `api/movies`;
@@ -43,6 +45,12 @@ const MovieDetails = () => {
                         .filter(Boolean)
                         .sort(),
                 );
+                // Don't hold up the page; the poster falls back to a search until this lands
+                resolveWikiUrl(movieData.title, movieData.released)
+                    .then(setWikiUrl)
+                    .catch((error) =>
+                        console.error("Error finding Wikipedia article", error),
+                    );
             } catch (error) {
                 console.error("Error fetching data", error);
             }
@@ -68,8 +76,10 @@ const MovieDetails = () => {
                         alt={movie.title}
                         onClick={() =>
                             window.open(
-                                `https://en.wikipedia.org/wiki/${movie.title}`,
+                                wikiUrl ||
+                                    searchUrl(movie.title, movie.released),
                                 "_blank",
+                                "noopener",
                             )
                         }
                     />

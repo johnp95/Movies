@@ -1,8 +1,13 @@
+from io import StringIO
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
-from django.test import override_settings
+from django.core.management import call_command
+from django.test import SimpleTestCase, TestCase, override_settings
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from . import wikipedia
 from .models import Movie
 
 
@@ -217,3 +222,109 @@ class MovieAPITests(APITestCase):
         response = self.client.post("/api/movies/", {"title": "Sneaky"}, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(Movie.objects.count(), 2)
+
+
+class WikipediaTests(SimpleTestCase):
+    def test_parse_query_follows_normalisation_and_redirects(self):
+        pages = wikipedia.parse_query(
+            ["barbie (2023 film)", "Nope (film)"],
+            {
+                "normalized": [
+                    {"from": "barbie (2023 film)", "to": "Barbie (2023 film)"}
+                ],
+                "redirects": [{"from": "Barbie (2023 film)", "to": "Barbie (film)"}],
+                "pages": [
+                    {"title": "Barbie (film)", "description": "2023 film"},
+                    {"title": "Nope (film)", "missing": True},
+                ],
+            },
+        )
+        self.assertEqual(pages["barbie (2023 film)"]["title"], "Barbie (film)")
+        self.assertFalse(pages["barbie (2023 film)"]["missing"])
+        self.assertTrue(pages["Nope (film)"]["missing"])
+
+    def page(self, title, missing=False, disambiguation=False, description=""):
+        return {
+            "title": title,
+            "missing": missing,
+            "disambiguation": disambiguation,
+            "description": description,
+        }
+
+    def test_resolve_prefers_year_film_article(self):
+        pages = {
+            "Heat (1995 film)": self.page("Heat (1995 film)"),
+            "Heat (film)": self.page("Heat (film)", disambiguation=True),
+            "Heat": self.page("Heat", description="Type of energy transfer"),
+        }
+        self.assertEqual(wikipedia.resolve("Heat", 1995, pages), "Heat (1995 film)")
+
+    def test_resolve_skips_bare_title_that_is_not_a_film(self):
+        pages = {
+            "Heat (1995 film)": self.page("Heat (1995 film)", missing=True),
+            "Heat (film)": self.page("Heat (film)", disambiguation=True),
+            "Heat": self.page("Heat", description="Type of energy transfer"),
+        }
+        self.assertIsNone(wikipedia.resolve("Heat", 1995, pages))
+
+    def test_resolve_accepts_bare_title_that_is_a_film(self):
+        pages = {
+            "Oppenheimer (2023 film)": self.page("x", missing=True),
+            "Oppenheimer (film)": self.page("x", missing=True),
+            "Oppenheimer": self.page(
+                "Oppenheimer (film)", description="2023 film by Christopher Nolan"
+            ),
+        }
+        self.assertEqual(
+            wikipedia.resolve("Oppenheimer", 2023, pages), "Oppenheimer (film)"
+        )
+
+    def test_resolve_accepts_bare_title_naming_a_film_article(self):
+        title = "Gravity (2013 film)"
+        pages = {
+            f"{title} (2013 film)": self.page("x", missing=True),
+            f"{title} (film)": self.page("x", missing=True),
+            title: self.page(title, description="Science fiction thriller"),
+        }
+        self.assertEqual(wikipedia.resolve(title, 2013, pages), title)
+
+    def test_article_url_encodes_special_characters(self):
+        self.assertEqual(
+            wikipedia.article_url("What's Up, Doc? (1972 film)"),
+            "https://en.wikipedia.org/wiki/What%27s_Up%2C_Doc%3F_%281972_film%29",
+        )
+
+
+class CheckWikiLinksTests(TestCase):
+    def test_reports_films_without_an_article(self):
+        for date_watched in ["2026-01-01", "2026-02-01"]:
+            Movie.objects.create(
+                title="Top Gun",
+                director="Tony Scott",
+                date_watched=date_watched,
+                released=1986,
+            )
+        Movie.objects.create(
+            title="Unknown Film", director="x", date_watched="2026-01-01", released=2020
+        )
+
+        def fake_fetch(names):
+            # a rewatch shouldn't be looked up twice
+            self.assertEqual(len(names), len(set(names)))
+            return {
+                name: {
+                    "title": name,
+                    "missing": name != "Top Gun (1986 film)",
+                    "disambiguation": False,
+                    "description": "",
+                }
+                for name in names
+            }
+
+        out = StringIO()
+        with patch.object(wikipedia, "fetch_pages", side_effect=fake_fetch):
+            call_command("check_wiki_links", stdout=out)
+        output = out.getvalue()
+        self.assertIn("NOT FOUND  Unknown Film (2020)", output)
+        self.assertNotIn("Top Gun", output)
+        self.assertIn("1/2 films link to an article", output)
