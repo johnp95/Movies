@@ -147,6 +147,53 @@ class MovieAPITests(APITestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_best_picture(self):
+        Movie.objects.create(
+            title="Oppenheimer",
+            director="Christopher Nolan",
+            date_watched="2026-01-01",
+            released=2023,
+            best_picture=True,
+        )
+        # a rewatch is a second row, but the film should only be listed once
+        Movie.objects.create(
+            title="Oppenheimer",
+            director="Christopher Nolan",
+            date_watched="2026-02-01",
+            released=2023,
+            best_picture=True,
+        )
+        response = self.client.get("/api/movies/best-picture/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual([m["title"] for m in response.data], ["Oppenheimer"])
+
+    def test_foreign_films(self):
+        Movie.objects.create(
+            title="Parasite",
+            director="Bong Joon-ho",
+            date_watched="2026-01-01",
+            released=2019,
+            language="Korean",
+        )
+        Movie.objects.create(
+            title="Parasite",
+            director="Bong Joon-ho",
+            date_watched="2026-02-01",
+            released=2019,
+            language="Korean",
+        )
+        # language can be stored as NULL (setUp movies) or "", neither is foreign
+        Movie.objects.create(
+            title="Blank Language",
+            director="director",
+            date_watched="2026-01-01",
+            released=2020,
+            language="",
+        )
+        response = self.client.get("/api/movies/foreign-films/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual([m["title"] for m in response.data], ["Parasite"])
+
     def test_search(self):
         response = self.client.get("/api/movies/search/", {"query": "Gerwig"})
         self.assertEqual(len(response.data), 1)

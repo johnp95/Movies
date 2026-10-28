@@ -7,7 +7,7 @@ const navItems = [
     { label: "Home", path: "/", protected: true },
     { label: "Add Movie", path: "/add_movie", protected: true },
     { label: "Search", path: "/search" },
-    { label: "Best Picture", path: "/best_picture" },
+    { label: "Best Picture", path: "/best-picture" },
     { label: "Foreign Films", path: "/foreign-films" },
 ];
 
