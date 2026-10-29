@@ -195,7 +195,7 @@ const Edit = () => {
     );
 };
 const movieLoader = async ({ params }) => {
-    const res = await fetch(`${url}/${params.id}`);
+    const res = await fetch(`${url}${params.id}`);
     const data = await res.json();
     return data;
 };
