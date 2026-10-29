@@ -1,5 +1,3 @@
-from datetime import date
-
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
@@ -21,17 +19,3 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
-
-    @property
-    def Days_since(self):
-        today = date.today()
-        difference = today - self.date_watched
-
-        years = difference.days // 365
-        remaining_days = difference.days % 365
-
-        return (
-            f"{years} years, {remaining_days} days"
-            if years > 0
-            else f"{remaining_days} days"
-        )
