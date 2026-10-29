@@ -5,7 +5,7 @@ import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 
-const url = API_BASE_URL + `api/movies/director`;
+const url = API_BASE_URL + `api/movies/director/`;
 
 const DirectorDetail = () => {
     const [movies, setMovies] = useState([]);
@@ -15,7 +15,9 @@ const DirectorDetail = () => {
     useEffect(() => {
         const fetchMovie = async () => {
             try {
-                const res = await fetch(`${url}?director=${myDirector}`);
+                const res = await fetch(
+                    `${url}?director=${encodeURIComponent(myDirector)}`,
+                );
                 const data = await res.json();
                 setMovies(data);
             } catch (error) {

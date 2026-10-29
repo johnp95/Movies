@@ -4,7 +4,7 @@ import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 
-const url = API_BASE_URL + `api/movies/best-picture`;
+const url = API_BASE_URL + `api/movies/best-picture/`;
 
 const BestPicture = () => {
     const [movies, setMovies] = useState([]);

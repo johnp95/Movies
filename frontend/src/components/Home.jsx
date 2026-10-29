@@ -8,7 +8,7 @@ import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 import { namesToText } from "../utils/names";
 
-const url = API_BASE_URL + `api/movies`;
+const url = API_BASE_URL + `api/movies/`;
 const rowsPerPage = 20;
 
 // Same fields as the API search, but filtered client-side so every viewing

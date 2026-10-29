@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const GetData = (id) => {
-    return AxiosInstance.get(`api/movies/${id}`);
+    return AxiosInstance.get(`api/movies/${id}/`);
 };
 
 const Delete = () => {

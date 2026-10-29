@@ -12,8 +12,8 @@ const MovieDetails = () => {
     const [watchDates, setWatchDates] = useState([]);
     const [wikiUrl, setWikiUrl] = useState(null);
     const { id: myId } = useParams();
-    const url = API_BASE_URL + `api/movies/${myId}`;
-    const allMoviesUrl = API_BASE_URL + `api/movies`;
+    const url = API_BASE_URL + `api/movies/${myId}/`;
+    const allMoviesUrl = API_BASE_URL + `api/movies/`;
 
     useEffect(() => {
         const fetchMovie = async () => {
