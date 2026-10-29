@@ -1,7 +1,7 @@
 import json
 import time
 from urllib.error import HTTPError
-from urllib.parse import urlencode, quote
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 API_URL = "https://en.wikipedia.org/w/api.php"

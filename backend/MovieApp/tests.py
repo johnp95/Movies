@@ -134,9 +134,7 @@ class MovieAPITests(APITestCase):
         self.assertEqual(response.data[0]["actors"], ["Tom Cruise"])
 
     def test_actress(self):
-        response = self.client.get(
-            "/api/movies/actress/", {"actress": "Margot Robbie"}
-        )
+        response = self.client.get("/api/movies/actress/", {"actress": "Margot Robbie"})
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["actresses"], ["Margot Robbie"])
 
