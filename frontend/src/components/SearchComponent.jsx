@@ -8,7 +8,7 @@ import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 
-const url = API_BASE_URL + `api/movies/search`;
+const url = API_BASE_URL + `api/movies/search/`;
 const cardsPerPage = 20;
 
 const sortMovies = (movies, method) => {

@@ -6,7 +6,7 @@ import AxiosInstance from "./Axios";
 import useGoBack from "../hooks/useGoBack";
 import { namesToText, textToNames } from "../utils/names";
 
-const url = API_BASE_URL + `api/movies`;
+const url = API_BASE_URL + `api/movies/`;
 
 const Edit = () => {
     const movie = useLoaderData();

@@ -4,7 +4,7 @@ import PageControls from "./PageControls";
 import usePagination from "../hooks/usePagination";
 import { API_BASE_URL } from "../config";
 
-const url = API_BASE_URL + `api/movies/foreign-films`;
+const url = API_BASE_URL + `api/movies/foreign-films/`;
 
 const ForeignFilms = () => {
     const [movies, setMovies] = useState([]);
