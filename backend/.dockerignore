@@ -11,3 +11,10 @@ Dockerfile
 .dockerignore
 **/*.pyc
 **/__pycache__
+media
+*.sql
+.coverage
+htmlcov
+.pytest_cache
+.vscode
+.idea
