@@ -5,7 +5,7 @@ Merge into main
 
 <!-- On Server: -->
 
-ssh john@134.209.61.32
+ssh john@<droplet-ip>
 cd ~/movies
 git pull --ff-only
 
