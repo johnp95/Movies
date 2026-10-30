@@ -1,12 +1,14 @@
 .git
 .vscode
+.idea
 .dockerignore
 .gitignore
 .env
-config
-build
+.env.*
+*.local
+*.log
+.DS_Store
 node_modules
-docker-compose.yaml
 Dockerfile
 README.md
 dist
