@@ -50,13 +50,13 @@ const Delete = () => {
                 </div>
             ) : (
                 <div>
-                    <div className="bg-blue-500 text-white p-4 mb-4">
-                        <h1 className="text-2xl font-bold">
+                    <div className="bg-red-500 text-white p-4 mb-4">
+                        <h1 className="text-2xl font-bold text-center">
                             Delete Movie {myData.name}
                         </h1>
                     </div>
                     <div className="bg-white shadow-md rounded-sm px-4 sm:px-8 pt-6 pb-8 mb-4">
-                        <p className="mb-4">
+                        <p className="mb-4 text-center">
                             Are you sure that you want to delete:{" "}
                             <strong>{myData.title}</strong>
                         </p>
