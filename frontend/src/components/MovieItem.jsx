@@ -4,7 +4,7 @@ const MovieItem = ({ movie }) => {
     return (
         <div className="w-64 rounded-lg shadow-md m-5 overflow-hidden font-sans">
             <img
-                className="w-64 h-[290px] object-cover"
+                className="w-64 h-72.5 object-cover"
                 src={movie.image}
                 alt={movie.title}
             />
