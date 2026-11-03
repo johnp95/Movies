@@ -16,7 +16,7 @@ docker compose exec backend python manage.py test MovieApp.tests.MovieAPITests.t
 docker compose exec backend python manage.py makemigrations
 ```
 
-Frontend (from `frontend/`): `npm run lint` (ESLint, `--max-warnings 0`, so any warning fails CI), `npm run build`, `npm run dev`. There are no frontend tests.
+Frontend (from `frontend/`): `npm run lint` (ESLint, `--max-warnings 0`, so any warning fails CI), `npm run build`, `npm run dev`, `npm test` (Vitest in watch mode; `npm test -- --run` for a single run, `npx vitest run src/utils` for one folder). Tests sit next to the code they cover (`*.test.js[x]`) and use React Testing Library on jsdom; `src/test/utils.jsx` has the shared helpers (`renderRoutes` renders inside a memory router + `AuthProvider` and shows the current URL as `data-testid="location"`, `mockFetch` stubs `fetch`, `makeMovie` builds a movie). Components that write through `AxiosInstance` are tested with `vi.mock("./Axios")`.
 
 CI (`.github/workflows/ci.yml`) runs on every PR and on push to `main`: backend tests against Postgres, `makemigrations --check` (forgetting a migration fails CI), `collectstatic`, frontend lint + build, production image build, and `caddy validate`. A push to `main` that passes all of these auto-deploys to the DigitalOcean droplet over SSH.
 
